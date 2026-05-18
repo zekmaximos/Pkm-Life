@@ -1,0 +1,2346 @@
+[
+  {
+    "id": "celadon_city",
+    "name": "Celadon City",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      16,
+      30
+    ],
+    "encounters": [
+      {
+        "species": "Eevee",
+        "min_level": 16,
+        "max_level": 30,
+        "weight": 55
+      },
+      {
+        "species": "Grimer",
+        "min_level": 16,
+        "max_level": 30,
+        "weight": 55
+      },
+      {
+        "species": "Koffing",
+        "min_level": 16,
+        "max_level": 30,
+        "weight": 30
+      },
+      {
+        "species": "Porygon",
+        "min_level": 16,
+        "max_level": 30,
+        "weight": 30
+      },
+      {
+        "species": "Flareon",
+        "min_level": 22,
+        "max_level": 38,
+        "weight": 1
+      },
+      {
+        "species": "Jolteon",
+        "min_level": 22,
+        "max_level": 38,
+        "weight": 1
+      },
+      {
+        "species": "Vaporeon",
+        "min_level": 22,
+        "max_level": 38,
+        "weight": 1
+      }
+    ],
+    "location_id": "celadon_city"
+  },
+  {
+    "id": "cerulean_cave",
+    "name": "Cerulean Cave",
+    "kind": "cave",
+    "region": "Kanto",
+    "level_range": [
+      50,
+      70
+    ],
+    "encounters": [
+      {
+        "species": "Mewtwo",
+        "min_level": 50,
+        "max_level": 70,
+        "weight": 1
+      },
+      {
+        "species": "Slowpoke",
+        "min_level": 50,
+        "max_level": 70,
+        "weight": 30
+      },
+      {
+        "species": "Chansey",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Dragonair",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Electrode",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Golbat",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Golduck",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 1
+      },
+      {
+        "species": "Graveler",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 22
+      },
+      {
+        "species": "Gyarados",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 1
+      },
+      {
+        "species": "Hypno",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Kadabra",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 22
+      },
+      {
+        "species": "Machoke",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 22
+      },
+      {
+        "species": "Magneton",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Parasect",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 22
+      },
+      {
+        "species": "Rhydon",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Seaking",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Slowbro",
+        "min_level": 56,
+        "max_level": 78,
+        "weight": 6
+      },
+      {
+        "species": "Alakazam",
+        "min_level": 62,
+        "max_level": 86,
+        "weight": 1
+      },
+      {
+        "species": "Dragonite",
+        "min_level": 62,
+        "max_level": 86,
+        "weight": 1
+      },
+      {
+        "species": "Poliwrath",
+        "min_level": 62,
+        "max_level": 86,
+        "weight": 1
+      }
+    ],
+    "location_id": "cerulean_cave"
+  },
+  {
+    "id": "cerulean_city",
+    "name": "Cerulean City",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      8,
+      16
+    ],
+    "encounters": [
+      {
+        "species": "Goldeen",
+        "min_level": 8,
+        "max_level": 16,
+        "weight": 55
+      },
+      {
+        "species": "Poliwag",
+        "min_level": 8,
+        "max_level": 16,
+        "weight": 55
+      },
+      {
+        "species": "Jynx",
+        "min_level": 14,
+        "max_level": 24,
+        "weight": 6
+      },
+      {
+        "species": "Poliwhirl",
+        "min_level": 14,
+        "max_level": 24,
+        "weight": 22
+      }
+    ],
+    "location_id": "cerulean_city"
+  },
+  {
+    "id": "cinnabar_island",
+    "name": "Cinnabar Island",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      30,
+      45
+    ],
+    "encounters": [
+      {
+        "species": "Aerodactyl",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 6
+      },
+      {
+        "species": "Horsea",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 55
+      },
+      {
+        "species": "Kabuto",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Omanyte",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Ponyta",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Seel",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 55
+      },
+      {
+        "species": "Shellder",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 55
+      },
+      {
+        "species": "Staryu",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Tentacool",
+        "min_level": 30,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Kabutops",
+        "min_level": 36,
+        "max_level": 53,
+        "weight": 6
+      },
+      {
+        "species": "Omastar",
+        "min_level": 36,
+        "max_level": 53,
+        "weight": 6
+      },
+      {
+        "species": "Seadra",
+        "min_level": 36,
+        "max_level": 53,
+        "weight": 6
+      }
+    ],
+    "location_id": "cinnabar_island"
+  },
+  {
+    "id": "digletts_cave",
+    "name": "Diglett's Cave",
+    "kind": "cave",
+    "region": "Kanto",
+    "level_range": [
+      14,
+      30
+    ],
+    "encounters": [
+      {
+        "species": "Diglett",
+        "min_level": 14,
+        "max_level": 30,
+        "weight": 55
+      },
+      {
+        "species": "Dugtrio",
+        "min_level": 20,
+        "max_level": 38,
+        "weight": 6
+      }
+    ],
+    "location_id": "digletts_cave"
+  },
+  {
+    "id": "lavender_town",
+    "name": "Lavender Town",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      14,
+      24
+    ],
+    "encounters": [
+      {
+        "species": "Gastly",
+        "min_level": 14,
+        "max_level": 24,
+        "weight": 30
+      },
+      {
+        "species": "Haunter",
+        "min_level": 20,
+        "max_level": 32,
+        "weight": 22
+      }
+    ],
+    "location_id": "lavender_town"
+  },
+  {
+    "id": "mt_moon",
+    "name": "Mt. Moon",
+    "kind": "cave",
+    "region": "Kanto",
+    "level_range": [
+      7,
+      14
+    ],
+    "encounters": [
+      {
+        "species": "Geodude",
+        "min_level": 7,
+        "max_level": 14,
+        "weight": 55
+      },
+      {
+        "species": "Paras",
+        "min_level": 7,
+        "max_level": 14,
+        "weight": 55
+      },
+      {
+        "species": "Zubat",
+        "min_level": 7,
+        "max_level": 14,
+        "weight": 55
+      },
+      {
+        "species": "Clefairy",
+        "min_level": 13,
+        "max_level": 22,
+        "weight": 47
+      },
+      {
+        "species": "Clefable",
+        "min_level": 19,
+        "max_level": 30,
+        "weight": 1
+      }
+    ],
+    "location_id": "mt_moon"
+  },
+  {
+    "id": "mythic_event",
+    "name": "Mythic Event",
+    "kind": "special",
+    "region": "Kanto",
+    "level_range": [
+      50,
+      70
+    ],
+    "encounters": [
+      {
+        "species": "Mew",
+        "min_level": 50,
+        "max_level": 70,
+        "weight": 1
+      }
+    ],
+    "location_id": "mythic_event"
+  },
+  {
+    "id": "pallet_town",
+    "name": "Pallet Town",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      2,
+      5
+    ],
+    "encounters": [
+      {
+        "species": "Magikarp",
+        "min_level": 2,
+        "max_level": 5,
+        "weight": 55
+      },
+      {
+        "species": "Pidgey",
+        "min_level": 2,
+        "max_level": 5,
+        "weight": 55
+      },
+      {
+        "species": "Poliwag",
+        "min_level": 2,
+        "max_level": 5,
+        "weight": 55
+      },
+      {
+        "species": "Rattata",
+        "min_level": 2,
+        "max_level": 5,
+        "weight": 55
+      },
+      {
+        "species": "Staryu",
+        "min_level": 2,
+        "max_level": 5,
+        "weight": 30
+      },
+      {
+        "species": "Tangela",
+        "min_level": 2,
+        "max_level": 5,
+        "weight": 14
+      }
+    ],
+    "location_id": "pallet_town"
+  },
+  {
+    "id": "pokemon_mansion",
+    "name": "Pokemon Mansion",
+    "kind": "dungeon",
+    "region": "Kanto",
+    "level_range": [
+      28,
+      45
+    ],
+    "encounters": [
+      {
+        "species": "Ditto",
+        "min_level": 28,
+        "max_level": 45,
+        "weight": 55
+      },
+      {
+        "species": "Grimer",
+        "min_level": 28,
+        "max_level": 45,
+        "weight": 55
+      },
+      {
+        "species": "Growlithe",
+        "min_level": 28,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Koffing",
+        "min_level": 28,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Ponyta",
+        "min_level": 28,
+        "max_level": 45,
+        "weight": 30
+      },
+      {
+        "species": "Vulpix",
+        "min_level": 28,
+        "max_level": 45,
+        "weight": 55
+      },
+      {
+        "species": "Arcanine",
+        "min_level": 34,
+        "max_level": 53,
+        "weight": 1
+      },
+      {
+        "species": "Magmar",
+        "min_level": 34,
+        "max_level": 53,
+        "weight": 6
+      },
+      {
+        "species": "Muk",
+        "min_level": 34,
+        "max_level": 53,
+        "weight": 1
+      },
+      {
+        "species": "Ninetales",
+        "min_level": 34,
+        "max_level": 53,
+        "weight": 1
+      },
+      {
+        "species": "Rapidash",
+        "min_level": 34,
+        "max_level": 53,
+        "weight": 1
+      },
+      {
+        "species": "Raticate",
+        "min_level": 34,
+        "max_level": 53,
+        "weight": 22
+      },
+      {
+        "species": "Weezing",
+        "min_level": 34,
+        "max_level": 53,
+        "weight": 6
+      }
+    ],
+    "location_id": "pokemon_mansion"
+  },
+  {
+    "id": "pokemon_tower",
+    "name": "Pokemon Tower",
+    "kind": "tower",
+    "region": "Kanto",
+    "level_range": [
+      18,
+      32
+    ],
+    "encounters": [
+      {
+        "species": "Cubone",
+        "min_level": 18,
+        "max_level": 32,
+        "weight": 55
+      },
+      {
+        "species": "Gastly",
+        "min_level": 18,
+        "max_level": 32,
+        "weight": 30
+      },
+      {
+        "species": "Haunter",
+        "min_level": 24,
+        "max_level": 40,
+        "weight": 22
+      },
+      {
+        "species": "Marowak",
+        "min_level": 24,
+        "max_level": 40,
+        "weight": 6
+      },
+      {
+        "species": "Gengar",
+        "min_level": 30,
+        "max_level": 48,
+        "weight": 1
+      }
+    ],
+    "location_id": "pokemon_tower"
+  },
+  {
+    "id": "power_plant",
+    "name": "Power Plant",
+    "kind": "dungeon",
+    "region": "Kanto",
+    "level_range": [
+      25,
+      42
+    ],
+    "encounters": [
+      {
+        "species": "Magnemite",
+        "min_level": 25,
+        "max_level": 42,
+        "weight": 55
+      },
+      {
+        "species": "Voltorb",
+        "min_level": 25,
+        "max_level": 42,
+        "weight": 30
+      },
+      {
+        "species": "Zapdos",
+        "min_level": 25,
+        "max_level": 42,
+        "weight": 1
+      },
+      {
+        "species": "Electabuzz",
+        "min_level": 31,
+        "max_level": 50,
+        "weight": 6
+      },
+      {
+        "species": "Electrode",
+        "min_level": 31,
+        "max_level": 50,
+        "weight": 6
+      },
+      {
+        "species": "Magneton",
+        "min_level": 31,
+        "max_level": 50,
+        "weight": 6
+      },
+      {
+        "species": "Pikachu",
+        "min_level": 31,
+        "max_level": 50,
+        "weight": 47
+      },
+      {
+        "species": "Raichu",
+        "min_level": 37,
+        "max_level": 58,
+        "weight": 1
+      }
+    ],
+    "location_id": "power_plant"
+  },
+  {
+    "id": "rock_tunnel",
+    "name": "Rock Tunnel",
+    "kind": "cave",
+    "region": "Kanto",
+    "level_range": [
+      15,
+      25
+    ],
+    "encounters": [
+      {
+        "species": "Cubone",
+        "min_level": 15,
+        "max_level": 25,
+        "weight": 55
+      },
+      {
+        "species": "Geodude",
+        "min_level": 15,
+        "max_level": 25,
+        "weight": 55
+      },
+      {
+        "species": "Machop",
+        "min_level": 15,
+        "max_level": 25,
+        "weight": 55
+      },
+      {
+        "species": "Onix",
+        "min_level": 15,
+        "max_level": 25,
+        "weight": 30
+      },
+      {
+        "species": "Zubat",
+        "min_level": 15,
+        "max_level": 25,
+        "weight": 55
+      },
+      {
+        "species": "Graveler",
+        "min_level": 21,
+        "max_level": 33,
+        "weight": 22
+      }
+    ],
+    "location_id": "rock_tunnel"
+  },
+  {
+    "id": "route_1",
+    "name": "Route 1",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      2,
+      9
+    ],
+    "encounters": [
+      {
+        "species": "Pidgey",
+        "min_level": 2,
+        "max_level": 9,
+        "weight": 55
+      },
+      {
+        "species": "Rattata",
+        "min_level": 2,
+        "max_level": 9,
+        "weight": 55
+      }
+    ],
+    "location_id": "route_1"
+  },
+  {
+    "id": "route_10",
+    "name": "Route 10",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      20,
+      27
+    ],
+    "encounters": [
+      {
+        "species": "Ekans",
+        "min_level": 20,
+        "max_level": 27,
+        "weight": 55
+      },
+      {
+        "species": "Magikarp",
+        "min_level": 20,
+        "max_level": 27,
+        "weight": 55
+      },
+      {
+        "species": "Sandshrew",
+        "min_level": 20,
+        "max_level": 27,
+        "weight": 55
+      },
+      {
+        "species": "Slowpoke",
+        "min_level": 20,
+        "max_level": 27,
+        "weight": 30
+      },
+      {
+        "species": "Spearow",
+        "min_level": 20,
+        "max_level": 27,
+        "weight": 55
+      },
+      {
+        "species": "Voltorb",
+        "min_level": 20,
+        "max_level": 27,
+        "weight": 30
+      }
+    ],
+    "location_id": "route_10"
+  },
+  {
+    "id": "route_11",
+    "name": "Route 11",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      22,
+      29
+    ],
+    "encounters": [
+      {
+        "species": "Drowzee",
+        "min_level": 22,
+        "max_level": 29,
+        "weight": 30
+      },
+      {
+        "species": "Krabby",
+        "min_level": 22,
+        "max_level": 29,
+        "weight": 55
+      },
+      {
+        "species": "Hypno",
+        "min_level": 28,
+        "max_level": 37,
+        "weight": 6
+      }
+    ],
+    "location_id": "route_11"
+  },
+  {
+    "id": "route_12",
+    "name": "Route 12",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      24,
+      31
+    ],
+    "encounters": [
+      {
+        "species": "Bellsprout",
+        "min_level": 24,
+        "max_level": 31,
+        "weight": 55
+      },
+      {
+        "species": "Oddish",
+        "min_level": 24,
+        "max_level": 31,
+        "weight": 55
+      },
+      {
+        "species": "Venonat",
+        "min_level": 24,
+        "max_level": 31,
+        "weight": 55
+      },
+      {
+        "species": "Gloom",
+        "min_level": 30,
+        "max_level": 39,
+        "weight": 22
+      },
+      {
+        "species": "Snorlax",
+        "min_level": 30,
+        "max_level": 39,
+        "weight": 1
+      },
+      {
+        "species": "Weepinbell",
+        "min_level": 30,
+        "max_level": 39,
+        "weight": 22
+      }
+    ],
+    "location_id": "route_12"
+  },
+  {
+    "id": "route_13",
+    "name": "Route 13",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      26,
+      33
+    ],
+    "encounters": [
+      {
+        "species": "Ditto",
+        "min_level": 26,
+        "max_level": 33,
+        "weight": 55
+      },
+      {
+        "species": "Venonat",
+        "min_level": 26,
+        "max_level": 33,
+        "weight": 55
+      },
+      {
+        "species": "Gloom",
+        "min_level": 32,
+        "max_level": 41,
+        "weight": 22
+      },
+      {
+        "species": "Weepinbell",
+        "min_level": 32,
+        "max_level": 41,
+        "weight": 22
+      }
+    ],
+    "location_id": "route_13"
+  },
+  {
+    "id": "route_14",
+    "name": "Route 14",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      28,
+      35
+    ],
+    "encounters": [
+      {
+        "species": "Ditto",
+        "min_level": 28,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Venonat",
+        "min_level": 28,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Gloom",
+        "min_level": 34,
+        "max_level": 43,
+        "weight": 22
+      },
+      {
+        "species": "Pidgeotto",
+        "min_level": 34,
+        "max_level": 43,
+        "weight": 22
+      },
+      {
+        "species": "Weepinbell",
+        "min_level": 34,
+        "max_level": 43,
+        "weight": 22
+      }
+    ],
+    "location_id": "route_14"
+  },
+  {
+    "id": "route_15",
+    "name": "Route 15",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      30,
+      37
+    ],
+    "encounters": [
+      {
+        "species": "Ditto",
+        "min_level": 30,
+        "max_level": 37,
+        "weight": 55
+      },
+      {
+        "species": "Gloom",
+        "min_level": 36,
+        "max_level": 45,
+        "weight": 22
+      },
+      {
+        "species": "Pidgeotto",
+        "min_level": 36,
+        "max_level": 45,
+        "weight": 22
+      },
+      {
+        "species": "Weepinbell",
+        "min_level": 36,
+        "max_level": 45,
+        "weight": 22
+      },
+      {
+        "species": "Victreebel",
+        "min_level": 42,
+        "max_level": 53,
+        "weight": 1
+      },
+      {
+        "species": "Vileplume",
+        "min_level": 42,
+        "max_level": 53,
+        "weight": 1
+      }
+    ],
+    "location_id": "route_15"
+  },
+  {
+    "id": "route_16",
+    "name": "Route 16",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      32,
+      39
+    ],
+    "encounters": [
+      {
+        "species": "Doduo",
+        "min_level": 32,
+        "max_level": 39,
+        "weight": 55
+      },
+      {
+        "species": "Raticate",
+        "min_level": 38,
+        "max_level": 47,
+        "weight": 22
+      },
+      {
+        "species": "Snorlax",
+        "min_level": 38,
+        "max_level": 47,
+        "weight": 1
+      }
+    ],
+    "location_id": "route_16"
+  },
+  {
+    "id": "route_17",
+    "name": "Route 17",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      34,
+      41
+    ],
+    "encounters": [
+      {
+        "species": "Doduo",
+        "min_level": 34,
+        "max_level": 41,
+        "weight": 55
+      },
+      {
+        "species": "Dodrio",
+        "min_level": 40,
+        "max_level": 49,
+        "weight": 6
+      },
+      {
+        "species": "Fearow",
+        "min_level": 40,
+        "max_level": 49,
+        "weight": 6
+      },
+      {
+        "species": "Raticate",
+        "min_level": 40,
+        "max_level": 49,
+        "weight": 22
+      }
+    ],
+    "location_id": "route_17"
+  },
+  {
+    "id": "route_18",
+    "name": "Route 18",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      36,
+      43
+    ],
+    "encounters": [
+      {
+        "species": "Doduo",
+        "min_level": 36,
+        "max_level": 43,
+        "weight": 55
+      },
+      {
+        "species": "Lickitung",
+        "min_level": 36,
+        "max_level": 43,
+        "weight": 30
+      },
+      {
+        "species": "Dodrio",
+        "min_level": 42,
+        "max_level": 51,
+        "weight": 6
+      },
+      {
+        "species": "Fearow",
+        "min_level": 42,
+        "max_level": 51,
+        "weight": 6
+      },
+      {
+        "species": "Raticate",
+        "min_level": 42,
+        "max_level": 51,
+        "weight": 22
+      }
+    ],
+    "location_id": "route_18"
+  },
+  {
+    "id": "route_19",
+    "name": "Route 19",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      38,
+      45
+    ],
+    "encounters": [
+      {
+        "species": "Horsea",
+        "min_level": 38,
+        "max_level": 45,
+        "weight": 55
+      },
+      {
+        "species": "Tentacool",
+        "min_level": 38,
+        "max_level": 45,
+        "weight": 30
+      }
+    ],
+    "location_id": "route_19"
+  },
+  {
+    "id": "route_2",
+    "name": "Route 2",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      4,
+      11
+    ],
+    "encounters": [
+      {
+        "species": "Caterpie",
+        "min_level": 4,
+        "max_level": 11,
+        "weight": 55
+      },
+      {
+        "species": "Pidgey",
+        "min_level": 4,
+        "max_level": 11,
+        "weight": 55
+      },
+      {
+        "species": "Rattata",
+        "min_level": 4,
+        "max_level": 11,
+        "weight": 55
+      },
+      {
+        "species": "Weedle",
+        "min_level": 4,
+        "max_level": 11,
+        "weight": 55
+      },
+      {
+        "species": "Kakuna",
+        "min_level": 10,
+        "max_level": 19,
+        "weight": 47
+      },
+      {
+        "species": "Metapod",
+        "min_level": 10,
+        "max_level": 19,
+        "weight": 47
+      },
+      {
+        "species": "Mr-Mime",
+        "min_level": 10,
+        "max_level": 19,
+        "weight": 6
+      }
+    ],
+    "location_id": "route_2"
+  },
+  {
+    "id": "route_20",
+    "name": "Route 20",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      40,
+      47
+    ],
+    "encounters": [
+      {
+        "species": "Horsea",
+        "min_level": 40,
+        "max_level": 47,
+        "weight": 55
+      },
+      {
+        "species": "Tentacool",
+        "min_level": 40,
+        "max_level": 47,
+        "weight": 30
+      },
+      {
+        "species": "Gyarados",
+        "min_level": 46,
+        "max_level": 55,
+        "weight": 1
+      },
+      {
+        "species": "Seadra",
+        "min_level": 46,
+        "max_level": 55,
+        "weight": 6
+      },
+      {
+        "species": "Tentacruel",
+        "min_level": 46,
+        "max_level": 55,
+        "weight": 1
+      }
+    ],
+    "location_id": "route_20"
+  },
+  {
+    "id": "route_21",
+    "name": "Route 21",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      42,
+      49
+    ],
+    "encounters": [
+      {
+        "species": "Tangela",
+        "min_level": 42,
+        "max_level": 49,
+        "weight": 14
+      },
+      {
+        "species": "Tentacool",
+        "min_level": 42,
+        "max_level": 49,
+        "weight": 30
+      },
+      {
+        "species": "Pidgeotto",
+        "min_level": 48,
+        "max_level": 57,
+        "weight": 22
+      },
+      {
+        "species": "Tentacruel",
+        "min_level": 48,
+        "max_level": 57,
+        "weight": 1
+      },
+      {
+        "species": "Pidgeot",
+        "min_level": 54,
+        "max_level": 65,
+        "weight": 1
+      }
+    ],
+    "location_id": "route_21"
+  },
+  {
+    "id": "route_22",
+    "name": "Route 22",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      44,
+      51
+    ],
+    "encounters": [
+      {
+        "species": "Goldeen",
+        "min_level": 44,
+        "max_level": 51,
+        "weight": 55
+      },
+      {
+        "species": "Magikarp",
+        "min_level": 44,
+        "max_level": 51,
+        "weight": 55
+      },
+      {
+        "species": "Mankey",
+        "min_level": 44,
+        "max_level": 51,
+        "weight": 55
+      },
+      {
+        "species": "Nidoran-F",
+        "min_level": 44,
+        "max_level": 51,
+        "weight": 55
+      },
+      {
+        "species": "Nidoran-M",
+        "min_level": 44,
+        "max_level": 51,
+        "weight": 55
+      },
+      {
+        "species": "Poliwag",
+        "min_level": 44,
+        "max_level": 51,
+        "weight": 55
+      },
+      {
+        "species": "Poliwhirl",
+        "min_level": 50,
+        "max_level": 59,
+        "weight": 22
+      }
+    ],
+    "location_id": "route_22"
+  },
+  {
+    "id": "route_23",
+    "name": "Route 23",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      45,
+      52
+    ],
+    "encounters": [
+      {
+        "species": "Goldeen",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 55
+      },
+      {
+        "species": "Mankey",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 55
+      },
+      {
+        "species": "Arbok",
+        "min_level": 51,
+        "max_level": 60,
+        "weight": 6
+      },
+      {
+        "species": "Kingler",
+        "min_level": 51,
+        "max_level": 60,
+        "weight": 6
+      },
+      {
+        "species": "Nidorina",
+        "min_level": 51,
+        "max_level": 60,
+        "weight": 22
+      },
+      {
+        "species": "Nidorino",
+        "min_level": 51,
+        "max_level": 60,
+        "weight": 22
+      },
+      {
+        "species": "Primeape",
+        "min_level": 51,
+        "max_level": 60,
+        "weight": 6
+      },
+      {
+        "species": "Sandslash",
+        "min_level": 51,
+        "max_level": 60,
+        "weight": 6
+      },
+      {
+        "species": "Seaking",
+        "min_level": 51,
+        "max_level": 60,
+        "weight": 6
+      }
+    ],
+    "location_id": "route_23"
+  },
+  {
+    "id": "route_24",
+    "name": "Route 24",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      45,
+      52
+    ],
+    "encounters": [
+      {
+        "species": "Abra",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 30
+      },
+      {
+        "species": "Caterpie",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 55
+      },
+      {
+        "species": "Psyduck",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 55
+      },
+      {
+        "species": "Butterfree",
+        "min_level": 57,
+        "max_level": 68,
+        "weight": 1
+      }
+    ],
+    "location_id": "route_24"
+  },
+  {
+    "id": "route_25",
+    "name": "Route 25",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      45,
+      52
+    ],
+    "encounters": [
+      {
+        "species": "Abra",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 30
+      },
+      {
+        "species": "Psyduck",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 55
+      },
+      {
+        "species": "Weedle",
+        "min_level": 45,
+        "max_level": 52,
+        "weight": 55
+      },
+      {
+        "species": "Beedrill",
+        "min_level": 57,
+        "max_level": 68,
+        "weight": 1
+      }
+    ],
+    "location_id": "route_25"
+  },
+  {
+    "id": "route_3",
+    "name": "Route 3",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      6,
+      13
+    ],
+    "encounters": [
+      {
+        "species": "Mankey",
+        "min_level": 6,
+        "max_level": 13,
+        "weight": 55
+      },
+      {
+        "species": "Spearow",
+        "min_level": 6,
+        "max_level": 13,
+        "weight": 55
+      },
+      {
+        "species": "Jigglypuff",
+        "min_level": 12,
+        "max_level": 21,
+        "weight": 47
+      },
+      {
+        "species": "Wigglytuff",
+        "min_level": 18,
+        "max_level": 29,
+        "weight": 1
+      }
+    ],
+    "location_id": "route_3"
+  },
+  {
+    "id": "route_4",
+    "name": "Route 4",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      8,
+      15
+    ],
+    "encounters": [
+      {
+        "species": "Ekans",
+        "min_level": 8,
+        "max_level": 15,
+        "weight": 55
+      },
+      {
+        "species": "Magikarp",
+        "min_level": 8,
+        "max_level": 15,
+        "weight": 55
+      },
+      {
+        "species": "Mankey",
+        "min_level": 8,
+        "max_level": 15,
+        "weight": 55
+      },
+      {
+        "species": "Rattata",
+        "min_level": 8,
+        "max_level": 15,
+        "weight": 55
+      },
+      {
+        "species": "Sandshrew",
+        "min_level": 8,
+        "max_level": 15,
+        "weight": 55
+      },
+      {
+        "species": "Spearow",
+        "min_level": 8,
+        "max_level": 15,
+        "weight": 55
+      }
+    ],
+    "location_id": "route_4"
+  },
+  {
+    "id": "route_5",
+    "name": "Route 5",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      10,
+      17
+    ],
+    "encounters": [
+      {
+        "species": "Bellsprout",
+        "min_level": 10,
+        "max_level": 17,
+        "weight": 55
+      },
+      {
+        "species": "Meowth",
+        "min_level": 10,
+        "max_level": 17,
+        "weight": 55
+      },
+      {
+        "species": "Oddish",
+        "min_level": 10,
+        "max_level": 17,
+        "weight": 55
+      },
+      {
+        "species": "Pidgey",
+        "min_level": 10,
+        "max_level": 17,
+        "weight": 55
+      }
+    ],
+    "location_id": "route_5"
+  },
+  {
+    "id": "route_6",
+    "name": "Route 6",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      12,
+      19
+    ],
+    "encounters": [
+      {
+        "species": "Bellsprout",
+        "min_level": 12,
+        "max_level": 19,
+        "weight": 55
+      },
+      {
+        "species": "Goldeen",
+        "min_level": 12,
+        "max_level": 19,
+        "weight": 55
+      },
+      {
+        "species": "Krabby",
+        "min_level": 12,
+        "max_level": 19,
+        "weight": 55
+      },
+      {
+        "species": "Meowth",
+        "min_level": 12,
+        "max_level": 19,
+        "weight": 55
+      },
+      {
+        "species": "Oddish",
+        "min_level": 12,
+        "max_level": 19,
+        "weight": 55
+      },
+      {
+        "species": "Pidgey",
+        "min_level": 12,
+        "max_level": 19,
+        "weight": 55
+      }
+    ],
+    "location_id": "route_6"
+  },
+  {
+    "id": "route_7",
+    "name": "Route 7",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      14,
+      21
+    ],
+    "encounters": [
+      {
+        "species": "Bellsprout",
+        "min_level": 14,
+        "max_level": 21,
+        "weight": 55
+      },
+      {
+        "species": "Growlithe",
+        "min_level": 14,
+        "max_level": 21,
+        "weight": 30
+      },
+      {
+        "species": "Meowth",
+        "min_level": 14,
+        "max_level": 21,
+        "weight": 55
+      },
+      {
+        "species": "Oddish",
+        "min_level": 14,
+        "max_level": 21,
+        "weight": 55
+      },
+      {
+        "species": "Vulpix",
+        "min_level": 14,
+        "max_level": 21,
+        "weight": 55
+      },
+      {
+        "species": "Persian",
+        "min_level": 20,
+        "max_level": 29,
+        "weight": 6
+      }
+    ],
+    "location_id": "route_7"
+  },
+  {
+    "id": "route_8",
+    "name": "Route 8",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      16,
+      23
+    ],
+    "encounters": [
+      {
+        "species": "Ekans",
+        "min_level": 16,
+        "max_level": 23,
+        "weight": 55
+      },
+      {
+        "species": "Growlithe",
+        "min_level": 16,
+        "max_level": 23,
+        "weight": 30
+      },
+      {
+        "species": "Meowth",
+        "min_level": 16,
+        "max_level": 23,
+        "weight": 55
+      },
+      {
+        "species": "Sandshrew",
+        "min_level": 16,
+        "max_level": 23,
+        "weight": 55
+      },
+      {
+        "species": "Vulpix",
+        "min_level": 16,
+        "max_level": 23,
+        "weight": 55
+      },
+      {
+        "species": "Persian",
+        "min_level": 22,
+        "max_level": 31,
+        "weight": 6
+      }
+    ],
+    "location_id": "route_8"
+  },
+  {
+    "id": "route_9",
+    "name": "Route 9",
+    "kind": "route",
+    "region": "Kanto",
+    "level_range": [
+      18,
+      25
+    ],
+    "encounters": [
+      {
+        "species": "Ekans",
+        "min_level": 18,
+        "max_level": 25,
+        "weight": 55
+      },
+      {
+        "species": "Rattata",
+        "min_level": 18,
+        "max_level": 25,
+        "weight": 55
+      },
+      {
+        "species": "Sandshrew",
+        "min_level": 18,
+        "max_level": 25,
+        "weight": 55
+      },
+      {
+        "species": "Spearow",
+        "min_level": 18,
+        "max_level": 25,
+        "weight": 55
+      }
+    ],
+    "location_id": "route_9"
+  },
+  {
+    "id": "safari_zone",
+    "name": "Safari Zone",
+    "kind": "wild_area",
+    "region": "Kanto",
+    "level_range": [
+      20,
+      35
+    ],
+    "encounters": [
+      {
+        "species": "Doduo",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Dratini",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 30
+      },
+      {
+        "species": "Exeggcute",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 30
+      },
+      {
+        "species": "Kangaskhan",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 14
+      },
+      {
+        "species": "Nidoran-F",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Nidoran-M",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Paras",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Pinsir",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 6
+      },
+      {
+        "species": "Psyduck",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Rhyhorn",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 30
+      },
+      {
+        "species": "Scyther",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 6
+      },
+      {
+        "species": "Tauros",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 14
+      },
+      {
+        "species": "Venonat",
+        "min_level": 20,
+        "max_level": 35,
+        "weight": 55
+      },
+      {
+        "species": "Chansey",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 6
+      },
+      {
+        "species": "Dodrio",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 6
+      },
+      {
+        "species": "Dragonair",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 6
+      },
+      {
+        "species": "Exeggutor",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 1
+      },
+      {
+        "species": "Nidorina",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 22
+      },
+      {
+        "species": "Nidorino",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 22
+      },
+      {
+        "species": "Parasect",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 22
+      },
+      {
+        "species": "Poliwhirl",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 22
+      },
+      {
+        "species": "Venomoth",
+        "min_level": 26,
+        "max_level": 43,
+        "weight": 6
+      },
+      {
+        "species": "Nidoking",
+        "min_level": 32,
+        "max_level": 51,
+        "weight": 1
+      },
+      {
+        "species": "Nidoqueen",
+        "min_level": 32,
+        "max_level": 51,
+        "weight": 1
+      }
+    ],
+    "location_id": "safari_zone"
+  },
+  {
+    "id": "saffron_city",
+    "name": "Saffron City",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      24,
+      38
+    ],
+    "encounters": [
+      {
+        "species": "Hitmonchan",
+        "min_level": 30,
+        "max_level": 46,
+        "weight": 6
+      },
+      {
+        "species": "Hitmonlee",
+        "min_level": 30,
+        "max_level": 46,
+        "weight": 6
+      }
+    ],
+    "location_id": "saffron_city"
+  },
+  {
+    "id": "seafoam_islands",
+    "name": "Seafoam Islands",
+    "kind": "cave",
+    "region": "Kanto",
+    "level_range": [
+      30,
+      50
+    ],
+    "encounters": [
+      {
+        "species": "Articuno",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 1
+      },
+      {
+        "species": "Krabby",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 55
+      },
+      {
+        "species": "Lapras",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 6
+      },
+      {
+        "species": "Psyduck",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 55
+      },
+      {
+        "species": "Seel",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 55
+      },
+      {
+        "species": "Shellder",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 55
+      },
+      {
+        "species": "Slowpoke",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 30
+      },
+      {
+        "species": "Staryu",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 30
+      },
+      {
+        "species": "Tentacool",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 30
+      },
+      {
+        "species": "Zubat",
+        "min_level": 30,
+        "max_level": 50,
+        "weight": 55
+      },
+      {
+        "species": "Cloyster",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 1
+      },
+      {
+        "species": "Dewgong",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 6
+      },
+      {
+        "species": "Golbat",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 6
+      },
+      {
+        "species": "Golduck",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 1
+      },
+      {
+        "species": "Gyarados",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 1
+      },
+      {
+        "species": "Kingler",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 6
+      },
+      {
+        "species": "Seadra",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 6
+      },
+      {
+        "species": "Slowbro",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 6
+      },
+      {
+        "species": "Starmie",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 1
+      },
+      {
+        "species": "Tentacruel",
+        "min_level": 36,
+        "max_level": 58,
+        "weight": 1
+      }
+    ],
+    "location_id": "seafoam_islands"
+  },
+  {
+    "id": "silph_co",
+    "name": "Silph Co.",
+    "kind": "gift",
+    "region": "Kanto",
+    "level_range": [
+      15,
+      25
+    ],
+    "encounters": [
+      {
+        "species": "Lapras",
+        "min_level": 15,
+        "max_level": 25,
+        "weight": 6
+      }
+    ],
+    "location_id": "silph_co"
+  },
+  {
+    "id": "vermilion_city",
+    "name": "Vermilion City",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      10,
+      18
+    ],
+    "encounters": [
+      {
+        "species": "Farfetchd",
+        "min_level": 10,
+        "max_level": 18,
+        "weight": 30
+      },
+      {
+        "species": "Krabby",
+        "min_level": 10,
+        "max_level": 18,
+        "weight": 55
+      },
+      {
+        "species": "Shellder",
+        "min_level": 10,
+        "max_level": 18,
+        "weight": 55
+      }
+    ],
+    "location_id": "vermilion_city"
+  },
+  {
+    "id": "victory_road",
+    "name": "Victory Road",
+    "kind": "cave",
+    "region": "Kanto",
+    "level_range": [
+      38,
+      58
+    ],
+    "encounters": [
+      {
+        "species": "Geodude",
+        "min_level": 38,
+        "max_level": 58,
+        "weight": 55
+      },
+      {
+        "species": "Machop",
+        "min_level": 38,
+        "max_level": 58,
+        "weight": 55
+      },
+      {
+        "species": "Moltres",
+        "min_level": 38,
+        "max_level": 58,
+        "weight": 1
+      },
+      {
+        "species": "Onix",
+        "min_level": 38,
+        "max_level": 58,
+        "weight": 30
+      },
+      {
+        "species": "Rhyhorn",
+        "min_level": 38,
+        "max_level": 58,
+        "weight": 30
+      },
+      {
+        "species": "Zubat",
+        "min_level": 38,
+        "max_level": 58,
+        "weight": 55
+      },
+      {
+        "species": "Arbok",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Fearow",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Golbat",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Graveler",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 22
+      },
+      {
+        "species": "Machoke",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 22
+      },
+      {
+        "species": "Marowak",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Primeape",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Rhydon",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Sandslash",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Venomoth",
+        "min_level": 44,
+        "max_level": 66,
+        "weight": 6
+      },
+      {
+        "species": "Golem",
+        "min_level": 50,
+        "max_level": 74,
+        "weight": 1
+      },
+      {
+        "species": "Machamp",
+        "min_level": 50,
+        "max_level": 74,
+        "weight": 1
+      }
+    ],
+    "location_id": "victory_road"
+  },
+  {
+    "id": "viridian_city",
+    "name": "Viridian City",
+    "kind": "city",
+    "region": "Kanto",
+    "level_range": [
+      3,
+      7
+    ],
+    "encounters": [
+      {
+        "species": "Magikarp",
+        "min_level": 3,
+        "max_level": 7,
+        "weight": 55
+      },
+      {
+        "species": "Poliwag",
+        "min_level": 3,
+        "max_level": 7,
+        "weight": 55
+      }
+    ],
+    "location_id": "viridian_city"
+  },
+  {
+    "id": "viridian_forest",
+    "name": "Viridian Forest",
+    "kind": "forest",
+    "region": "Kanto",
+    "level_range": [
+      3,
+      8
+    ],
+    "encounters": [
+      {
+        "species": "Caterpie",
+        "min_level": 3,
+        "max_level": 8,
+        "weight": 55
+      },
+      {
+        "species": "Weedle",
+        "min_level": 3,
+        "max_level": 8,
+        "weight": 55
+      },
+      {
+        "species": "Kakuna",
+        "min_level": 9,
+        "max_level": 16,
+        "weight": 47
+      },
+      {
+        "species": "Metapod",
+        "min_level": 9,
+        "max_level": 16,
+        "weight": 47
+      },
+      {
+        "species": "Pikachu",
+        "min_level": 9,
+        "max_level": 16,
+        "weight": 47
+      },
+      {
+        "species": "Beedrill",
+        "min_level": 15,
+        "max_level": 24,
+        "weight": 1
+      },
+      {
+        "species": "Butterfree",
+        "min_level": 15,
+        "max_level": 24,
+        "weight": 1
+      }
+    ],
+    "location_id": "viridian_forest"
+  }
+]

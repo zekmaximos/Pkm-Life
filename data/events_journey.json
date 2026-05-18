@@ -1,0 +1,501 @@
+[
+  {
+    "id": "first_route_story",
+    "title": "Primeira rota",
+    "text": "A estrada para Viridian parece maior do que voce imaginava. Cada som na grama parece uma escolha.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Seguir com calma",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce deu seus primeiros passos pela rota ao norte de Pallet Town."
+      },
+      {
+        "text": "Correr em busca de aventura",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          }
+        },
+        "failure_effects": {
+          "health": -8,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce saiu correndo pela primeira rota, faminto por aventura.",
+        "failure_history_entry": "Voce correu pela primeira rota, caiu feio e aprendeu a respeitar o caminho."
+      }
+    ],
+    "tags": [
+      "route",
+      "starter",
+      "wild"
+    ],
+    "base_weight": 1.0
+  },
+  {
+    "id": "choose_path_after_starter",
+    "title": "Que tipo de jornada?",
+    "text": "Com um Pokemon ao lado, voce pensa no que quer construir em Kanto.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Focar em batalhas e ginasios",
+        "effects": {
+          "career": "Treinador",
+          "attributes": {
+            "PHY": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce decidiu seguir a profissao de Treinador Pokemon."
+      },
+      {
+        "text": "Aprender cuidado e criacao",
+        "effects": {
+          "career": "Criador",
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce decidiu estudar criacao e cuidado Pokemon."
+      },
+      {
+        "text": "Buscar apresentacoes e beleza",
+        "effects": {
+          "career": "Coordenador",
+          "attributes": {
+            "LUK": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce decidiu explorar a profissao de Coordenador Pokemon."
+      }
+    ],
+    "tags": [
+      "pokemon",
+      "career",
+      "starter"
+    ],
+    "base_weight": 1.2,
+    "conditions": {
+      "requires_pokemon": true
+    }
+  },
+  {
+    "id": "local_training_match",
+    "title": "Desafio de bairro",
+    "text": "Um jovem treinador local chama voce para uma batalha informal.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": false,
+    "choices": [
+      {
+        "text": "Aceitar a batalha",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "PHY": 1
+          },
+          "money": 40,
+          "reputation": 1
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "money": -15
+        },
+        "history_entry": "Voce venceu uma batalha informal em Pallet Town.",
+        "failure_history_entry": "Voce perdeu uma batalha informal e pagou parte do lanche do vencedor."
+      },
+      {
+        "text": "Assistir e estudar",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce estudou uma batalha local antes de se arriscar."
+      }
+    ],
+    "tags": [
+      "battle",
+      "money"
+    ],
+    "base_weight": 1.0,
+    "conditions": {
+      "requires_pokemon": true
+    }
+  },
+  {
+    "id": "breeder_apprentice",
+    "title": "Ajuda no cuidado Pokemon",
+    "text": "Uma cuidadora de Pallet pede ajuda para escovar, alimentar e observar Pokemon jovens.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": false,
+    "choices": [
+      {
+        "text": "Ajudar com paciencia",
+        "effects": {
+          "career": "Criador",
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "money": 35
+        },
+        "history_entry": "Voce trabalhou como aprendiz de criador por um dia."
+      },
+      {
+        "text": "Tentar terminar rapido",
+        "chance": 0.4,
+        "effects": {
+          "money": 45,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "failure_effects": {
+          "reputation": -1,
+          "health": -4
+        },
+        "history_entry": "Voce terminou tarefas de cuidado Pokemon em tempo recorde.",
+        "failure_history_entry": "Voce apressou o cuidado Pokemon e acabou mordido por um filhote irritado."
+      }
+    ],
+    "tags": [
+      "care",
+      "work",
+      "pokemon"
+    ],
+    "base_weight": 0.95
+  },
+  {
+    "id": "coordinator_small_stage",
+    "title": "Pequeno palco",
+    "text": "A academia organiza uma apresentacao simples para mostrar vinculo e estilo dos Pokemon.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": false,
+    "choices": [
+      {
+        "text": "Participar com criatividade",
+        "chance": 0.6,
+        "effects": {
+          "career": "Coordenador",
+          "attributes": {
+            "LUK": 2,
+            "POK": 1
+          },
+          "reputation": 2,
+          "money": 30
+        },
+        "failure_effects": {
+          "attributes": {
+            "LUK": 1
+          },
+          "reputation": -1
+        },
+        "history_entry": "Voce brilhou em uma pequena apresentacao Pokemon.",
+        "failure_history_entry": "Sua apresentacao Pokemon saiu desajeitada, mas voce aprendeu muito."
+      },
+      {
+        "text": "Assistir da plateia",
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce assistiu a uma apresentacao Pokemon e estudou seus detalhes."
+      }
+    ],
+    "tags": [
+      "contest",
+      "pokemon"
+    ],
+    "base_weight": 0.9,
+    "conditions": {
+      "requires_pokemon": true
+    }
+  },
+  {
+    "id": "odd_job_pokemart",
+    "title": "Bico no Poke Mart",
+    "text": "O Poke Mart precisa de ajuda para organizar prateleiras e conferir Poke Balls.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": false,
+    "choices": [
+      {
+        "text": "Trabalhar com atencao",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "money": 55,
+          "inventory": {
+            "Poke Ball": 1
+          }
+        },
+        "history_entry": "Voce fez um bico no Poke Mart e ganhou Pokedollar e uma Poke Ball."
+      },
+      {
+        "text": "Tentar negociar pagamento maior",
+        "chance": 0.45,
+        "effects": {
+          "attributes": {
+            "LUK": 2
+          },
+          "money": 85
+        },
+        "failure_effects": {
+          "attributes": {
+            "LUK": 1
+          },
+          "money": 25
+        },
+        "history_entry": "Voce negociou bem um bico no Poke Mart.",
+        "failure_history_entry": "Sua negociacao no Poke Mart nao colou, mas ainda rendeu algum pagamento."
+      }
+    ],
+    "tags": [
+      "work",
+      "money",
+      "items"
+    ],
+    "base_weight": 0.8
+  },
+  {
+    "id": "habitat_nest_discovery",
+    "title": "Ninho no habitat natural",
+    "text": "Explorando com cuidado, voce encontra sinais de um ninho Pokemon protegido pela vegetacao local.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "egg",
+      "wild",
+      "care",
+      "rare"
+    ],
+    "base_weight": 0.08,
+    "conditions": {
+      "requires_pokemon": true,
+      "min_attributes": {
+        "POK": 35
+      }
+    },
+    "choices": [
+      {
+        "text": "Observar sem perturbar e procurar um ovo abandonado",
+        "chance": 0.35,
+        "effects": {
+          "attributes": {
+            "POK": 2
+          },
+          "eggs": [
+            {
+              "tier_weights": {
+                "C": 50,
+                "I": 30,
+                "R": 15,
+                "RR": 5
+              },
+              "origin": "ninho encontrado em habitat natural"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce encontrou um Poke Egg em um habitat natural.",
+        "failure_history_entry": "Voce encontrou um ninho, mas preferiu nao interferir sem certeza."
+      }
+    ]
+  },
+  {
+    "id": "breeder_egg_trade",
+    "title": "Criador viajante",
+    "text": "Um criador viajante passa pela cidade com ovos de procedencia registrada e pede ajuda por algumas horas.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "egg",
+      "care",
+      "work",
+      "rare"
+    ],
+    "base_weight": 0.1,
+    "conditions": {
+      "min_attributes": {
+        "POK": 30
+      }
+    },
+    "choices": [
+      {
+        "text": "Ajudar no cuidado dos ovos",
+        "chance": 0.45,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "money": 60,
+          "eggs": [
+            {
+              "tier_weights": {
+                "C": 45,
+                "I": 35,
+                "R": 15,
+                "RR": 5
+              },
+              "origin": "presente de um criador viajante"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "money": 25
+        },
+        "history_entry": "Um criador viajante confiou um Poke Egg aos seus cuidados.",
+        "failure_history_entry": "Voce ajudou um criador viajante, mas ainda nao ganhou confianca para receber um ovo."
+      }
+    ]
+  },
+  {
+    "id": "rare_moonlit_egg",
+    "title": "Ovo sob luz estranha",
+    "text": "Durante uma noite incomum, seu Pokemon reage a uma energia distante. Ha um ovo isolado onde nenhum treinador parecia ter passado.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "egg",
+      "rare",
+      "wild",
+      "pokemon"
+    ],
+    "base_weight": 0.025,
+    "conditions": {
+      "requires_pokemon": true,
+      "min_attributes": {
+        "LUK": 40,
+        "POK": 40
+      }
+    },
+    "choices": [
+      {
+        "text": "Registrar o local e levar o ovo com cuidado",
+        "chance": 0.28,
+        "effects": {
+          "attributes": {
+            "POK": 3,
+            "LUK": 2
+          },
+          "eggs": [
+            {
+              "tier_weights": {
+                "R": 35,
+                "RR": 45,
+                "SR": 20
+              },
+              "origin": "ovo isolado em uma noite estranha"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce encontrou um Poke Egg extremamente raro em um habitat natural.",
+        "failure_history_entry": "Voce encontrou sinais de um ovo raro, mas ele desapareceu antes do amanhecer."
+      }
+    ]
+  },
+  {
+    "id": "city_job_shift",
+    "title": "Turno de trabalho na cidade",
+    "text": "A cidade oferece um trabalho temporario ligado a lojas, entregas ou cuidado basico de Pokemon.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "work",
+      "money",
+      "city"
+    ],
+    "base_weight": 0.7,
+    "choices": [
+      {
+        "text": "Aceitar o turno",
+        "chance": 0.75,
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "money": 90
+        },
+        "failure_effects": {
+          "health": -4,
+          "money": 30
+        },
+        "history_entry": "Voce trabalhou um turno temporario e juntou alguns Pokedollar.",
+        "failure_history_entry": "O turno foi cansativo, mas ainda rendeu um pouco de dinheiro."
+      }
+    ]
+  }
+]

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "poke_ball",
+    "name": "Poke Ball",
+    "type": "capture",
+    "price": 200,
+    "capture_bonus": 0,
+    "preferred_rarities": [
+      "common",
+      "uncommon"
+    ],
+    "max_evolution_stage": 1
+  },
+  {
+    "id": "great_ball",
+    "name": "Great Ball",
+    "type": "capture",
+    "price": 600,
+    "capture_bonus": 12,
+    "preferred_rarities": [
+      "uncommon",
+      "rare"
+    ],
+    "max_evolution_stage": 2
+  },
+  {
+    "id": "ultra_ball",
+    "name": "Ultra Ball",
+    "type": "capture",
+    "price": 1200,
+    "capture_bonus": 25,
+    "preferred_rarities": [
+      "rare",
+      "very_rare"
+    ],
+    "max_evolution_stage": 3
+  },
+  {
+    "id": "net_ball",
+    "name": "Net Ball",
+    "type": "capture",
+    "price": 800,
+    "capture_bonus": 8,
+    "preferred_types": [
+      "Water",
+      "Bug"
+    ],
+    "preferred_rarities": [
+      "common",
+      "uncommon"
+    ]
+  },
+  {
+    "id": "dusk_ball",
+    "name": "Dusk Ball",
+    "type": "capture",
+    "price": 1000,
+    "capture_bonus": 8,
+    "preferred_types": [
+      "Ghost",
+      "Psychic"
+    ],
+    "preferred_rarities": [
+      "rare",
+      "very_rare"
+    ]
+  },
+  {
+    "id": "master_ball",
+    "name": "Master Ball",
+    "type": "capture",
+    "price": 0,
+    "capture_bonus": 100
+  },
+  {
+    "id": "potion",
+    "name": "Potion",
+    "type": "healing",
+    "price": 300,
+    "healing": 20
+  },
+  {
+    "id": "super_potion",
+    "name": "Super Potion",
+    "type": "healing",
+    "price": 700,
+    "healing": 50
+  },
+  {
+    "id": "antidote",
+    "name": "Antidote",
+    "type": "status",
+    "price": 100,
+    "effect": "cure_sick"
+  },
+  {
+    "id": "repel",
+    "name": "Repel",
+    "type": "utility",
+    "price": 350,
+    "effect": "reduce_wild_events"
+  },
+  {
+    "id": "common_egg",
+    "name": "Common Egg",
+    "type": "egg",
+    "price": 1200,
+    "effect": "create_common_egg"
+  },
+  {
+    "id": "rare_candy",
+    "name": "Rare Candy",
+    "type": "training",
+    "price": 3000,
+    "effect": "level_up_active"
+  },
+  {
+    "id": "protein",
+    "name": "Protein",
+    "type": "training",
+    "price": 1200,
+    "effect": "boost_combat"
+  },
+  {
+    "id": "calcium",
+    "name": "Calcium",
+    "type": "training",
+    "price": 1200,
+    "effect": "boost_occult"
+  },
+  {
+    "id": "grooming_kit",
+    "name": "Grooming Kit",
+    "type": "care",
+    "price": 900,
+    "effect": "boost_beauty_happiness"
+  },
+  {
+    "id": "lucky_charm",
+    "name": "Lucky Charm",
+    "type": "utility",
+    "price": 1500,
+    "effect": "boost_luck"
+  },
+  {
+    "id": "escape_rope",
+    "name": "Escape Rope",
+    "type": "utility",
+    "price": 550,
+    "effect": "safe_return"
+  }
+]

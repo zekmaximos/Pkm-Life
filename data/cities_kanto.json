@@ -1,0 +1,14 @@
+[
+  {"id": "pallet_town", "name": "Pallet Town", "region": "Kanto", "description": "Uma cidade pequena e tranquila, lar do Professor Oak.", "possible_events": ["oak_starter", "wild_encounter"]},
+  {"id": "viridian_city", "name": "Viridian City", "region": "Kanto", "description": "Cidade verde proxima a florestas e ao ultimo ginasio de Kanto.", "possible_events": ["wild_encounter", "gym"]},
+  {"id": "pewter_city", "name": "Pewter City", "region": "Kanto", "description": "Cidade de pedra, museus e do ginasio de Brock.", "possible_events": ["gym"]},
+  {"id": "cerulean_city", "name": "Cerulean City", "region": "Kanto", "description": "Cidade aquatica marcada por pontes e pelo ginasio de Misty.", "possible_events": ["gym", "wild_encounter"]},
+  {"id": "vermilion_city", "name": "Vermilion City", "region": "Kanto", "description": "Porto movimentado onde treinadores chegam de longe.", "possible_events": ["gym"]},
+  {"id": "lavender_town", "name": "Lavender Town", "region": "Kanto", "description": "Cidade silenciosa, famosa por historias de Pokemon espirituais.", "possible_events": ["wild_encounter"]},
+  {"id": "celadon_city", "name": "Celadon City", "region": "Kanto", "description": "Grande centro urbano com lojas, jardins e o ginasio de Erika.", "possible_events": ["gym"]},
+  {"id": "fuchsia_city", "name": "Fuchsia City", "region": "Kanto", "description": "Cidade ligada a zonas selvagens e ao ginasio de Koga.", "possible_events": ["gym", "wild_encounter"]},
+  {"id": "saffron_city", "name": "Saffron City", "region": "Kanto", "description": "Metropole central, influenciada por tecnologia e poderes psiquicos.", "possible_events": ["gym"]},
+  {"id": "cinnabar_island", "name": "Cinnabar Island", "region": "Kanto", "description": "Ilha vulcanica com laboratorio e ginasio de fogo.", "possible_events": ["gym"]},
+  {"id": "indigo_plateau", "name": "Indigo Plateau", "region": "Kanto", "description": "Sede da Liga Pokemon.", "possible_events": ["league"]}
+]
+

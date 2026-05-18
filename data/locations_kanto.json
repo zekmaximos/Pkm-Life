@@ -1,0 +1,652 @@
+[
+  {
+    "id": "pallet_town",
+    "name": "Pallet Town",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Cidade pequena e tranquila, ponto de partida de muitas historias Pokemon.",
+    "level_range": [
+      2,
+      5
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "viridian_city",
+    "name": "Viridian City",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Cidade verde entre Pallet, a floresta e o caminho para a Liga Pokemon.",
+    "level_range": [
+      3,
+      7
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "pewter_city",
+    "name": "Pewter City",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Cidade de pedra, museus e do ginasio de Brock.",
+    "level_range": [
+      1,
+      5
+    ],
+    "encounter_enabled": false,
+    "capture_enabled": false
+  },
+  {
+    "id": "cerulean_city",
+    "name": "Cerulean City",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Cidade aquatica marcada por pontes, rios e pelo ginasio de Misty.",
+    "level_range": [
+      8,
+      16
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "vermilion_city",
+    "name": "Vermilion City",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Cidade portuaria movimentada, ligada ao mar e ao comercio.",
+    "level_range": [
+      10,
+      18
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "lavender_town",
+    "name": "Lavender Town",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Cidade silenciosa, conhecida por memoria, misterio e Pokemon espirituais.",
+    "level_range": [
+      14,
+      24
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "celadon_city",
+    "name": "Celadon City",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Grande centro urbano com lojas, jardins e raridades.",
+    "level_range": [
+      16,
+      30
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "fuchsia_city",
+    "name": "Fuchsia City",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Cidade ligada a areas selvagens, safaris e criadores experientes.",
+    "level_range": [
+      1,
+      5
+    ],
+    "encounter_enabled": false,
+    "capture_enabled": false
+  },
+  {
+    "id": "saffron_city",
+    "name": "Saffron City",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Metropole central de Kanto, forte em tecnologia e fenomenos psiquicos.",
+    "level_range": [
+      24,
+      38
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "cinnabar_island",
+    "name": "Cinnabar Island",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Ilha vulcanica com laboratorio e especies raras.",
+    "level_range": [
+      30,
+      45
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "indigo_plateau",
+    "name": "Indigo Plateau",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Sede da Liga Pokemon e destino de treinadores de elite.",
+    "level_range": [
+      1,
+      5
+    ],
+    "encounter_enabled": false,
+    "capture_enabled": false
+  },
+  {
+    "id": "seafoam_harbor",
+    "name": "Seafoam Harbor",
+    "kind": "city",
+    "region": "Kanto",
+    "description": "Pequeno assentamento costeiro nas proximidades das Seafoam Islands, usado como base por treinadores de gelo.",
+    "level_range": [
+      30,
+      50
+    ],
+    "encounter_enabled": false,
+    "capture_enabled": false
+  },
+  {
+    "id": "route_1",
+    "name": "Route 1",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 1 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      2,
+      9
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_2",
+    "name": "Route 2",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 2 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      4,
+      11
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_3",
+    "name": "Route 3",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 3 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      6,
+      13
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_4",
+    "name": "Route 4",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 4 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      8,
+      15
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_5",
+    "name": "Route 5",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 5 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      10,
+      17
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_6",
+    "name": "Route 6",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 6 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      12,
+      19
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_7",
+    "name": "Route 7",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 7 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      14,
+      21
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_8",
+    "name": "Route 8",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 8 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      16,
+      23
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_9",
+    "name": "Route 9",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 9 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      18,
+      25
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_10",
+    "name": "Route 10",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 10 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      20,
+      27
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_11",
+    "name": "Route 11",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 11 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      22,
+      29
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_12",
+    "name": "Route 12",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 12 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      24,
+      31
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_13",
+    "name": "Route 13",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 13 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      26,
+      33
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_14",
+    "name": "Route 14",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 14 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      28,
+      35
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_15",
+    "name": "Route 15",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 15 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      30,
+      37
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_16",
+    "name": "Route 16",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 16 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      32,
+      39
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_17",
+    "name": "Route 17",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 17 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      34,
+      41
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_18",
+    "name": "Route 18",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 18 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      36,
+      43
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_19",
+    "name": "Route 19",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 19 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      38,
+      45
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_20",
+    "name": "Route 20",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 20 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      40,
+      47
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_21",
+    "name": "Route 21",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 21 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      42,
+      49
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_22",
+    "name": "Route 22",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 22 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      44,
+      51
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_23",
+    "name": "Route 23",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 23 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      45,
+      52
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_24",
+    "name": "Route 24",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 24 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      45,
+      52
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "route_25",
+    "name": "Route 25",
+    "kind": "route",
+    "region": "Kanto",
+    "description": "Rota 25 de Kanto, usada para encontros selvagens e captura de Pokemon.",
+    "level_range": [
+      45,
+      52
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "cerulean_cave",
+    "name": "Cerulean Cave",
+    "kind": "cave",
+    "region": "Kanto",
+    "description": "Caverna de alto risco com Pokemon muito fortes.",
+    "level_range": [
+      50,
+      70
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "digletts_cave",
+    "name": "Diglett's Cave",
+    "kind": "cave",
+    "region": "Kanto",
+    "description": "Caverna estreita dominada por Diglett e Dugtrio.",
+    "level_range": [
+      14,
+      30
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "mt_moon",
+    "name": "Mt. Moon",
+    "kind": "cave",
+    "region": "Kanto",
+    "description": "Caverna lunar conhecida por fosseis, Zubat e Pokemon de pedra.",
+    "level_range": [
+      7,
+      14
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "mythic_event",
+    "name": "Mythic Event",
+    "kind": "special",
+    "region": "Kanto",
+    "description": "Local narrativo reservado para eventos miticos.",
+    "level_range": [
+      50,
+      70
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "pokemon_mansion",
+    "name": "Pokemon Mansion",
+    "kind": "dungeon",
+    "region": "Kanto",
+    "description": "Mansao em ruinas de Cinnabar, quente e perigosa.",
+    "level_range": [
+      28,
+      45
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "pokemon_tower",
+    "name": "Pokemon Tower",
+    "kind": "tower",
+    "region": "Kanto",
+    "description": "Torre de Lavender Town associada a Pokemon fantasma.",
+    "level_range": [
+      18,
+      32
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "power_plant",
+    "name": "Power Plant",
+    "kind": "dungeon",
+    "region": "Kanto",
+    "description": "Usina abandonada tomada por Pokemon eletricos.",
+    "level_range": [
+      25,
+      42
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "rock_tunnel",
+    "name": "Rock Tunnel",
+    "kind": "cave",
+    "region": "Kanto",
+    "description": "Tunel escuro entre montanhas, habitado por rochosos e lutadores.",
+    "level_range": [
+      15,
+      25
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "safari_zone",
+    "name": "Safari Zone",
+    "kind": "wild_area",
+    "region": "Kanto",
+    "description": "Grande area selvagem de Fuchsia com especies raras.",
+    "level_range": [
+      20,
+      35
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "seafoam_islands",
+    "name": "Seafoam Islands",
+    "kind": "cave",
+    "region": "Kanto",
+    "description": "Ilhas geladas e cavernosas entre rotas maritimas.",
+    "level_range": [
+      30,
+      50
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "silph_co",
+    "name": "Silph Co.",
+    "kind": "gift",
+    "region": "Kanto",
+    "description": "Predio corporativo de Saffron ligado a presentes e eventos.",
+    "level_range": [
+      15,
+      25
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "victory_road",
+    "name": "Victory Road",
+    "kind": "cave",
+    "region": "Kanto",
+    "description": "Caverna final antes da Liga Pokemon.",
+    "level_range": [
+      38,
+      58
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  },
+  {
+    "id": "viridian_forest",
+    "name": "Viridian Forest",
+    "kind": "forest",
+    "region": "Kanto",
+    "description": "Floresta inicial com muitos insetos e alguns Pokemon eletricos raros.",
+    "level_range": [
+      3,
+      8
+    ],
+    "encounter_enabled": true,
+    "capture_enabled": true
+  }
+]

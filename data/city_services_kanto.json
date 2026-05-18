@@ -1,0 +1,387 @@
+[
+  {
+    "city": "Pallet Town",
+    "services": [
+      "academy",
+      "professor_lab",
+      "rest",
+      "gym"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Potion",
+      "Antidote",
+      "Repel",
+      "Common Egg",
+      "Grooming Kit",
+      "Escape Rope"
+    ],
+    "careers": [
+      "Estudante da academia",
+      "Criador"
+    ],
+    "gym": "pallet_normal",
+    "event_focus": [
+      "starter",
+      "academy",
+      "family",
+      "early_capture"
+    ]
+  },
+  {
+    "city": "Viridian City",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Potion",
+      "Antidote",
+      "Repel",
+      "Grooming Kit",
+      "Escape Rope"
+    ],
+    "careers": [
+      "Treinador",
+      "Criador"
+    ],
+    "gym": "viridian_ground",
+    "event_focus": [
+      "route",
+      "gym",
+      "forest"
+    ]
+  },
+  {
+    "city": "Pewter City",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym",
+      "museum"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Potion",
+      "Great Ball",
+      "Antidote",
+      "Repel",
+      "Grooming Kit",
+      "Escape Rope",
+      "Protein",
+      "Calcium"
+    ],
+    "careers": [
+      "Treinador",
+      "Estudante da academia"
+    ],
+    "gym": "pewter_rock",
+    "event_focus": [
+      "museum",
+      "rock",
+      "gym"
+    ]
+  },
+  {
+    "city": "Cerulean City",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Great Ball",
+      "Net Ball",
+      "Potion",
+      "Super Potion",
+      "Repel",
+      "Common Egg",
+      "Grooming Kit",
+      "Escape Rope"
+    ],
+    "careers": [
+      "Treinador",
+      "Coordenador"
+    ],
+    "gym": "cerulean_water",
+    "event_focus": [
+      "water",
+      "bridge",
+      "gym"
+    ]
+  },
+  {
+    "city": "Vermilion City",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym",
+      "port"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Great Ball",
+      "Net Ball",
+      "Potion",
+      "Super Potion",
+      "Repel",
+      "Grooming Kit",
+      "Escape Rope",
+      "Protein",
+      "Calcium"
+    ],
+    "careers": [
+      "Treinador",
+      "Coordenador",
+      "Criador"
+    ],
+    "gym": "vermilion_electric",
+    "event_focus": [
+      "port",
+      "electric",
+      "trade"
+    ]
+  },
+  {
+    "city": "Lavender Town",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "memorial",
+      "gym"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Great Ball",
+      "Dusk Ball",
+      "Potion",
+      "Antidote",
+      "Super Potion",
+      "Common Egg",
+      "Grooming Kit",
+      "Escape Rope"
+    ],
+    "careers": [
+      "Estudante da academia",
+      "Criador"
+    ],
+    "gym": "lavender_ghost",
+    "event_focus": [
+      "ghost",
+      "memorial",
+      "care"
+    ]
+  },
+  {
+    "city": "Celadon City",
+    "services": [
+      "department_store",
+      "pokemon_center",
+      "gym",
+      "contest_stage"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Great Ball",
+      "Ultra Ball",
+      "Net Ball",
+      "Dusk Ball",
+      "Potion",
+      "Super Potion",
+      "Antidote",
+      "Repel",
+      "Common Egg",
+      "Grooming Kit",
+      "Escape Rope",
+      "Rare Candy",
+      "Protein",
+      "Calcium",
+      "Lucky Charm"
+    ],
+    "careers": [
+      "Treinador",
+      "Coordenador",
+      "Criador"
+    ],
+    "gym": "celadon_grass",
+    "event_focus": [
+      "shopping",
+      "contest",
+      "grass",
+      "rare_items"
+    ]
+  },
+  {
+    "city": "Fuchsia City",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym",
+      "safari_zone"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Great Ball",
+      "Ultra Ball",
+      "Net Ball",
+      "Potion",
+      "Super Potion",
+      "Antidote",
+      "Repel",
+      "Common Egg",
+      "Grooming Kit",
+      "Escape Rope",
+      "Protein",
+      "Calcium"
+    ],
+    "careers": [
+      "Treinador",
+      "Criador"
+    ],
+    "gym": "fuchsia_poison",
+    "event_focus": [
+      "safari",
+      "poison",
+      "breeding"
+    ]
+  },
+  {
+    "city": "Saffron City",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym",
+      "corporate_work"
+    ],
+    "shop_inventory": [
+      "Poke Ball",
+      "Great Ball",
+      "Ultra Ball",
+      "Dusk Ball",
+      "Potion",
+      "Super Potion",
+      "Antidote",
+      "Repel",
+      "Grooming Kit",
+      "Escape Rope",
+      "Rare Candy",
+      "Protein",
+      "Calcium",
+      "Lucky Charm"
+    ],
+    "careers": [
+      "Treinador",
+      "Coordenador",
+      "Estudante da academia"
+    ],
+    "gym": "saffron_psychic",
+    "event_focus": [
+      "psychic",
+      "city",
+      "corporate"
+    ]
+  },
+  {
+    "city": "Cinnabar Island",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym",
+      "research_lab"
+    ],
+    "shop_inventory": [
+      "Great Ball",
+      "Ultra Ball",
+      "Net Ball",
+      "Potion",
+      "Super Potion",
+      "Antidote",
+      "Repel",
+      "Common Egg",
+      "Grooming Kit",
+      "Escape Rope",
+      "Rare Candy",
+      "Protein",
+      "Calcium",
+      "Lucky Charm"
+    ],
+    "careers": [
+      "Treinador",
+      "Estudante da academia",
+      "Criador"
+    ],
+    "gym": "cinnabar_fire",
+    "event_focus": [
+      "fire",
+      "fossil",
+      "research"
+    ]
+  },
+  {
+    "city": "Indigo Plateau",
+    "services": [
+      "pokemon_center",
+      "league",
+      "gym"
+    ],
+    "shop_inventory": [
+      "Ultra Ball",
+      "Potion",
+      "Super Potion",
+      "Antidote",
+      "Repel",
+      "Grooming Kit",
+      "Escape Rope",
+      "Rare Candy",
+      "Protein",
+      "Calcium",
+      "Lucky Charm"
+    ],
+    "careers": [
+      "Treinador",
+      "Coordenador"
+    ],
+    "gym": "indigo_dragon",
+    "event_focus": [
+      "league",
+      "legacy",
+      "elite"
+    ]
+  },
+  {
+    "city": "Seafoam Harbor",
+    "services": [
+      "pokemart",
+      "pokemon_center",
+      "gym",
+      "harbor"
+    ],
+    "shop_inventory": [
+      "Great Ball",
+      "Ultra Ball",
+      "Net Ball",
+      "Potion",
+      "Super Potion",
+      "Antidote",
+      "Repel",
+      "Common Egg",
+      "Grooming Kit",
+      "Escape Rope",
+      "Protein",
+      "Calcium"
+    ],
+    "careers": [
+      "Treinador",
+      "Criador"
+    ],
+    "gym": "seafoam_ice",
+    "event_focus": [
+      "ice",
+      "seafoam",
+      "harbor"
+    ]
+  }
+]

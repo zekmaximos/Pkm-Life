@@ -1,0 +1,7654 @@
+[
+  {
+    "pokedex_id": 1,
+    "name": "Bulbasaur",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Overgrow",
+    "rarity": "rare",
+    "habitats": [],
+    "evolution": "Ivysaur",
+    "evolution_level": 16,
+    "evolutions": [
+      {
+        "species": "Ivysaur",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Ivysaur",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Ivysaur",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 45,
+      "attack": 49,
+      "defense": 49,
+      "special_attack": 65,
+      "special_defense": 65,
+      "speed": 45
+    },
+    "base_combat": 55,
+    "base_beauty": 61,
+    "base_healthy": 52,
+    "base_occult": 38,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": true,
+    "availability": {
+      "wild": false,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 2,
+    "name": "Ivysaur",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Overgrow",
+    "rarity": "uncommon",
+    "habitats": [],
+    "evolution": "Venusaur",
+    "evolution_level": 32,
+    "evolutions": [
+      {
+        "species": "Venusaur",
+        "method": "level-up",
+        "level": 32,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Venusaur",
+        "method": "level-up",
+        "level": 32,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Venusaur",
+        "method": "level-up",
+        "level": 32,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 62,
+      "defense": 63,
+      "special_attack": 80,
+      "special_defense": 80,
+      "speed": 60
+    },
+    "base_combat": 69,
+    "base_beauty": 73,
+    "base_healthy": 66,
+    "base_occult": 48,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": false,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 3,
+    "name": "Venusaur",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Overgrow",
+    "rarity": "very_rare",
+    "habitats": [],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 80,
+      "attack": 82,
+      "defense": 83,
+      "special_attack": 100,
+      "special_defense": 100,
+      "speed": 80
+    },
+    "base_combat": 89,
+    "base_beauty": 89,
+    "base_healthy": 86,
+    "base_occult": 60,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": false,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 4,
+    "name": "Charmander",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Blaze",
+    "rarity": "rare",
+    "habitats": [],
+    "evolution": "Charmeleon",
+    "evolution_level": 16,
+    "evolutions": [
+      {
+        "species": "Charmeleon",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Charmeleon",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Charmeleon",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 39,
+      "attack": 52,
+      "defense": 43,
+      "special_attack": 60,
+      "special_defense": 50,
+      "speed": 65
+    },
+    "base_combat": 56,
+    "base_beauty": 64,
+    "base_healthy": 43,
+    "base_occult": 45,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": true,
+    "availability": {
+      "wild": false,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 5,
+    "name": "Charmeleon",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Blaze",
+    "rarity": "uncommon",
+    "habitats": [],
+    "evolution": "Charizard",
+    "evolution_level": 36,
+    "evolutions": [
+      {
+        "species": "Charizard",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Charizard",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Charizard",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 58,
+      "attack": 64,
+      "defense": 58,
+      "special_attack": 80,
+      "special_defense": 65,
+      "speed": 80
+    },
+    "base_combat": 72,
+    "base_beauty": 78,
+    "base_healthy": 60,
+    "base_occult": 56,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": false,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 6,
+    "name": "Charizard",
+    "types": [
+      "Fire",
+      "Flying"
+    ],
+    "ability": "Blaze",
+    "rarity": "very_rare",
+    "habitats": [],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 78,
+      "attack": 84,
+      "defense": 78,
+      "special_attack": 109,
+      "special_defense": 85,
+      "speed": 100
+    },
+    "base_combat": 94,
+    "base_beauty": 100,
+    "base_healthy": 80,
+    "base_occult": 71,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": false,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 7,
+    "name": "Squirtle",
+    "types": [
+      "Water"
+    ],
+    "ability": "Torrent",
+    "rarity": "rare",
+    "habitats": [],
+    "evolution": "Wartortle",
+    "evolution_level": 16,
+    "evolutions": [
+      {
+        "species": "Wartortle",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Wartortle",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Wartortle",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 44,
+      "attack": 48,
+      "defense": 65,
+      "special_attack": 50,
+      "special_defense": 64,
+      "speed": 43
+    },
+    "base_combat": 51,
+    "base_beauty": 67,
+    "base_healthy": 55,
+    "base_occult": 34,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": true,
+    "availability": {
+      "wild": false,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 8,
+    "name": "Wartortle",
+    "types": [
+      "Water"
+    ],
+    "ability": "Torrent",
+    "rarity": "uncommon",
+    "habitats": [],
+    "evolution": "Blastoise",
+    "evolution_level": 36,
+    "evolutions": [
+      {
+        "species": "Blastoise",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Blastoise",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Blastoise",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 59,
+      "attack": 63,
+      "defense": 80,
+      "special_attack": 65,
+      "special_defense": 80,
+      "speed": 58
+    },
+    "base_combat": 66,
+    "base_beauty": 79,
+    "base_healthy": 71,
+    "base_occult": 43,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": false,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 9,
+    "name": "Blastoise",
+    "types": [
+      "Water"
+    ],
+    "ability": "Torrent",
+    "rarity": "very_rare",
+    "habitats": [],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 79,
+      "attack": 83,
+      "defense": 100,
+      "special_attack": 85,
+      "special_defense": 105,
+      "speed": 78
+    },
+    "base_combat": 86,
+    "base_beauty": 95,
+    "base_healthy": 92,
+    "base_occult": 57,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": false,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 10,
+    "name": "Caterpie",
+    "types": [
+      "Bug"
+    ],
+    "ability": "Shield-Dust",
+    "rarity": "common",
+    "habitats": [
+      "Viridian Forest",
+      "Route 2",
+      "Route 24"
+    ],
+    "evolution": "Metapod",
+    "evolution_level": 7,
+    "evolutions": [
+      {
+        "species": "Metapod",
+        "method": "level-up",
+        "level": 7,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Metapod",
+        "method": "level-up",
+        "level": 7,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Metapod",
+        "method": "level-up",
+        "level": 7,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 45,
+      "attack": 30,
+      "defense": 35,
+      "special_attack": 20,
+      "special_defense": 20,
+      "speed": 45
+    },
+    "base_combat": 29,
+    "base_beauty": 45,
+    "base_healthy": 35,
+    "base_occult": 15,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 11,
+    "name": "Metapod",
+    "types": [
+      "Bug"
+    ],
+    "ability": "Shed-Skin",
+    "rarity": "common",
+    "habitats": [
+      "Viridian Forest",
+      "Route 2"
+    ],
+    "evolution": "Butterfree",
+    "evolution_level": 10,
+    "evolutions": [
+      {
+        "species": "Butterfree",
+        "method": "level-up",
+        "level": 10,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Butterfree",
+        "method": "level-up",
+        "level": 10,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Butterfree",
+        "method": "level-up",
+        "level": 10,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 50,
+      "attack": 20,
+      "defense": 55,
+      "special_attack": 25,
+      "special_defense": 25,
+      "speed": 30
+    },
+    "base_combat": 27,
+    "base_beauty": 42,
+    "base_healthy": 45,
+    "base_occult": 16,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 12,
+    "name": "Butterfree",
+    "types": [
+      "Bug",
+      "Flying"
+    ],
+    "ability": "Compound-Eyes",
+    "rarity": "very_rare",
+    "habitats": [
+      "Viridian Forest",
+      "Route 24"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 60,
+      "attack": 45,
+      "defense": 50,
+      "special_attack": 90,
+      "special_defense": 80,
+      "speed": 70
+    },
+    "base_combat": 68,
+    "base_beauty": 89,
+    "base_healthy": 63,
+    "base_occult": 51,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 13,
+    "name": "Weedle",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "ability": "Shield-Dust",
+    "rarity": "common",
+    "habitats": [
+      "Viridian Forest",
+      "Route 2",
+      "Route 25"
+    ],
+    "evolution": "Kakuna",
+    "evolution_level": 7,
+    "evolutions": [
+      {
+        "species": "Kakuna",
+        "method": "level-up",
+        "level": 7,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kakuna",
+        "method": "level-up",
+        "level": 7,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kakuna",
+        "method": "level-up",
+        "level": 7,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 35,
+      "defense": 30,
+      "special_attack": 20,
+      "special_defense": 20,
+      "speed": 50
+    },
+    "base_combat": 31,
+    "base_beauty": 46,
+    "base_healthy": 32,
+    "base_occult": 15,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 14,
+    "name": "Kakuna",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "ability": "Shed-Skin",
+    "rarity": "common",
+    "habitats": [
+      "Viridian Forest",
+      "Route 2"
+    ],
+    "evolution": "Beedrill",
+    "evolution_level": 10,
+    "evolutions": [
+      {
+        "species": "Beedrill",
+        "method": "level-up",
+        "level": 10,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Beedrill",
+        "method": "level-up",
+        "level": 10,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Beedrill",
+        "method": "level-up",
+        "level": 10,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 45,
+      "attack": 25,
+      "defense": 50,
+      "special_attack": 25,
+      "special_defense": 25,
+      "speed": 35
+    },
+    "base_combat": 29,
+    "base_beauty": 43,
+    "base_healthy": 41,
+    "base_occult": 16,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 15,
+    "name": "Beedrill",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "ability": "Swarm",
+    "rarity": "very_rare",
+    "habitats": [
+      "Viridian Forest",
+      "Route 25"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 40,
+      "special_attack": 45,
+      "special_defense": 80,
+      "speed": 75
+    },
+    "base_combat": 68,
+    "base_beauty": 70,
+    "base_healthy": 62,
+    "base_occult": 39,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 16,
+    "name": "Pidgey",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Keen-Eye",
+    "rarity": "common",
+    "habitats": [
+      "Pallet Town",
+      "Route 1",
+      "Route 2",
+      "Route 5",
+      "Route 6"
+    ],
+    "evolution": "Pidgeotto",
+    "evolution_level": 18,
+    "evolutions": [
+      {
+        "species": "Pidgeotto",
+        "method": "level-up",
+        "level": 18,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Pidgeotto",
+        "method": "level-up",
+        "level": 18,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Pidgeotto",
+        "method": "level-up",
+        "level": 18,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 40,
+      "special_attack": 35,
+      "special_defense": 35,
+      "speed": 56
+    },
+    "base_combat": 42,
+    "base_beauty": 64,
+    "base_healthy": 39,
+    "base_occult": 24,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 17,
+    "name": "Pidgeotto",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Keen-Eye",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 14",
+      "Route 15",
+      "Route 21"
+    ],
+    "evolution": "Pidgeot",
+    "evolution_level": 36,
+    "evolutions": [
+      {
+        "species": "Pidgeot",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Pidgeot",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Pidgeot",
+        "method": "level-up",
+        "level": 36,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 63,
+      "attack": 60,
+      "defense": 55,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 71
+    },
+    "base_combat": 57,
+    "base_beauty": 76,
+    "base_healthy": 57,
+    "base_occult": 33,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 18,
+    "name": "Pidgeot",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Keen-Eye",
+    "rarity": "very_rare",
+    "habitats": [
+      "Route 21"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 83,
+      "attack": 80,
+      "defense": 75,
+      "special_attack": 70,
+      "special_defense": 70,
+      "speed": 101
+    },
+    "base_combat": 79,
+    "base_beauty": 96,
+    "base_healthy": 77,
+    "base_occult": 47,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 19,
+    "name": "Rattata",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Run-Away",
+    "rarity": "common",
+    "habitats": [
+      "Pallet Town",
+      "Route 1",
+      "Route 2",
+      "Route 4",
+      "Route 9"
+    ],
+    "evolution": "Raticate",
+    "evolution_level": 20,
+    "evolutions": [
+      {
+        "species": "Raticate",
+        "method": "level-up",
+        "level": 20,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Raticate",
+        "method": "level-up",
+        "level": 20,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 30,
+      "attack": 56,
+      "defense": 35,
+      "special_attack": 25,
+      "special_defense": 35,
+      "speed": 72
+    },
+    "base_combat": 45,
+    "base_beauty": 56,
+    "base_healthy": 33,
+    "base_occult": 23,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 20,
+    "name": "Raticate",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Run-Away",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 16",
+      "Route 17",
+      "Route 18",
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 55,
+      "attack": 81,
+      "defense": 60,
+      "special_attack": 50,
+      "special_defense": 70,
+      "speed": 97
+    },
+    "base_combat": 71,
+    "base_beauty": 77,
+    "base_healthy": 60,
+    "base_occult": 41,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 21,
+    "name": "Spearow",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Keen-Eye",
+    "rarity": "common",
+    "habitats": [
+      "Route 3",
+      "Route 4",
+      "Route 9",
+      "Route 10"
+    ],
+    "evolution": "Fearow",
+    "evolution_level": 20,
+    "evolutions": [
+      {
+        "species": "Fearow",
+        "method": "level-up",
+        "level": 20,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Fearow",
+        "method": "level-up",
+        "level": 20,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 60,
+      "defense": 30,
+      "special_attack": 31,
+      "special_defense": 31,
+      "speed": 70
+    },
+    "base_combat": 47,
+    "base_beauty": 67,
+    "base_healthy": 35,
+    "base_occult": 23,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 22,
+    "name": "Fearow",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Keen-Eye",
+    "rarity": "rare",
+    "habitats": [
+      "Route 17",
+      "Route 18",
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 65,
+      "special_attack": 61,
+      "special_defense": 61,
+      "speed": 100
+    },
+    "base_combat": 78,
+    "base_beauty": 90,
+    "base_healthy": 64,
+    "base_occult": 42,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 23,
+    "name": "Ekans",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Intimidate",
+    "rarity": "common",
+    "habitats": [
+      "Route 4",
+      "Route 8",
+      "Route 9",
+      "Route 10"
+    ],
+    "evolution": "Arbok",
+    "evolution_level": 22,
+    "evolutions": [
+      {
+        "species": "Arbok",
+        "method": "level-up",
+        "level": 22,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Arbok",
+        "method": "level-up",
+        "level": 22,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 35,
+      "attack": 60,
+      "defense": 44,
+      "special_attack": 40,
+      "special_defense": 54,
+      "speed": 55
+    },
+    "base_combat": 51,
+    "base_beauty": 56,
+    "base_healthy": 43,
+    "base_occult": 30,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 24,
+    "name": "Arbok",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Intimidate",
+    "rarity": "rare",
+    "habitats": [
+      "Route 23",
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 95,
+      "defense": 69,
+      "special_attack": 65,
+      "special_defense": 79,
+      "speed": 80
+    },
+    "base_combat": 79,
+    "base_beauty": 76,
+    "base_healthy": 68,
+    "base_occult": 45,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 25,
+    "name": "Pikachu",
+    "types": [
+      "Electric"
+    ],
+    "ability": "Static",
+    "rarity": "common",
+    "habitats": [
+      "Viridian Forest",
+      "Power Plant"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Raichu",
+        "method": "use-item",
+        "level": null,
+        "item": "thunder-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Raichu",
+        "method": "use-item",
+        "level": null,
+        "item": "thunder-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 35,
+      "attack": 55,
+      "defense": 40,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 90
+    },
+    "base_combat": 58,
+    "base_beauty": 70,
+    "base_healthy": 40,
+    "base_occult": 45,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 26,
+    "name": "Raichu",
+    "types": [
+      "Electric"
+    ],
+    "ability": "Static",
+    "rarity": "very_rare",
+    "habitats": [
+      "Power Plant"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 60,
+      "attack": 90,
+      "defense": 55,
+      "special_attack": 90,
+      "special_defense": 80,
+      "speed": 110
+    },
+    "base_combat": 90,
+    "base_beauty": 93,
+    "base_healthy": 64,
+    "base_occult": 65,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 27,
+    "name": "Sandshrew",
+    "types": [
+      "Ground"
+    ],
+    "ability": "Sand-Veil",
+    "rarity": "common",
+    "habitats": [
+      "Route 4",
+      "Route 8",
+      "Route 9",
+      "Route 10"
+    ],
+    "evolution": "Sandslash",
+    "evolution_level": 22,
+    "evolutions": [
+      {
+        "species": "Sandslash",
+        "method": "level-up",
+        "level": 22,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Sandslash",
+        "method": "level-up",
+        "level": 22,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 50,
+      "attack": 75,
+      "defense": 85,
+      "special_attack": 20,
+      "special_defense": 30,
+      "speed": 40
+    },
+    "base_combat": 47,
+    "base_beauty": 45,
+    "base_healthy": 54,
+    "base_occult": 17,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 28,
+    "name": "Sandslash",
+    "types": [
+      "Ground"
+    ],
+    "ability": "Sand-Veil",
+    "rarity": "rare",
+    "habitats": [
+      "Route 23",
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 75,
+      "attack": 100,
+      "defense": 110,
+      "special_attack": 45,
+      "special_defense": 55,
+      "speed": 65
+    },
+    "base_combat": 72,
+    "base_beauty": 65,
+    "base_healthy": 79,
+    "base_occult": 32,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 29,
+    "name": "Nidoran-F",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Poison-Point",
+    "rarity": "common",
+    "habitats": [
+      "Route 22",
+      "Safari Zone"
+    ],
+    "evolution": "Nidorina",
+    "evolution_level": 16,
+    "evolutions": [
+      {
+        "species": "Nidorina",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Nidorina",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Nidorina",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 55,
+      "attack": 47,
+      "defense": 52,
+      "special_attack": 40,
+      "special_defense": 40,
+      "speed": 41
+    },
+    "base_combat": 43,
+    "base_beauty": 52,
+    "base_healthy": 50,
+    "base_occult": 25,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 30,
+    "name": "Nidorina",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Poison-Point",
+    "rarity": "uncommon",
+    "habitats": [
+      "Safari Zone",
+      "Route 23"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Nidoqueen",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Nidoqueen",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Nidoqueen",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 70,
+      "attack": 62,
+      "defense": 67,
+      "special_attack": 55,
+      "special_defense": 55,
+      "speed": 56
+    },
+    "base_combat": 58,
+    "base_beauty": 64,
+    "base_healthy": 65,
+    "base_occult": 34,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 31,
+    "name": "Nidoqueen",
+    "types": [
+      "Poison",
+      "Ground"
+    ],
+    "ability": "Poison-Point",
+    "rarity": "very_rare",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 90,
+      "attack": 92,
+      "defense": 87,
+      "special_attack": 75,
+      "special_defense": 85,
+      "speed": 76
+    },
+    "base_combat": 83,
+    "base_beauty": 81,
+    "base_healthy": 88,
+    "base_occult": 49,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 32,
+    "name": "Nidoran-M",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Poison-Point",
+    "rarity": "common",
+    "habitats": [
+      "Route 22",
+      "Safari Zone"
+    ],
+    "evolution": "Nidorino",
+    "evolution_level": 16,
+    "evolutions": [
+      {
+        "species": "Nidorino",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Nidorino",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Nidorino",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 46,
+      "attack": 57,
+      "defense": 40,
+      "special_attack": 40,
+      "special_defense": 40,
+      "speed": 50
+    },
+    "base_combat": 47,
+    "base_beauty": 54,
+    "base_healthy": 43,
+    "base_occult": 26,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 33,
+    "name": "Nidorino",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Poison-Point",
+    "rarity": "uncommon",
+    "habitats": [
+      "Safari Zone",
+      "Route 23"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Nidoking",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Nidoking",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Nidoking",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 61,
+      "attack": 72,
+      "defense": 57,
+      "special_attack": 55,
+      "special_defense": 55,
+      "speed": 65
+    },
+    "base_combat": 62,
+    "base_beauty": 66,
+    "base_healthy": 58,
+    "base_occult": 35,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 34,
+    "name": "Nidoking",
+    "types": [
+      "Poison",
+      "Ground"
+    ],
+    "ability": "Poison-Point",
+    "rarity": "very_rare",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 81,
+      "attack": 102,
+      "defense": 77,
+      "special_attack": 85,
+      "special_defense": 75,
+      "speed": 85
+    },
+    "base_combat": 89,
+    "base_beauty": 84,
+    "base_healthy": 78,
+    "base_occult": 50,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 35,
+    "name": "Clefairy",
+    "types": [
+      "Fairy"
+    ],
+    "ability": "Cute-Charm",
+    "rarity": "common",
+    "habitats": [
+      "Mt. Moon"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Clefable",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Clefable",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 70,
+      "attack": 45,
+      "defense": 48,
+      "special_attack": 60,
+      "special_defense": 65,
+      "speed": 35
+    },
+    "base_combat": 50,
+    "base_beauty": 59,
+    "base_healthy": 62,
+    "base_occult": 36,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 36,
+    "name": "Clefable",
+    "types": [
+      "Fairy"
+    ],
+    "ability": "Cute-Charm",
+    "rarity": "very_rare",
+    "habitats": [
+      "Mt. Moon"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 95,
+      "attack": 70,
+      "defense": 73,
+      "special_attack": 95,
+      "special_defense": 90,
+      "speed": 60
+    },
+    "base_combat": 78,
+    "base_beauty": 82,
+    "base_healthy": 87,
+    "base_occult": 54,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 37,
+    "name": "Vulpix",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Flash-Fire",
+    "rarity": "common",
+    "habitats": [
+      "Route 7",
+      "Route 8",
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Ninetales",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Ninetales",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 38,
+      "attack": 41,
+      "defense": 40,
+      "special_attack": 50,
+      "special_defense": 65,
+      "speed": 65
+    },
+    "base_combat": 51,
+    "base_beauty": 64,
+    "base_healthy": 46,
+    "base_occult": 46,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 38,
+    "name": "Ninetales",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Flash-Fire",
+    "rarity": "very_rare",
+    "habitats": [
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 73,
+      "attack": 76,
+      "defense": 75,
+      "special_attack": 81,
+      "special_defense": 100,
+      "speed": 100
+    },
+    "base_combat": 84,
+    "base_beauty": 91,
+    "base_healthy": 81,
+    "base_occult": 67,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 39,
+    "name": "Jigglypuff",
+    "types": [
+      "Normal",
+      "Fairy"
+    ],
+    "ability": "Cute-Charm",
+    "rarity": "common",
+    "habitats": [
+      "Route 3"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Wigglytuff",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Wigglytuff",
+        "method": "use-item",
+        "level": null,
+        "item": "moon-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 115,
+      "attack": 45,
+      "defense": 20,
+      "special_attack": 45,
+      "special_defense": 25,
+      "speed": 20
+    },
+    "base_combat": 36,
+    "base_beauty": 50,
+    "base_healthy": 64,
+    "base_occult": 21,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 40,
+    "name": "Wigglytuff",
+    "types": [
+      "Normal",
+      "Fairy"
+    ],
+    "ability": "Cute-Charm",
+    "rarity": "very_rare",
+    "habitats": [
+      "Route 3"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 140,
+      "attack": 70,
+      "defense": 45,
+      "special_attack": 85,
+      "special_defense": 50,
+      "speed": 45
+    },
+    "base_combat": 66,
+    "base_beauty": 74,
+    "base_healthy": 89,
+    "base_occult": 40,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 41,
+    "name": "Zubat",
+    "types": [
+      "Poison",
+      "Flying"
+    ],
+    "ability": "Inner-Focus",
+    "rarity": "common",
+    "habitats": [
+      "Mt. Moon",
+      "Rock Tunnel",
+      "Seafoam Islands",
+      "Victory Road"
+    ],
+    "evolution": "Golbat",
+    "evolution_level": 22,
+    "evolutions": [
+      {
+        "species": "Golbat",
+        "method": "level-up",
+        "level": 22,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Golbat",
+        "method": "level-up",
+        "level": 22,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 35,
+      "special_attack": 30,
+      "special_defense": 40,
+      "speed": 55
+    },
+    "base_combat": 41,
+    "base_beauty": 63,
+    "base_healthy": 39,
+    "base_occult": 24,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 42,
+    "name": "Golbat",
+    "types": [
+      "Poison",
+      "Flying"
+    ],
+    "ability": "Inner-Focus",
+    "rarity": "rare",
+    "habitats": [
+      "Seafoam Islands",
+      "Victory Road",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Crobat",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Crobat",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 75,
+      "attack": 80,
+      "defense": 70,
+      "special_attack": 65,
+      "special_defense": 75,
+      "speed": 90
+    },
+    "base_combat": 76,
+    "base_beauty": 91,
+    "base_healthy": 74,
+    "base_occult": 45,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 43,
+    "name": "Oddish",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "common",
+    "habitats": [
+      "Route 5",
+      "Route 6",
+      "Route 7",
+      "Route 12"
+    ],
+    "evolution": "Gloom",
+    "evolution_level": 21,
+    "evolutions": [
+      {
+        "species": "Gloom",
+        "method": "level-up",
+        "level": 21,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Gloom",
+        "method": "level-up",
+        "level": 21,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Gloom",
+        "method": "level-up",
+        "level": 21,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 45,
+      "attack": 50,
+      "defense": 55,
+      "special_attack": 75,
+      "special_defense": 65,
+      "speed": 30
+    },
+    "base_combat": 56,
+    "base_beauty": 58,
+    "base_healthy": 53,
+    "base_occult": 40,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 44,
+    "name": "Gloom",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 12",
+      "Route 13",
+      "Route 14",
+      "Route 15"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Vileplume",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Bellossom",
+        "method": "use-item",
+        "level": null,
+        "item": "sun-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Vileplume",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Bellossom",
+        "method": "use-item",
+        "level": null,
+        "item": "sun-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Vileplume",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Bellossom",
+        "method": "use-item",
+        "level": null,
+        "item": "sun-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 70,
+      "special_attack": 85,
+      "special_defense": 75,
+      "speed": 40
+    },
+    "base_combat": 68,
+    "base_beauty": 67,
+    "base_healthy": 67,
+    "base_occult": 46,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 45,
+    "name": "Vileplume",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "very_rare",
+    "habitats": [
+      "Route 15"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 75,
+      "attack": 80,
+      "defense": 85,
+      "special_attack": 110,
+      "special_defense": 90,
+      "speed": 50
+    },
+    "base_combat": 86,
+    "base_beauty": 80,
+    "base_healthy": 82,
+    "base_occult": 57,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 46,
+    "name": "Paras",
+    "types": [
+      "Bug",
+      "Grass"
+    ],
+    "ability": "Effect-Spore",
+    "rarity": "common",
+    "habitats": [
+      "Mt. Moon",
+      "Safari Zone"
+    ],
+    "evolution": "Parasect",
+    "evolution_level": 24,
+    "evolutions": [
+      {
+        "species": "Parasect",
+        "method": "level-up",
+        "level": 24,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Parasect",
+        "method": "level-up",
+        "level": 24,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 35,
+      "attack": 70,
+      "defense": 55,
+      "special_attack": 45,
+      "special_defense": 55,
+      "speed": 25
+    },
+    "base_combat": 51,
+    "base_beauty": 47,
+    "base_healthy": 46,
+    "base_occult": 28,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 47,
+    "name": "Parasect",
+    "types": [
+      "Bug",
+      "Grass"
+    ],
+    "ability": "Effect-Spore",
+    "rarity": "uncommon",
+    "habitats": [
+      "Safari Zone",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 95,
+      "defense": 80,
+      "special_attack": 60,
+      "special_defense": 80,
+      "speed": 30
+    },
+    "base_combat": 69,
+    "base_beauty": 58,
+    "base_healthy": 71,
+    "base_occult": 39,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 48,
+    "name": "Venonat",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "ability": "Compound-Eyes",
+    "rarity": "common",
+    "habitats": [
+      "Route 12",
+      "Route 13",
+      "Route 14",
+      "Safari Zone"
+    ],
+    "evolution": "Venomoth",
+    "evolution_level": 31,
+    "evolutions": [
+      {
+        "species": "Venomoth",
+        "method": "level-up",
+        "level": 31,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Venomoth",
+        "method": "level-up",
+        "level": 31,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 60,
+      "attack": 55,
+      "defense": 50,
+      "special_attack": 40,
+      "special_defense": 55,
+      "speed": 45
+    },
+    "base_combat": 48,
+    "base_beauty": 56,
+    "base_healthy": 56,
+    "base_occult": 29,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 49,
+    "name": "Venomoth",
+    "types": [
+      "Bug",
+      "Poison"
+    ],
+    "ability": "Shield-Dust",
+    "rarity": "rare",
+    "habitats": [
+      "Safari Zone",
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 70,
+      "attack": 65,
+      "defense": 60,
+      "special_attack": 90,
+      "special_defense": 75,
+      "speed": 90
+    },
+    "base_combat": 78,
+    "base_beauty": 86,
+    "base_healthy": 69,
+    "base_occult": 52,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 50,
+    "name": "Diglett",
+    "types": [
+      "Ground"
+    ],
+    "ability": "Sand-Veil",
+    "rarity": "common",
+    "habitats": [
+      "Diglett's Cave"
+    ],
+    "evolution": "Dugtrio",
+    "evolution_level": 26,
+    "evolutions": [
+      {
+        "species": "Dugtrio",
+        "method": "level-up",
+        "level": 26,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Dugtrio",
+        "method": "level-up",
+        "level": 26,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 10,
+      "attack": 55,
+      "defense": 25,
+      "special_attack": 35,
+      "special_defense": 45,
+      "speed": 95
+    },
+    "base_combat": 52,
+    "base_beauty": 65,
+    "base_healthy": 24,
+    "base_occult": 30,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 51,
+    "name": "Dugtrio",
+    "types": [
+      "Ground"
+    ],
+    "ability": "Sand-Veil",
+    "rarity": "rare",
+    "habitats": [
+      "Diglett's Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 35,
+      "attack": 100,
+      "defense": 50,
+      "special_attack": 50,
+      "special_defense": 70,
+      "speed": 120
+    },
+    "base_combat": 81,
+    "base_beauty": 83,
+    "base_healthy": 49,
+    "base_occult": 43,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 52,
+    "name": "Meowth",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Pickup",
+    "rarity": "common",
+    "habitats": [
+      "Route 5",
+      "Route 6",
+      "Route 7",
+      "Route 8"
+    ],
+    "evolution": "Persian",
+    "evolution_level": 28,
+    "evolutions": [
+      {
+        "species": "Persian",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Perrserker",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Persian",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Perrserker",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 35,
+      "special_attack": 40,
+      "special_defense": 40,
+      "speed": 90
+    },
+    "base_combat": 50,
+    "base_beauty": 67,
+    "base_healthy": 39,
+    "base_occult": 30,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 53,
+    "name": "Persian",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Limber",
+    "rarity": "rare",
+    "habitats": [
+      "Route 7",
+      "Route 8"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 70,
+      "defense": 60,
+      "special_attack": 65,
+      "special_defense": 65,
+      "speed": 115
+    },
+    "base_combat": 75,
+    "base_beauty": 87,
+    "base_healthy": 64,
+    "base_occult": 45,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 54,
+    "name": "Psyduck",
+    "types": [
+      "Water"
+    ],
+    "ability": "Damp",
+    "rarity": "common",
+    "habitats": [
+      "Route 24",
+      "Route 25",
+      "Seafoam Islands",
+      "Safari Zone"
+    ],
+    "evolution": "Golduck",
+    "evolution_level": 33,
+    "evolutions": [
+      {
+        "species": "Golduck",
+        "method": "level-up",
+        "level": 33,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Golduck",
+        "method": "level-up",
+        "level": 33,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 50,
+      "attack": 52,
+      "defense": 48,
+      "special_attack": 65,
+      "special_defense": 50,
+      "speed": 55
+    },
+    "base_combat": 56,
+    "base_beauty": 73,
+    "base_healthy": 49,
+    "base_occult": 36,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 55,
+    "name": "Golduck",
+    "types": [
+      "Water"
+    ],
+    "ability": "Damp",
+    "rarity": "very_rare",
+    "habitats": [
+      "Seafoam Islands",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 80,
+      "attack": 82,
+      "defense": 78,
+      "special_attack": 95,
+      "special_defense": 80,
+      "speed": 85
+    },
+    "base_combat": 86,
+    "base_beauty": 97,
+    "base_healthy": 79,
+    "base_occult": 54,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 56,
+    "name": "Mankey",
+    "types": [
+      "Fighting"
+    ],
+    "ability": "Vital-Spirit",
+    "rarity": "common",
+    "habitats": [
+      "Route 3",
+      "Route 4",
+      "Route 22",
+      "Route 23"
+    ],
+    "evolution": "Primeape",
+    "evolution_level": 28,
+    "evolutions": [
+      {
+        "species": "Primeape",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Primeape",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 80,
+      "defense": 35,
+      "special_attack": 35,
+      "special_defense": 45,
+      "speed": 70
+    },
+    "base_combat": 57,
+    "base_beauty": 60,
+    "base_healthy": 40,
+    "base_occult": 28,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 57,
+    "name": "Primeape",
+    "types": [
+      "Fighting"
+    ],
+    "ability": "Vital-Spirit",
+    "rarity": "rare",
+    "habitats": [
+      "Route 23",
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Annihilape",
+        "method": "use-move",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Annihilape",
+        "method": "use-move",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 105,
+      "defense": 60,
+      "special_attack": 60,
+      "special_defense": 70,
+      "speed": 95
+    },
+    "base_combat": 82,
+    "base_beauty": 80,
+    "base_healthy": 65,
+    "base_occult": 43,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 58,
+    "name": "Growlithe",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Intimidate",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 7",
+      "Route 8",
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Arcanine",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Arcanine",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 55,
+      "attack": 70,
+      "defense": 45,
+      "special_attack": 70,
+      "special_defense": 50,
+      "speed": 60
+    },
+    "base_combat": 64,
+    "base_beauty": 67,
+    "base_healthy": 51,
+    "base_occult": 48,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 59,
+    "name": "Arcanine",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Intimidate",
+    "rarity": "very_rare",
+    "habitats": [
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 90,
+      "attack": 110,
+      "defense": 80,
+      "special_attack": 100,
+      "special_defense": 80,
+      "speed": 95
+    },
+    "base_combat": 99,
+    "base_beauty": 93,
+    "base_healthy": 84,
+    "base_occult": 67,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 60,
+    "name": "Poliwag",
+    "types": [
+      "Water"
+    ],
+    "ability": "Water-Absorb",
+    "rarity": "common",
+    "habitats": [
+      "Pallet Town",
+      "Viridian City",
+      "Route 22",
+      "Cerulean City"
+    ],
+    "evolution": "Poliwhirl",
+    "evolution_level": 25,
+    "evolutions": [
+      {
+        "species": "Poliwhirl",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Poliwhirl",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Poliwhirl",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 50,
+      "defense": 40,
+      "special_attack": 40,
+      "special_defense": 40,
+      "speed": 90
+    },
+    "base_combat": 52,
+    "base_beauty": 77,
+    "base_healthy": 40,
+    "base_occult": 30,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 61,
+    "name": "Poliwhirl",
+    "types": [
+      "Water"
+    ],
+    "ability": "Water-Absorb",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 22",
+      "Cerulean City",
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Poliwrath",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Politoed",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Poliwrath",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Politoed",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Poliwrath",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Politoed",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 65,
+      "defense": 65,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 90
+    },
+    "base_combat": 63,
+    "base_beauty": 83,
+    "base_healthy": 61,
+    "base_occult": 35,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 62,
+    "name": "Poliwrath",
+    "types": [
+      "Water",
+      "Fighting"
+    ],
+    "ability": "Water-Absorb",
+    "rarity": "very_rare",
+    "habitats": [
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 90,
+      "attack": 95,
+      "defense": 95,
+      "special_attack": 70,
+      "special_defense": 90,
+      "speed": 70
+    },
+    "base_combat": 82,
+    "base_beauty": 88,
+    "base_healthy": 91,
+    "base_occult": 48,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 63,
+    "name": "Abra",
+    "types": [
+      "Psychic"
+    ],
+    "ability": "Synchronize",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 24",
+      "Route 25"
+    ],
+    "evolution": "Kadabra",
+    "evolution_level": 16,
+    "evolutions": [
+      {
+        "species": "Kadabra",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kadabra",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kadabra",
+        "method": "level-up",
+        "level": 16,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 25,
+      "attack": 20,
+      "defense": 15,
+      "special_attack": 105,
+      "special_defense": 55,
+      "speed": 90
+    },
+    "base_combat": 63,
+    "base_beauty": 93,
+    "base_healthy": 30,
+    "base_occult": 76,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 64,
+    "name": "Kadabra",
+    "types": [
+      "Psychic"
+    ],
+    "ability": "Synchronize",
+    "rarity": "uncommon",
+    "habitats": [
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Alakazam",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Alakazam",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Alakazam",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 40,
+      "attack": 35,
+      "defense": 30,
+      "special_attack": 120,
+      "special_defense": 70,
+      "speed": 105
+    },
+    "base_combat": 78,
+    "base_beauty": 100,
+    "base_healthy": 45,
+    "base_occult": 85,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 65,
+    "name": "Alakazam",
+    "types": [
+      "Psychic"
+    ],
+    "ability": "Synchronize",
+    "rarity": "very_rare",
+    "habitats": [
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 55,
+      "attack": 50,
+      "defense": 45,
+      "special_attack": 135,
+      "special_defense": 95,
+      "speed": 120
+    },
+    "base_combat": 94,
+    "base_beauty": 100,
+    "base_healthy": 63,
+    "base_occult": 97,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 66,
+    "name": "Machop",
+    "types": [
+      "Fighting"
+    ],
+    "ability": "Guts",
+    "rarity": "common",
+    "habitats": [
+      "Rock Tunnel",
+      "Victory Road"
+    ],
+    "evolution": "Machoke",
+    "evolution_level": 28,
+    "evolutions": [
+      {
+        "species": "Machoke",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Machoke",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Machoke",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 70,
+      "attack": 80,
+      "defense": 50,
+      "special_attack": 35,
+      "special_defense": 35,
+      "speed": 35
+    },
+    "base_combat": 51,
+    "base_beauty": 50,
+    "base_healthy": 55,
+    "base_occult": 22,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 67,
+    "name": "Machoke",
+    "types": [
+      "Fighting"
+    ],
+    "ability": "Guts",
+    "rarity": "uncommon",
+    "habitats": [
+      "Victory Road",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Machamp",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Machamp",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Machamp",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 80,
+      "attack": 100,
+      "defense": 70,
+      "special_attack": 50,
+      "special_defense": 60,
+      "speed": 45
+    },
+    "base_combat": 68,
+    "base_beauty": 60,
+    "base_healthy": 72,
+    "base_occult": 33,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 68,
+    "name": "Machamp",
+    "types": [
+      "Fighting"
+    ],
+    "ability": "Guts",
+    "rarity": "very_rare",
+    "habitats": [
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 90,
+      "attack": 130,
+      "defense": 80,
+      "special_attack": 65,
+      "special_defense": 85,
+      "speed": 55
+    },
+    "base_combat": 87,
+    "base_beauty": 72,
+    "base_healthy": 86,
+    "base_occult": 44,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 69,
+    "name": "Bellsprout",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "common",
+    "habitats": [
+      "Route 5",
+      "Route 6",
+      "Route 7",
+      "Route 12"
+    ],
+    "evolution": "Weepinbell",
+    "evolution_level": 21,
+    "evolutions": [
+      {
+        "species": "Weepinbell",
+        "method": "level-up",
+        "level": 21,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Weepinbell",
+        "method": "level-up",
+        "level": 21,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Weepinbell",
+        "method": "level-up",
+        "level": 21,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 50,
+      "attack": 75,
+      "defense": 35,
+      "special_attack": 70,
+      "special_defense": 30,
+      "speed": 40
+    },
+    "base_combat": 59,
+    "base_beauty": 57,
+    "base_healthy": 40,
+    "base_occult": 31,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 70,
+    "name": "Weepinbell",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 12",
+      "Route 13",
+      "Route 14",
+      "Route 15"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Victreebel",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Victreebel",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Victreebel",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 50,
+      "special_attack": 85,
+      "special_defense": 45,
+      "speed": 55
+    },
+    "base_combat": 74,
+    "base_beauty": 69,
+    "base_healthy": 55,
+    "base_occult": 40,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 71,
+    "name": "Victreebel",
+    "types": [
+      "Grass",
+      "Poison"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "very_rare",
+    "habitats": [
+      "Route 15"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 80,
+      "attack": 105,
+      "defense": 65,
+      "special_attack": 100,
+      "special_defense": 70,
+      "speed": 70
+    },
+    "base_combat": 90,
+    "base_beauty": 82,
+    "base_healthy": 73,
+    "base_occult": 52,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 72,
+    "name": "Tentacool",
+    "types": [
+      "Water",
+      "Poison"
+    ],
+    "ability": "Clear-Body",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 19",
+      "Route 20",
+      "Route 21",
+      "Cinnabar Island",
+      "Seafoam Islands"
+    ],
+    "evolution": "Tentacruel",
+    "evolution_level": 30,
+    "evolutions": [
+      {
+        "species": "Tentacruel",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Tentacruel",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 40,
+      "defense": 35,
+      "special_attack": 50,
+      "special_defense": 100,
+      "speed": 70
+    },
+    "base_combat": 54,
+    "base_beauty": 80,
+    "base_healthy": 55,
+    "base_occult": 45,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 73,
+    "name": "Tentacruel",
+    "types": [
+      "Water",
+      "Poison"
+    ],
+    "ability": "Clear-Body",
+    "rarity": "very_rare",
+    "habitats": [
+      "Route 20",
+      "Route 21",
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 80,
+      "attack": 70,
+      "defense": 65,
+      "special_attack": 80,
+      "special_defense": 120,
+      "speed": 100
+    },
+    "base_combat": 83,
+    "base_beauty": 100,
+    "base_healthy": 87,
+    "base_occult": 61,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 74,
+    "name": "Geodude",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "ability": "Rock-Head",
+    "rarity": "common",
+    "habitats": [
+      "Mt. Moon",
+      "Rock Tunnel",
+      "Victory Road"
+    ],
+    "evolution": "Graveler",
+    "evolution_level": 25,
+    "evolutions": [
+      {
+        "species": "Graveler",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Graveler",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Graveler",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 80,
+      "defense": 100,
+      "special_attack": 30,
+      "special_defense": 30,
+      "speed": 20
+    },
+    "base_combat": 50,
+    "base_beauty": 40,
+    "base_healthy": 54,
+    "base_occult": 18,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 75,
+    "name": "Graveler",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "ability": "Rock-Head",
+    "rarity": "uncommon",
+    "habitats": [
+      "Rock Tunnel",
+      "Victory Road",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Golem",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Golem",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Golem",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 55,
+      "attack": 95,
+      "defense": 115,
+      "special_attack": 45,
+      "special_defense": 45,
+      "speed": 35
+    },
+    "base_combat": 65,
+    "base_beauty": 52,
+    "base_healthy": 69,
+    "base_occult": 27,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 76,
+    "name": "Golem",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "ability": "Rock-Head",
+    "rarity": "very_rare",
+    "habitats": [
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 80,
+      "attack": 120,
+      "defense": 130,
+      "special_attack": 55,
+      "special_defense": 65,
+      "speed": 45
+    },
+    "base_combat": 81,
+    "base_beauty": 62,
+    "base_healthy": 90,
+    "base_occult": 36,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 77,
+    "name": "Ponyta",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Run-Away",
+    "rarity": "uncommon",
+    "habitats": [
+      "Pokemon Mansion",
+      "Cinnabar Island"
+    ],
+    "evolution": "Rapidash",
+    "evolution_level": 40,
+    "evolutions": [
+      {
+        "species": "Rapidash",
+        "method": "level-up",
+        "level": 40,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Rapidash",
+        "method": "level-up",
+        "level": 40,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 50,
+      "attack": 85,
+      "defense": 55,
+      "special_attack": 65,
+      "special_defense": 65,
+      "speed": 90
+    },
+    "base_combat": 75,
+    "base_beauty": 77,
+    "base_healthy": 55,
+    "base_occult": 53,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 78,
+    "name": "Rapidash",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Run-Away",
+    "rarity": "very_rare",
+    "habitats": [
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 100,
+      "defense": 70,
+      "special_attack": 80,
+      "special_defense": 80,
+      "speed": 105
+    },
+    "base_combat": 90,
+    "base_beauty": 89,
+    "base_healthy": 70,
+    "base_occult": 62,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 79,
+    "name": "Slowpoke",
+    "types": [
+      "Water",
+      "Psychic"
+    ],
+    "ability": "Oblivious",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 10",
+      "Seafoam Islands",
+      "Cerulean Cave"
+    ],
+    "evolution": "Slowbro",
+    "evolution_level": 37,
+    "evolutions": [
+      {
+        "species": "Slowbro",
+        "method": "level-up",
+        "level": 37,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Slowking",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Slowbro",
+        "method": "level-up",
+        "level": 37,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Slowking",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 90,
+      "attack": 65,
+      "defense": 65,
+      "special_attack": 40,
+      "special_defense": 40,
+      "speed": 15
+    },
+    "base_combat": 46,
+    "base_beauty": 56,
+    "base_healthy": 70,
+    "base_occult": 46,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 80,
+    "name": "Slowbro",
+    "types": [
+      "Water",
+      "Psychic"
+    ],
+    "ability": "Oblivious",
+    "rarity": "rare",
+    "habitats": [
+      "Seafoam Islands",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 95,
+      "attack": 75,
+      "defense": 110,
+      "special_attack": 100,
+      "special_defense": 80,
+      "speed": 30
+    },
+    "base_combat": 78,
+    "base_beauty": 81,
+    "base_healthy": 95,
+    "base_occult": 74,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 81,
+    "name": "Magnemite",
+    "types": [
+      "Electric",
+      "Steel"
+    ],
+    "ability": "Magnet-Pull",
+    "rarity": "common",
+    "habitats": [
+      "Power Plant"
+    ],
+    "evolution": "Magneton",
+    "evolution_level": 30,
+    "evolutions": [
+      {
+        "species": "Magneton",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Magneton",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 25,
+      "attack": 35,
+      "defense": 70,
+      "special_attack": 95,
+      "special_defense": 55,
+      "speed": 45
+    },
+    "base_combat": 61,
+    "base_beauty": 65,
+    "base_healthy": 46,
+    "base_occult": 54,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 82,
+    "name": "Magneton",
+    "types": [
+      "Electric",
+      "Steel"
+    ],
+    "ability": "Magnet-Pull",
+    "rarity": "rare",
+    "habitats": [
+      "Power Plant",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Magnezone",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Magnezone",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 50,
+      "attack": 60,
+      "defense": 95,
+      "special_attack": 120,
+      "special_defense": 70,
+      "speed": 70
+    },
+    "base_combat": 85,
+    "base_beauty": 84,
+    "base_healthy": 68,
+    "base_occult": 67,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 83,
+    "name": "Farfetchd",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Keen-Eye",
+    "rarity": "uncommon",
+    "habitats": [
+      "Vermilion City"
+    ],
+    "evolution": "Sirfetchd",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Sirfetchd",
+        "method": "three-critical-hits",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 52,
+      "attack": 90,
+      "defense": 55,
+      "special_attack": 58,
+      "special_defense": 62,
+      "speed": 60
+    },
+    "base_combat": 69,
+    "base_beauty": 75,
+    "base_healthy": 56,
+    "base_occult": 37,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 84,
+    "name": "Doduo",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Run-Away",
+    "rarity": "common",
+    "habitats": [
+      "Route 16",
+      "Route 17",
+      "Route 18",
+      "Safari Zone"
+    ],
+    "evolution": "Dodrio",
+    "evolution_level": 31,
+    "evolutions": [
+      {
+        "species": "Dodrio",
+        "method": "level-up",
+        "level": 31,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Dodrio",
+        "method": "level-up",
+        "level": 31,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 35,
+      "attack": 85,
+      "defense": 45,
+      "special_attack": 35,
+      "special_defense": 35,
+      "speed": 75
+    },
+    "base_combat": 59,
+    "base_beauty": 70,
+    "base_healthy": 38,
+    "base_occult": 26,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 85,
+    "name": "Dodrio",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "ability": "Run-Away",
+    "rarity": "rare",
+    "habitats": [
+      "Route 17",
+      "Route 18",
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 110,
+      "defense": 70,
+      "special_attack": 60,
+      "special_defense": 60,
+      "speed": 110
+    },
+    "base_combat": 86,
+    "base_beauty": 93,
+    "base_healthy": 63,
+    "base_occult": 42,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 86,
+    "name": "Seel",
+    "types": [
+      "Water"
+    ],
+    "ability": "Thick-Fat",
+    "rarity": "common",
+    "habitats": [
+      "Seafoam Islands",
+      "Cinnabar Island"
+    ],
+    "evolution": "Dewgong",
+    "evolution_level": 34,
+    "evolutions": [
+      {
+        "species": "Dewgong",
+        "method": "level-up",
+        "level": 34,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Dewgong",
+        "method": "level-up",
+        "level": 34,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 65,
+      "attack": 45,
+      "defense": 55,
+      "special_attack": 45,
+      "special_defense": 70,
+      "speed": 45
+    },
+    "base_combat": 48,
+    "base_beauty": 69,
+    "base_healthy": 64,
+    "base_occult": 34,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 87,
+    "name": "Dewgong",
+    "types": [
+      "Water",
+      "Ice"
+    ],
+    "ability": "Thick-Fat",
+    "rarity": "rare",
+    "habitats": [
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 90,
+      "attack": 70,
+      "defense": 80,
+      "special_attack": 70,
+      "special_defense": 95,
+      "speed": 70
+    },
+    "base_combat": 73,
+    "base_beauty": 89,
+    "base_healthy": 89,
+    "base_occult": 59,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 88,
+    "name": "Grimer",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Stench",
+    "rarity": "common",
+    "habitats": [
+      "Pokemon Mansion",
+      "Celadon City"
+    ],
+    "evolution": "Muk",
+    "evolution_level": 38,
+    "evolutions": [
+      {
+        "species": "Muk",
+        "method": "level-up",
+        "level": 38,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Muk",
+        "method": "level-up",
+        "level": 38,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 80,
+      "attack": 80,
+      "defense": 50,
+      "special_attack": 40,
+      "special_defense": 50,
+      "speed": 25
+    },
+    "base_combat": 52,
+    "base_beauty": 50,
+    "base_healthy": 64,
+    "base_occult": 26,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 89,
+    "name": "Muk",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Stench",
+    "rarity": "very_rare",
+    "habitats": [
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 105,
+      "attack": 105,
+      "defense": 75,
+      "special_attack": 65,
+      "special_defense": 100,
+      "speed": 50
+    },
+    "base_combat": 79,
+    "base_beauty": 73,
+    "base_healthy": 95,
+    "base_occult": 47,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 90,
+    "name": "Shellder",
+    "types": [
+      "Water"
+    ],
+    "ability": "Shell-Armor",
+    "rarity": "common",
+    "habitats": [
+      "Vermilion City",
+      "Cinnabar Island",
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Cloyster",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Cloyster",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 30,
+      "attack": 65,
+      "defense": 100,
+      "special_attack": 45,
+      "special_defense": 25,
+      "speed": 40
+    },
+    "base_combat": 53,
+    "base_beauty": 58,
+    "base_healthy": 48,
+    "base_occult": 23,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 91,
+    "name": "Cloyster",
+    "types": [
+      "Water",
+      "Ice"
+    ],
+    "ability": "Shell-Armor",
+    "rarity": "very_rare",
+    "habitats": [
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 50,
+      "attack": 95,
+      "defense": 180,
+      "special_attack": 85,
+      "special_defense": 45,
+      "speed": 70
+    },
+    "base_combat": 89,
+    "base_beauty": 83,
+    "base_healthy": 85,
+    "base_occult": 52,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 92,
+    "name": "Gastly",
+    "types": [
+      "Ghost",
+      "Poison"
+    ],
+    "ability": "Levitate",
+    "rarity": "uncommon",
+    "habitats": [
+      "Pokemon Tower",
+      "Lavender Town"
+    ],
+    "evolution": "Haunter",
+    "evolution_level": 25,
+    "evolutions": [
+      {
+        "species": "Haunter",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Haunter",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Haunter",
+        "method": "level-up",
+        "level": 25,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 30,
+      "attack": 35,
+      "defense": 30,
+      "special_attack": 100,
+      "special_defense": 35,
+      "speed": 80
+    },
+    "base_combat": 64,
+    "base_beauty": 76,
+    "base_healthy": 31,
+    "base_occult": 68,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 93,
+    "name": "Haunter",
+    "types": [
+      "Ghost",
+      "Poison"
+    ],
+    "ability": "Levitate",
+    "rarity": "uncommon",
+    "habitats": [
+      "Pokemon Tower",
+      "Lavender Town"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Gengar",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Gengar",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Gengar",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 45,
+      "attack": 50,
+      "defense": 45,
+      "special_attack": 115,
+      "special_defense": 55,
+      "speed": 95
+    },
+    "base_combat": 79,
+    "base_beauty": 89,
+    "base_healthy": 48,
+    "base_occult": 79,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 94,
+    "name": "Gengar",
+    "types": [
+      "Ghost",
+      "Poison"
+    ],
+    "ability": "Cursed-Body",
+    "rarity": "very_rare",
+    "habitats": [
+      "Pokemon Tower"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 60,
+      "special_attack": 130,
+      "special_defense": 75,
+      "speed": 110
+    },
+    "base_combat": 94,
+    "base_beauty": 100,
+    "base_healthy": 64,
+    "base_occult": 89,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 95,
+    "name": "Onix",
+    "types": [
+      "Rock",
+      "Ground"
+    ],
+    "ability": "Rock-Head",
+    "rarity": "uncommon",
+    "habitats": [
+      "Rock Tunnel",
+      "Victory Road"
+    ],
+    "evolution": "Steelix",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Steelix",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 35,
+      "attack": 45,
+      "defense": 160,
+      "special_attack": 30,
+      "special_defense": 45,
+      "speed": 70
+    },
+    "base_combat": 54,
+    "base_beauty": 58,
+    "base_healthy": 73,
+    "base_occult": 26,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 96,
+    "name": "Drowzee",
+    "types": [
+      "Psychic"
+    ],
+    "ability": "Insomnia",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 11"
+    ],
+    "evolution": "Hypno",
+    "evolution_level": 26,
+    "evolutions": [
+      {
+        "species": "Hypno",
+        "method": "level-up",
+        "level": 26,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Hypno",
+        "method": "level-up",
+        "level": 26,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 60,
+      "attack": 48,
+      "defense": 45,
+      "special_attack": 43,
+      "special_defense": 90,
+      "speed": 42
+    },
+    "base_combat": 49,
+    "base_beauty": 69,
+    "base_healthy": 64,
+    "base_occult": 62,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 97,
+    "name": "Hypno",
+    "types": [
+      "Psychic"
+    ],
+    "ability": "Insomnia",
+    "rarity": "rare",
+    "habitats": [
+      "Route 11",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 85,
+      "attack": 73,
+      "defense": 70,
+      "special_attack": 73,
+      "special_defense": 115,
+      "speed": 67
+    },
+    "base_combat": 76,
+    "base_beauty": 91,
+    "base_healthy": 89,
+    "base_occult": 79,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 98,
+    "name": "Krabby",
+    "types": [
+      "Water"
+    ],
+    "ability": "Hyper-Cutter",
+    "rarity": "common",
+    "habitats": [
+      "Route 6",
+      "Route 11",
+      "Vermilion City",
+      "Seafoam Islands"
+    ],
+    "evolution": "Kingler",
+    "evolution_level": 28,
+    "evolutions": [
+      {
+        "species": "Kingler",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kingler",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 30,
+      "attack": 105,
+      "defense": 90,
+      "special_attack": 25,
+      "special_defense": 25,
+      "speed": 50
+    },
+    "base_combat": 60,
+    "base_beauty": 57,
+    "base_healthy": 45,
+    "base_occult": 18,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 99,
+    "name": "Kingler",
+    "types": [
+      "Water"
+    ],
+    "ability": "Hyper-Cutter",
+    "rarity": "rare",
+    "habitats": [
+      "Route 23",
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 55,
+      "attack": 130,
+      "defense": 115,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 75
+    },
+    "base_combat": 85,
+    "base_beauty": 77,
+    "base_healthy": 70,
+    "base_occult": 34,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 100,
+    "name": "Voltorb",
+    "types": [
+      "Electric"
+    ],
+    "ability": "Soundproof",
+    "rarity": "uncommon",
+    "habitats": [
+      "Power Plant",
+      "Route 10"
+    ],
+    "evolution": "Electrode",
+    "evolution_level": 30,
+    "evolutions": [
+      {
+        "species": "Electrode",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Electrode",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 30,
+      "defense": 50,
+      "special_attack": 55,
+      "special_defense": 55,
+      "speed": 100
+    },
+    "base_combat": 55,
+    "base_beauty": 76,
+    "base_healthy": 47,
+    "base_occult": 49,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 101,
+    "name": "Electrode",
+    "types": [
+      "Electric"
+    ],
+    "ability": "Soundproof",
+    "rarity": "rare",
+    "habitats": [
+      "Power Plant",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 70,
+      "special_attack": 80,
+      "special_defense": 80,
+      "speed": 150
+    },
+    "base_combat": 82,
+    "base_beauty": 100,
+    "base_healthy": 68,
+    "base_occult": 67,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 102,
+    "name": "Exeggcute",
+    "types": [
+      "Grass",
+      "Psychic"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "uncommon",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Exeggutor",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Exeggutor",
+        "method": "use-item",
+        "level": null,
+        "item": "leaf-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 60,
+      "attack": 40,
+      "defense": 80,
+      "special_attack": 60,
+      "special_defense": 45,
+      "speed": 40
+    },
+    "base_combat": 50,
+    "base_beauty": 67,
+    "base_healthy": 62,
+    "base_occult": 56,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 103,
+    "name": "Exeggutor",
+    "types": [
+      "Grass",
+      "Psychic"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "very_rare",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 95,
+      "attack": 95,
+      "defense": 85,
+      "special_attack": 125,
+      "special_defense": 75,
+      "speed": 55
+    },
+    "base_combat": 95,
+    "base_beauty": 95,
+    "base_healthy": 87,
+    "base_occult": 82,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 104,
+    "name": "Cubone",
+    "types": [
+      "Ground"
+    ],
+    "ability": "Rock-Head",
+    "rarity": "common",
+    "habitats": [
+      "Pokemon Tower",
+      "Rock Tunnel"
+    ],
+    "evolution": "Marowak",
+    "evolution_level": 28,
+    "evolutions": [
+      {
+        "species": "Marowak",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Marowak",
+        "method": "level-up",
+        "level": 28,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 50,
+      "attack": 50,
+      "defense": 95,
+      "special_attack": 40,
+      "special_defense": 50,
+      "speed": 35
+    },
+    "base_combat": 48,
+    "base_beauty": 50,
+    "base_healthy": 63,
+    "base_occult": 27,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 105,
+    "name": "Marowak",
+    "types": [
+      "Ground"
+    ],
+    "ability": "Rock-Head",
+    "rarity": "rare",
+    "habitats": [
+      "Pokemon Tower",
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 80,
+      "defense": 110,
+      "special_attack": 50,
+      "special_defense": 80,
+      "speed": 45
+    },
+    "base_combat": 66,
+    "base_beauty": 61,
+    "base_healthy": 79,
+    "base_occult": 38,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 106,
+    "name": "Hitmonlee",
+    "types": [
+      "Fighting"
+    ],
+    "ability": "Limber",
+    "rarity": "rare",
+    "habitats": [
+      "Saffron City"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 50,
+      "attack": 120,
+      "defense": 53,
+      "special_attack": 35,
+      "special_defense": 110,
+      "speed": 87
+    },
+    "base_combat": 80,
+    "base_beauty": 74,
+    "base_healthy": 67,
+    "base_occult": 45,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 107,
+    "name": "Hitmonchan",
+    "types": [
+      "Fighting"
+    ],
+    "ability": "Keen-Eye",
+    "rarity": "rare",
+    "habitats": [
+      "Saffron City"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 50,
+      "attack": 105,
+      "defense": 79,
+      "special_attack": 35,
+      "special_defense": 110,
+      "speed": 76
+    },
+    "base_combat": 76,
+    "base_beauty": 70,
+    "base_healthy": 74,
+    "base_occult": 44,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 108,
+    "name": "Lickitung",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Own-Tempo",
+    "rarity": "uncommon",
+    "habitats": [
+      "Route 18"
+    ],
+    "evolution": "Lickilicky",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Lickilicky",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 90,
+      "attack": 55,
+      "defense": 75,
+      "special_attack": 60,
+      "special_defense": 75,
+      "speed": 30
+    },
+    "base_combat": 56,
+    "base_beauty": 61,
+    "base_healthy": 82,
+    "base_occult": 38,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 109,
+    "name": "Koffing",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Levitate",
+    "rarity": "uncommon",
+    "habitats": [
+      "Pokemon Mansion",
+      "Celadon City"
+    ],
+    "evolution": "Weezing",
+    "evolution_level": 35,
+    "evolutions": [
+      {
+        "species": "Weezing",
+        "method": "level-up",
+        "level": 35,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Weezing",
+        "method": "level-up",
+        "level": 35,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 40,
+      "attack": 65,
+      "defense": 95,
+      "special_attack": 60,
+      "special_defense": 45,
+      "speed": 35
+    },
+    "base_combat": 58,
+    "base_beauty": 54,
+    "base_healthy": 57,
+    "base_occult": 31,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 110,
+    "name": "Weezing",
+    "types": [
+      "Poison"
+    ],
+    "ability": "Levitate",
+    "rarity": "rare",
+    "habitats": [
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 120,
+      "special_attack": 85,
+      "special_defense": 70,
+      "speed": 60
+    },
+    "base_combat": 83,
+    "base_beauty": 74,
+    "base_healthy": 82,
+    "base_occult": 47,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 111,
+    "name": "Rhyhorn",
+    "types": [
+      "Ground",
+      "Rock"
+    ],
+    "ability": "Lightning-Rod",
+    "rarity": "uncommon",
+    "habitats": [
+      "Safari Zone",
+      "Victory Road"
+    ],
+    "evolution": "Rhydon",
+    "evolution_level": 42,
+    "evolutions": [
+      {
+        "species": "Rhydon",
+        "method": "level-up",
+        "level": 42,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Rhydon",
+        "method": "level-up",
+        "level": 42,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 80,
+      "attack": 85,
+      "defense": 95,
+      "special_attack": 30,
+      "special_defense": 30,
+      "speed": 25
+    },
+    "base_combat": 52,
+    "base_beauty": 45,
+    "base_healthy": 71,
+    "base_occult": 18,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 112,
+    "name": "Rhydon",
+    "types": [
+      "Ground",
+      "Rock"
+    ],
+    "ability": "Lightning-Rod",
+    "rarity": "rare",
+    "habitats": [
+      "Victory Road",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Rhyperior",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Rhyperior",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 105,
+      "attack": 130,
+      "defense": 120,
+      "special_attack": 45,
+      "special_defense": 45,
+      "speed": 40
+    },
+    "base_combat": 77,
+    "base_beauty": 58,
+    "base_healthy": 93,
+    "base_occult": 27,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 113,
+    "name": "Chansey",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Natural-Cure",
+    "rarity": "rare",
+    "habitats": [
+      "Safari Zone",
+      "Cerulean Cave"
+    ],
+    "evolution": "Blissey",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Blissey",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 250,
+      "attack": 5,
+      "defense": 5,
+      "special_attack": 35,
+      "special_defense": 105,
+      "speed": 50
+    },
+    "base_combat": 33,
+    "base_beauty": 81,
+    "base_healthy": 100,
+    "base_occult": 40,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 114,
+    "name": "Tangela",
+    "types": [
+      "Grass"
+    ],
+    "ability": "Chlorophyll",
+    "rarity": "rare",
+    "habitats": [
+      "Route 21",
+      "Pallet Town"
+    ],
+    "evolution": "Tangrowth",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Tangrowth",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 65,
+      "attack": 55,
+      "defense": 115,
+      "special_attack": 100,
+      "special_defense": 40,
+      "speed": 60
+    },
+    "base_combat": 74,
+    "base_beauty": 74,
+    "base_healthy": 72,
+    "base_occult": 44,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 115,
+    "name": "Kangaskhan",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Early-Bird",
+    "rarity": "rare",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 105,
+      "attack": 95,
+      "defense": 80,
+      "special_attack": 40,
+      "special_defense": 80,
+      "speed": 90
+    },
+    "base_combat": 74,
+    "base_beauty": 78,
+    "base_healthy": 91,
+    "base_occult": 39,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 116,
+    "name": "Horsea",
+    "types": [
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "common",
+    "habitats": [
+      "Route 19",
+      "Route 20",
+      "Cinnabar Island"
+    ],
+    "evolution": "Seadra",
+    "evolution_level": 32,
+    "evolutions": [
+      {
+        "species": "Seadra",
+        "method": "level-up",
+        "level": 32,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Seadra",
+        "method": "level-up",
+        "level": 32,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 30,
+      "attack": 40,
+      "defense": 70,
+      "special_attack": 70,
+      "special_defense": 25,
+      "speed": 60
+    },
+    "base_combat": 54,
+    "base_beauty": 71,
+    "base_healthy": 40,
+    "base_occult": 32,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 117,
+    "name": "Seadra",
+    "types": [
+      "Water"
+    ],
+    "ability": "Poison-Point",
+    "rarity": "rare",
+    "habitats": [
+      "Route 20",
+      "Cinnabar Island",
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Kingdra",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kingdra",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 55,
+      "attack": 65,
+      "defense": 95,
+      "special_attack": 95,
+      "special_defense": 45,
+      "speed": 85
+    },
+    "base_combat": 79,
+    "base_beauty": 91,
+    "base_healthy": 64,
+    "base_occult": 46,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 118,
+    "name": "Goldeen",
+    "types": [
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "common",
+    "habitats": [
+      "Route 6",
+      "Route 22",
+      "Route 23",
+      "Cerulean City"
+    ],
+    "evolution": "Seaking",
+    "evolution_level": 33,
+    "evolutions": [
+      {
+        "species": "Seaking",
+        "method": "level-up",
+        "level": 33,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Seaking",
+        "method": "level-up",
+        "level": 33,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 45,
+      "attack": 67,
+      "defense": 60,
+      "special_attack": 35,
+      "special_defense": 50,
+      "speed": 63
+    },
+    "base_combat": 54,
+    "base_beauty": 68,
+    "base_healthy": 51,
+    "base_occult": 28,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 119,
+    "name": "Seaking",
+    "types": [
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "rare",
+    "habitats": [
+      "Route 23",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 80,
+      "attack": 92,
+      "defense": 65,
+      "special_attack": 65,
+      "special_defense": 80,
+      "speed": 68
+    },
+    "base_combat": 76,
+    "base_beauty": 84,
+    "base_healthy": 76,
+    "base_occult": 44,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 120,
+    "name": "Staryu",
+    "types": [
+      "Water"
+    ],
+    "ability": "Illuminate",
+    "rarity": "uncommon",
+    "habitats": [
+      "Pallet Town",
+      "Cinnabar Island",
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Starmie",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Starmie",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 30,
+      "attack": 45,
+      "defense": 55,
+      "special_attack": 70,
+      "special_defense": 55,
+      "speed": 85
+    },
+    "base_combat": 62,
+    "base_beauty": 83,
+    "base_healthy": 44,
+    "base_occult": 41,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 121,
+    "name": "Starmie",
+    "types": [
+      "Water",
+      "Psychic"
+    ],
+    "ability": "Illuminate",
+    "rarity": "very_rare",
+    "habitats": [
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 75,
+      "defense": 85,
+      "special_attack": 100,
+      "special_defense": 85,
+      "speed": 115
+    },
+    "base_combat": 92,
+    "base_beauty": 100,
+    "base_healthy": 74,
+    "base_occult": 84,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 122,
+    "name": "Mr-Mime",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ],
+    "ability": "Soundproof",
+    "rarity": "rare",
+    "habitats": [
+      "Route 2"
+    ],
+    "evolution": "Mr-Rime",
+    "evolution_level": 42,
+    "evolutions": [
+      {
+        "species": "Mr-Rime",
+        "method": "level-up",
+        "level": 42,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 40,
+      "attack": 45,
+      "defense": 65,
+      "special_attack": 100,
+      "special_defense": 120,
+      "speed": 90
+    },
+    "base_combat": 80,
+    "base_beauty": 100,
+    "base_healthy": 69,
+    "base_occult": 90,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 123,
+    "name": "Scyther",
+    "types": [
+      "Bug",
+      "Flying"
+    ],
+    "ability": "Swarm",
+    "rarity": "very_rare",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Scizor",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kleavor",
+        "method": "use-item",
+        "level": null,
+        "item": "black-augurite",
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 80,
+      "special_attack": 55,
+      "special_defense": 80,
+      "speed": 105
+    },
+    "base_combat": 86,
+    "base_beauty": 94,
+    "base_healthy": 76,
+    "base_occult": 45,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 124,
+    "name": "Jynx",
+    "types": [
+      "Ice",
+      "Psychic"
+    ],
+    "ability": "Oblivious",
+    "rarity": "rare",
+    "habitats": [
+      "Cerulean City"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 50,
+      "defense": 35,
+      "special_attack": 115,
+      "special_defense": 95,
+      "speed": 95
+    },
+    "base_combat": 82,
+    "base_beauty": 100,
+    "base_healthy": 65,
+    "base_occult": 98,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 125,
+    "name": "Electabuzz",
+    "types": [
+      "Electric"
+    ],
+    "ability": "Static",
+    "rarity": "rare",
+    "habitats": [
+      "Power Plant"
+    ],
+    "evolution": "Electivire",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Electivire",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 83,
+      "defense": 57,
+      "special_attack": 95,
+      "special_defense": 85,
+      "speed": 105
+    },
+    "base_combat": 89,
+    "base_beauty": 93,
+    "base_healthy": 68,
+    "base_occult": 68,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 126,
+    "name": "Magmar",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Flame-Body",
+    "rarity": "rare",
+    "habitats": [
+      "Pokemon Mansion"
+    ],
+    "evolution": "Magmortar",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Magmortar",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 95,
+      "defense": 57,
+      "special_attack": 100,
+      "special_defense": 85,
+      "speed": 93
+    },
+    "base_combat": 92,
+    "base_beauty": 90,
+    "base_healthy": 68,
+    "base_occult": 68,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 127,
+    "name": "Pinsir",
+    "types": [
+      "Bug"
+    ],
+    "ability": "Hyper-Cutter",
+    "rarity": "very_rare",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 65,
+      "attack": 125,
+      "defense": 100,
+      "special_attack": 55,
+      "special_defense": 70,
+      "speed": 85
+    },
+    "base_combat": 88,
+    "base_beauty": 75,
+    "base_healthy": 76,
+    "base_occult": 41,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 128,
+    "name": "Tauros",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Intimidate",
+    "rarity": "rare",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 75,
+      "attack": 100,
+      "defense": 95,
+      "special_attack": 40,
+      "special_defense": 70,
+      "speed": 110
+    },
+    "base_combat": 79,
+    "base_beauty": 81,
+    "base_healthy": 79,
+    "base_occult": 39,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 129,
+    "name": "Magikarp",
+    "types": [
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "common",
+    "habitats": [
+      "Pallet Town",
+      "Viridian City",
+      "Route 4",
+      "Route 10",
+      "Route 22"
+    ],
+    "evolution": "Gyarados",
+    "evolution_level": 20,
+    "evolutions": [
+      {
+        "species": "Gyarados",
+        "method": "level-up",
+        "level": 20,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Gyarados",
+        "method": "level-up",
+        "level": 20,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 20,
+      "attack": 10,
+      "defense": 55,
+      "special_attack": 15,
+      "special_defense": 20,
+      "speed": 80
+    },
+    "base_combat": 29,
+    "base_beauty": 63,
+    "base_healthy": 30,
+    "base_occult": 17,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 130,
+    "name": "Gyarados",
+    "types": [
+      "Water",
+      "Flying"
+    ],
+    "ability": "Intimidate",
+    "rarity": "very_rare",
+    "habitats": [
+      "Route 20",
+      "Seafoam Islands",
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 95,
+      "attack": 125,
+      "defense": 79,
+      "special_attack": 60,
+      "special_defense": 100,
+      "speed": 81
+    },
+    "base_combat": 90,
+    "base_beauty": 91,
+    "base_healthy": 92,
+    "base_occult": 49,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 131,
+    "name": "Lapras",
+    "types": [
+      "Water",
+      "Ice"
+    ],
+    "ability": "Water-Absorb",
+    "rarity": "very_rare",
+    "habitats": [
+      "Silph Co.",
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 130,
+      "attack": 85,
+      "defense": 80,
+      "special_attack": 85,
+      "special_defense": 95,
+      "speed": 60
+    },
+    "base_combat": 81,
+    "base_beauty": 93,
+    "base_healthy": 100,
+    "base_occult": 63,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 132,
+    "name": "Ditto",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Limber",
+    "rarity": "common",
+    "habitats": [
+      "Route 13",
+      "Route 14",
+      "Route 15",
+      "Pokemon Mansion"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 48,
+      "attack": 48,
+      "defense": 48,
+      "special_attack": 48,
+      "special_defense": 48,
+      "speed": 48
+    },
+    "base_combat": 48,
+    "base_beauty": 56,
+    "base_healthy": 48,
+    "base_occult": 30,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 133,
+    "name": "Eevee",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Run-Away",
+    "rarity": "common",
+    "habitats": [
+      "Celadon City"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Vaporeon",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Jolteon",
+        "method": "use-item",
+        "level": null,
+        "item": "thunder-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Flareon",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Espeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Umbreon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Leafeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Glaceon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Sylveon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Vaporeon",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Jolteon",
+        "method": "use-item",
+        "level": null,
+        "item": "thunder-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Flareon",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Espeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Umbreon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Leafeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Glaceon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Sylveon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Vaporeon",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Jolteon",
+        "method": "use-item",
+        "level": null,
+        "item": "thunder-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Flareon",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Espeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Umbreon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Leafeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Glaceon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Sylveon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Vaporeon",
+        "method": "use-item",
+        "level": null,
+        "item": "water-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Jolteon",
+        "method": "use-item",
+        "level": null,
+        "item": "thunder-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Flareon",
+        "method": "use-item",
+        "level": null,
+        "item": "fire-stone",
+        "min_happiness": null
+      },
+      {
+        "species": "Espeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Umbreon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": 160
+      },
+      {
+        "species": "Leafeon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Glaceon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Sylveon",
+        "method": "level-up",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 55,
+      "attack": 55,
+      "defense": 50,
+      "special_attack": 45,
+      "special_defense": 65,
+      "speed": 55
+    },
+    "base_combat": 52,
+    "base_beauty": 61,
+    "base_healthy": 56,
+    "base_occult": 34,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 134,
+    "name": "Vaporeon",
+    "types": [
+      "Water"
+    ],
+    "ability": "Water-Absorb",
+    "rarity": "very_rare",
+    "habitats": [
+      "Celadon City"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 130,
+      "attack": 65,
+      "defense": 60,
+      "special_attack": 110,
+      "special_defense": 95,
+      "speed": 65
+    },
+    "base_combat": 82,
+    "base_beauty": 100,
+    "base_healthy": 100,
+    "base_occult": 60,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 135,
+    "name": "Jolteon",
+    "types": [
+      "Electric"
+    ],
+    "ability": "Volt-Absorb",
+    "rarity": "very_rare",
+    "habitats": [
+      "Celadon City"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 65,
+      "defense": 60,
+      "special_attack": 110,
+      "special_defense": 95,
+      "speed": 130
+    },
+    "base_combat": 94,
+    "base_beauty": 100,
+    "base_healthy": 72,
+    "base_occult": 77,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 136,
+    "name": "Flareon",
+    "types": [
+      "Fire"
+    ],
+    "ability": "Flash-Fire",
+    "rarity": "very_rare",
+    "habitats": [
+      "Celadon City"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 65,
+      "attack": 130,
+      "defense": 60,
+      "special_attack": 95,
+      "special_defense": 110,
+      "speed": 65
+    },
+    "base_combat": 100,
+    "base_beauty": 83,
+    "base_healthy": 76,
+    "base_occult": 70,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 137,
+    "name": "Porygon",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Trace",
+    "rarity": "uncommon",
+    "habitats": [
+      "Celadon City"
+    ],
+    "evolution": "Porygon2",
+    "evolution_level": null,
+    "evolutions": [
+      {
+        "species": "Porygon2",
+        "method": "trade",
+        "level": null,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 65,
+      "attack": 60,
+      "defense": 70,
+      "special_attack": 85,
+      "special_defense": 75,
+      "speed": 40
+    },
+    "base_combat": 67,
+    "base_beauty": 68,
+    "base_healthy": 69,
+    "base_occult": 46,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 138,
+    "name": "Omanyte",
+    "types": [
+      "Rock",
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "uncommon",
+    "habitats": [
+      "Cinnabar Island"
+    ],
+    "evolution": "Omastar",
+    "evolution_level": 40,
+    "evolutions": [
+      {
+        "species": "Omastar",
+        "method": "level-up",
+        "level": 40,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Omastar",
+        "method": "level-up",
+        "level": 40,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 35,
+      "attack": 40,
+      "defense": 100,
+      "special_attack": 90,
+      "special_defense": 55,
+      "speed": 35
+    },
+    "base_combat": 61,
+    "base_beauty": 72,
+    "base_healthy": 59,
+    "base_occult": 42,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 139,
+    "name": "Omastar",
+    "types": [
+      "Rock",
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "rare",
+    "habitats": [
+      "Cinnabar Island"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 70,
+      "attack": 60,
+      "defense": 125,
+      "special_attack": 115,
+      "special_defense": 70,
+      "speed": 55
+    },
+    "base_combat": 83,
+    "base_beauty": 90,
+    "base_healthy": 85,
+    "base_occult": 54,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 140,
+    "name": "Kabuto",
+    "types": [
+      "Rock",
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "uncommon",
+    "habitats": [
+      "Cinnabar Island"
+    ],
+    "evolution": "Kabutops",
+    "evolution_level": 40,
+    "evolutions": [
+      {
+        "species": "Kabutops",
+        "method": "level-up",
+        "level": 40,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Kabutops",
+        "method": "level-up",
+        "level": 40,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 30,
+      "attack": 80,
+      "defense": 90,
+      "special_attack": 55,
+      "special_defense": 45,
+      "speed": 55
+    },
+    "base_combat": 65,
+    "base_beauty": 68,
+    "base_healthy": 51,
+    "base_occult": 32,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 141,
+    "name": "Kabutops",
+    "types": [
+      "Rock",
+      "Water"
+    ],
+    "ability": "Swift-Swim",
+    "rarity": "rare",
+    "habitats": [
+      "Cinnabar Island"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 60,
+      "attack": 115,
+      "defense": 105,
+      "special_attack": 65,
+      "special_defense": 70,
+      "speed": 80
+    },
+    "base_combat": 87,
+    "base_beauty": 85,
+    "base_healthy": 75,
+    "base_occult": 43,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 142,
+    "name": "Aerodactyl",
+    "types": [
+      "Rock",
+      "Flying"
+    ],
+    "ability": "Rock-Head",
+    "rarity": "very_rare",
+    "habitats": [
+      "Cinnabar Island"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 80,
+      "attack": 105,
+      "defense": 65,
+      "special_attack": 60,
+      "special_defense": 75,
+      "speed": 130
+    },
+    "base_combat": 89,
+    "base_beauty": 100,
+    "base_healthy": 74,
+    "base_occult": 48,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": true,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 143,
+    "name": "Snorlax",
+    "types": [
+      "Normal"
+    ],
+    "ability": "Immunity",
+    "rarity": "very_rare",
+    "habitats": [
+      "Route 12",
+      "Route 16"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 160,
+      "attack": 110,
+      "defense": 65,
+      "special_attack": 65,
+      "special_defense": 110,
+      "speed": 30
+    },
+    "base_combat": 78,
+    "base_beauty": 73,
+    "base_healthy": 100,
+    "base_occult": 48,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": true,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 144,
+    "name": "Articuno",
+    "types": [
+      "Ice",
+      "Flying"
+    ],
+    "ability": "Pressure",
+    "rarity": "legendary",
+    "habitats": [
+      "Seafoam Islands"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 90,
+      "attack": 85,
+      "defense": 100,
+      "special_attack": 95,
+      "special_defense": 125,
+      "speed": 85
+    },
+    "base_combat": 93,
+    "base_beauty": 100,
+    "base_healthy": 100,
+    "base_occult": 100,
+    "can_be_wild": true,
+    "is_legendary": true,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": true,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 145,
+    "name": "Zapdos",
+    "types": [
+      "Electric",
+      "Flying"
+    ],
+    "ability": "Pressure",
+    "rarity": "legendary",
+    "habitats": [
+      "Power Plant"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 90,
+      "attack": 90,
+      "defense": 85,
+      "special_attack": 125,
+      "special_defense": 90,
+      "speed": 100
+    },
+    "base_combat": 100,
+    "base_beauty": 100,
+    "base_healthy": 89,
+    "base_occult": 100,
+    "can_be_wild": true,
+    "is_legendary": true,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": true,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 146,
+    "name": "Moltres",
+    "types": [
+      "Fire",
+      "Flying"
+    ],
+    "ability": "Pressure",
+    "rarity": "legendary",
+    "habitats": [
+      "Victory Road"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 90,
+      "attack": 100,
+      "defense": 90,
+      "special_attack": 125,
+      "special_defense": 85,
+      "speed": 90
+    },
+    "base_combat": 100,
+    "base_beauty": 100,
+    "base_healthy": 89,
+    "base_occult": 100,
+    "can_be_wild": true,
+    "is_legendary": true,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": true,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 147,
+    "name": "Dratini",
+    "types": [
+      "Dragon"
+    ],
+    "ability": "Shed-Skin",
+    "rarity": "uncommon",
+    "habitats": [
+      "Safari Zone"
+    ],
+    "evolution": "Dragonair",
+    "evolution_level": 30,
+    "evolutions": [
+      {
+        "species": "Dragonair",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Dragonair",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Dragonair",
+        "method": "level-up",
+        "level": 30,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 41,
+      "attack": 64,
+      "defense": 45,
+      "special_attack": 50,
+      "special_defense": 50,
+      "speed": 50
+    },
+    "base_combat": 54,
+    "base_beauty": 67,
+    "base_healthy": 45,
+    "base_occult": 55,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 148,
+    "name": "Dragonair",
+    "types": [
+      "Dragon"
+    ],
+    "ability": "Shed-Skin",
+    "rarity": "rare",
+    "habitats": [
+      "Safari Zone",
+      "Cerulean Cave"
+    ],
+    "evolution": "Dragonite",
+    "evolution_level": 55,
+    "evolutions": [
+      {
+        "species": "Dragonite",
+        "method": "level-up",
+        "level": 55,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Dragonite",
+        "method": "level-up",
+        "level": 55,
+        "item": null,
+        "min_happiness": null
+      },
+      {
+        "species": "Dragonite",
+        "method": "level-up",
+        "level": 55,
+        "item": null,
+        "min_happiness": null
+      }
+    ],
+    "evolution_stage": 2,
+    "base_stats": {
+      "hp": 61,
+      "attack": 84,
+      "defense": 65,
+      "special_attack": 70,
+      "special_defense": 70,
+      "speed": 70
+    },
+    "base_combat": 74,
+    "base_beauty": 83,
+    "base_healthy": 65,
+    "base_occult": 67,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 149,
+    "name": "Dragonite",
+    "types": [
+      "Dragon",
+      "Flying"
+    ],
+    "ability": "Inner-Focus",
+    "rarity": "very_rare",
+    "habitats": [
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 3,
+    "base_stats": {
+      "hp": 91,
+      "attack": 134,
+      "defense": 95,
+      "special_attack": 100,
+      "special_defense": 100,
+      "speed": 80
+    },
+    "base_combat": 100,
+    "base_beauty": 100,
+    "base_healthy": 95,
+    "base_occult": 84,
+    "can_be_wild": true,
+    "is_legendary": false,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": false,
+      "evolution": true
+    }
+  },
+  {
+    "pokedex_id": 150,
+    "name": "Mewtwo",
+    "types": [
+      "Psychic"
+    ],
+    "ability": "Pressure",
+    "rarity": "legendary",
+    "habitats": [
+      "Cerulean Cave"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 106,
+      "attack": 110,
+      "defense": 90,
+      "special_attack": 154,
+      "special_defense": 90,
+      "speed": 130
+    },
+    "base_combat": 100,
+    "base_beauty": 100,
+    "base_healthy": 97,
+    "base_occult": 100,
+    "can_be_wild": true,
+    "is_legendary": true,
+    "is_mythic": false,
+    "is_starter": false,
+    "availability": {
+      "wild": true,
+      "gift": false,
+      "event": true,
+      "evolution": false
+    }
+  },
+  {
+    "pokedex_id": 151,
+    "name": "Mew",
+    "types": [
+      "Psychic"
+    ],
+    "ability": "Synchronize",
+    "rarity": "mythic",
+    "habitats": [
+      "Mythic Event"
+    ],
+    "evolution": null,
+    "evolution_level": null,
+    "evolutions": [],
+    "evolution_stage": 1,
+    "base_stats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 100,
+      "special_attack": 100,
+      "special_defense": 100,
+      "speed": 100
+    },
+    "base_combat": 100,
+    "base_beauty": 100,
+    "base_healthy": 100,
+    "base_occult": 100,
+    "can_be_wild": false,
+    "is_legendary": false,
+    "is_mythic": true,
+    "is_starter": false,
+    "availability": {
+      "wild": false,
+      "gift": false,
+      "event": true,
+      "evolution": false
+    }
+  }
+]

@@ -1,0 +1,788 @@
+[
+  {
+    "id": "first_pokemon_toy",
+    "title": "O brinquedo de Pokemon",
+    "text": "Ainda pequeno, voce ganha um brinquedo gasto de Pokemon. Ele vira sua primeira obsessao.",
+    "min_age": 1,
+    "max_age": 4,
+    "phase": "primeira infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Cuidar dele como se fosse real",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce cuidava de um brinquedo de Pokemon como se fosse um companheiro real."
+      },
+      {
+        "text": "Levar para brincar la fora",
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "LUK": 1
+          }
+        },
+        "history_entry": "Voce levou seu brinquedo de Pokemon para pequenas aventuras em Pallet Town."
+      }
+    ],
+    "tags": [
+      "family",
+      "pokemon"
+    ],
+    "base_weight": 1.0,
+    "min_event_chance": 0.2
+  },
+  {
+    "id": "thunderstorm_night",
+    "title": "Noite de trovoes",
+    "text": "Uma tempestade cai sobre Pallet Town. Ao longe, algo eletrico ilumina a grama alta.",
+    "min_age": 2,
+    "max_age": 4,
+    "phase": "primeira infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Olhar pela janela",
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce viu luzes eletricas na grama alta durante uma tempestade."
+      },
+      {
+        "text": "Tentar sair para ver melhor",
+        "chance": 0.35,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "LUK": 1
+          }
+        },
+        "failure_effects": {
+          "health": -8,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce quase saiu na tempestade para investigar luzes na grama.",
+        "failure_history_entry": "Voce escorregou tentando sair na tempestade e aprendeu medo e curiosidade ao mesmo tempo."
+      }
+    ],
+    "tags": [
+      "risk",
+      "rare",
+      "wild"
+    ],
+    "base_weight": 0.75
+  },
+  {
+    "id": "academy_first_day",
+    "title": "Primeiro dia na academia",
+    "text": "A pequena academia local ensina criancas sobre rotas, tipos e seguranca com Pokemon selvagens.",
+    "min_age": 5,
+    "max_age": 7,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Prestar atencao nas aulas",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 2
+          },
+          "career": "Estudante da academia"
+        },
+        "history_entry": "Voce comecou a estudar Pokemon na academia de Pallet Town."
+      },
+      {
+        "text": "Fazer amigos no intervalo",
+        "effects": {
+          "attributes": {
+            "LUK": 2,
+            "MEN": 1
+          },
+          "career": "Estudante da academia"
+        },
+        "history_entry": "Voce fez seus primeiros amigos na academia Pokemon."
+      },
+      {
+        "text": "Fugir para observar a grama alta",
+        "chance": 0.45,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          }
+        },
+        "failure_effects": {
+          "health": -6,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce fugiu da aula e observou Pokemon selvagens de longe.",
+        "failure_history_entry": "Voce fugiu da aula, tropecou perto da grama alta e levou uma bronca memoravel."
+      }
+    ],
+    "tags": [
+      "academy",
+      "starter"
+    ],
+    "base_weight": 1.4,
+    "min_event_chance": 0.35
+  },
+  {
+    "id": "hurt_pidgey",
+    "title": "Um Pidgey ferido",
+    "text": "Voce encontra um Pidgey machucado perto de casa. Ele parece assustado, mas nao foge.",
+    "min_age": 5,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Ajudar o Pidgey com cuidado",
+        "chance": 0.8,
+        "effects": {
+          "attributes": {
+            "POK": 3,
+            "MEN": 1
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "health": -2
+        },
+        "history_entry": "Voce ajudou um Pidgey ferido perto de Pallet Town.",
+        "failure_history_entry": "Voce tentou ajudar um Pidgey ferido, mas ele se assustou e bicou sua mao."
+      },
+      {
+        "text": "Chamar um adulto",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce chamou um adulto para cuidar de um Pidgey ferido."
+      },
+      {
+        "text": "Observar de longe",
+        "effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce observou um Pidgey ferido e aprendeu a respeitar seu espaco."
+      }
+    ],
+    "tags": [
+      "pokemon",
+      "care",
+      "wild"
+    ],
+    "base_weight": 1.1
+  },
+  {
+    "id": "oak_lab_visit",
+    "title": "Visita ao laboratorio",
+    "text": "O laboratorio do Professor Oak esta aberto. Livros, mapas e sons estranhos ocupam a sala.",
+    "min_age": 6,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": false,
+    "choices": [
+      {
+        "text": "Ler sobre tipos Pokemon",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 3
+          }
+        },
+        "history_entry": "Voce passou uma tarde lendo sobre tipos Pokemon no laboratorio do Professor Oak."
+      },
+      {
+        "text": "Ajudar a organizar amostras",
+        "chance": 0.75,
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          },
+          "money": 15
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "reputation": -1
+        },
+        "history_entry": "Voce ajudou no laboratorio e ganhou alguns Pokedollar.",
+        "failure_history_entry": "Voce derrubou amostras no laboratorio do Professor Oak e ficou sem graca."
+      },
+      {
+        "text": "Conversar com os assistentes",
+        "effects": {
+          "attributes": {
+            "LUK": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce fez perguntas aos assistentes do Professor Oak."
+      }
+    ],
+    "tags": [
+      "academy",
+      "research",
+      "pokemon"
+    ],
+    "base_weight": 1.2
+  },
+  {
+    "id": "school_battle_cards",
+    "title": "Batalhas de papel",
+    "text": "As criancas da academia inventam batalhas usando cartas desenhadas a mao.",
+    "min_age": 6,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": false,
+    "choices": [
+      {
+        "text": "Jogar pensando em estrategia",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce aprendeu estrategia brincando de batalhas Pokemon no papel."
+      },
+      {
+        "text": "Blefar e improvisar",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "LUK": 2,
+            "MEN": 1
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "attributes": {
+            "LUK": 1
+          },
+          "reputation": -1
+        },
+        "history_entry": "Voce venceu uma brincadeira de batalha com um blefe ousado.",
+        "failure_history_entry": "Seu blefe numa batalha de papel falhou e virou piada por alguns dias."
+      }
+    ],
+    "tags": [
+      "academy",
+      "battle"
+    ],
+    "base_weight": 0.9
+  },
+  {
+    "id": "forest_dare",
+    "title": "Desafio na grama alta",
+    "text": "Outras criancas desafiam voce a chegar perto da grama alta sem um Pokemon.",
+    "min_age": 7,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": false,
+    "choices": [
+      {
+        "text": "Aceitar o desafio",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "PHY": 3,
+            "POK": 1
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "attributes": {
+            "PHY": 1
+          },
+          "health": -10
+        },
+        "history_entry": "Voce encarou a grama alta antes de ter um Pokemon.",
+        "failure_history_entry": "Voce correu da grama alta depois de ouvir um rosnado desconhecido."
+      },
+      {
+        "text": "Recusar e voltar para casa",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce recusou um desafio perigoso perto da grama alta."
+      }
+    ],
+    "tags": [
+      "risk",
+      "wild",
+      "route"
+    ],
+    "base_weight": 0.8
+  },
+  {
+    "id": "lost_allowance",
+    "title": "Mesada perdida",
+    "text": "Voce encontra alguns Pokedollar caidos perto da estrada. Ninguem parece estar olhando.",
+    "min_age": 8,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Entregar na academia",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "reputation": 2
+        },
+        "history_entry": "Voce entregou Pokedollar perdidos na academia."
+      },
+      {
+        "text": "Guardar para comprar Poke Balls no futuro",
+        "chance": 0.7,
+        "effects": {
+          "money": 30,
+          "attributes": {
+            "LUK": 1
+          }
+        },
+        "failure_effects": {
+          "reputation": -2,
+          "attributes": {
+            "LUK": 1
+          }
+        },
+        "history_entry": "Voce guardou alguns Pokedollar encontrados na estrada.",
+        "failure_history_entry": "Descobriram que voce guardou Pokedollar perdidos, e sua reputacao sofreu."
+      }
+    ],
+    "tags": [
+      "money",
+      "luck"
+    ],
+    "base_weight": 0.65
+  },
+  {
+    "id": "academy_pokeball_prize",
+    "title": "Premio da academia",
+    "text": "A academia organiza uma prova sobre seguranca, habitats e comportamento de Pokemon selvagens.",
+    "min_age": 8,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Fazer a prova com calma",
+        "chance": 0.65,
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 2
+          },
+          "inventory": {
+            "Poke Ball": 2
+          }
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce ganhou duas Poke Balls em uma prova da academia.",
+        "failure_history_entry": "Voce foi mediano na prova da academia, mas aprendeu o suficiente para tentar de novo no futuro."
+      },
+      {
+        "text": "Chutar respostas e confiar na sorte",
+        "chance": 0.35,
+        "effects": {
+          "attributes": {
+            "LUK": 2
+          },
+          "inventory": {
+            "Great Ball": 1
+          }
+        },
+        "failure_effects": {
+          "attributes": {
+            "LUK": 1
+          }
+        },
+        "history_entry": "Voce ganhou uma Great Ball chutando respostas improvaveis na academia.",
+        "failure_history_entry": "Voce chutou respostas na prova da academia e saiu so com uma risada nervosa."
+      }
+    ],
+    "tags": [
+      "academy",
+      "items",
+      "capture"
+    ],
+    "base_weight": 0.9
+  },
+  {
+    "id": "rattata_in_pantry",
+    "title": "Rattata na despensa",
+    "text": "Um Rattata entra na despensa da sua casa. Ele esta assustado, faminto e rapido demais para adultos alcancarem.",
+    "min_age": 8,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Oferecer comida e tentar uma Poke Ball",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "LUK": 1
+          },
+          "inventory": {
+            "Poke Ball": -1
+          },
+          "pokemon": [
+            {
+              "species": "Rattata",
+              "level": 3,
+              "origin": "atraido pela despensa de casa"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "inventory": {
+            "Poke Ball": -1
+          }
+        },
+        "history_entry": "Voce conquistou um Rattata jovem antes mesmo de receber um Pokemon inicial.",
+        "failure_history_entry": "Voce tentou capturar um Rattata na despensa, mas ele fugiu pela janela."
+      },
+      {
+        "text": "Guiar o Rattata para fora com cuidado",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          },
+          "reputation": 1
+        },
+        "history_entry": "Voce guiou um Rattata assustado para fora de casa sem machuca-lo."
+      }
+    ],
+    "tags": [
+      "capture",
+      "pokemon",
+      "rare"
+    ],
+    "base_weight": 0.55,
+    "conditions": {
+      "min_items": {
+        "Poke Ball": 1
+      },
+      "requires_no_pokemon": true
+    }
+  },
+  {
+    "id": "pidgey_follows_home",
+    "title": "O Pidgey que voltou",
+    "text": "Um Pidgey que voce ja tinha visto aparece varias tardes no mesmo telhado, sempre observando voce.",
+    "min_age": 9,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "choices": [
+      {
+        "text": "Criar uma rotina de cuidado",
+        "chance": 0.6,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "pokemon": [
+            {
+              "species": "Pidgey",
+              "level": 4,
+              "origin": "amizade construida em Pallet Town"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Um Pidgey passou a confiar em voce e entrou para sua equipe.",
+        "failure_history_entry": "Voce tentou conquistar a confianca de um Pidgey, mas ele continuou livre pelos telhados."
+      },
+      {
+        "text": "So observar seu comportamento",
+        "effects": {
+          "attributes": {
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce observou por semanas o comportamento de um Pidgey dos telhados."
+      }
+    ],
+    "tags": [
+      "pokemon",
+      "care"
+    ],
+    "base_weight": 0.55,
+    "conditions": {
+      "requires_no_pokemon": true
+    }
+  },
+  {
+    "id": "pallet_area_companion",
+    "title": "Um companheiro da vizinhanca",
+    "text": "Durante varios dias, um Pokemon pequeno das redondezas de Pallet aparece perto de voce. Ele parece curioso, nao agressivo.",
+    "min_age": 7,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "tags": [
+      "pokemon",
+      "care",
+      "wild",
+      "capture"
+    ],
+    "base_weight": 0.45,
+    "conditions": {
+      "requires_no_pokemon": true
+    },
+    "choices": [
+      {
+        "text": "Criar confianca com comida e paciencia",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "random_area_pokemon": [
+            {
+              "location": "Pallet Town",
+              "level": 3,
+              "origin": "amizade construida nas redondezas de Pallet"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce conquistou a confianca de um Pokemon das redondezas de Pallet.",
+        "failure_history_entry": "Voce tentou se aproximar de um Pokemon de Pallet, mas ele voltou para a grama alta."
+      },
+      {
+        "text": "Observar sem interferir",
+        "effects": {
+          "attributes": {
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce observou um Pokemon selvagem de Pallet sem tentar prende-lo."
+      }
+    ]
+  },
+  {
+    "id": "warm_common_egg",
+    "title": "Ovo esquecido na cerca",
+    "text": "Perto de uma cerca baixa, voce encontra um ovo morno com manchas coloridas. Um adulto diz que ele pode ser cuidado na academia.",
+    "min_age": 6,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "tags": [
+      "egg",
+      "care",
+      "rare"
+    ],
+    "base_weight": 0.22,
+    "choices": [
+      {
+        "text": "Levar o ovo para a academia",
+        "chance": 0.7,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "eggs": [
+            {
+              "tier_weights": {
+                "C": 75,
+                "I": 25
+              },
+              "origin": "encontrado perto de uma cerca em Pallet"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce encontrou um Poke Egg comum nas redondezas de Pallet.",
+        "failure_history_entry": "Voce encontrou um ovo, mas um cuidador localizou o verdadeiro dono antes que voce pudesse cuidar dele."
+      }
+    ]
+  },
+  {
+    "id": "academy_colored_egg",
+    "title": "Ovo colorido da academia",
+    "text": "A academia recebe alguns ovos para estudo. Um deles chama sua atencao pela cor ligada a um tipo Pokemon.",
+    "min_age": 8,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "tags": [
+      "egg",
+      "academy",
+      "research",
+      "rare"
+    ],
+    "base_weight": 0.12,
+    "conditions": {
+      "min_attributes": {
+        "POK": 35
+      }
+    },
+    "choices": [
+      {
+        "text": "Assumir a responsabilidade pelo ovo",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "POK": 3,
+            "MEN": 1
+          },
+          "eggs": [
+            {
+              "tier_weights": {
+                "I": 50,
+                "R": 35,
+                "RR": 15
+              },
+              "origin": "programa de estudo da academia de Pallet"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce recebeu um Poke Egg raro em um programa da academia.",
+        "failure_history_entry": "A academia decidiu que voce ainda nao estava pronto para cuidar daquele ovo raro."
+      }
+    ]
+  },
+  {
+    "id": "shimmering_super_rare_egg",
+    "title": "Ovo de brilho estranho",
+    "text": "Em uma noite silenciosa, um ovo de brilho incomum aparece perto do laboratorio do Professor Oak. Ninguem sabe explicar sua origem.",
+    "min_age": 9,
+    "max_age": 9,
+    "phase": "infancia",
+    "region": "Kanto",
+    "city": "Pallet Town",
+    "once": true,
+    "tags": [
+      "egg",
+      "rare",
+      "research",
+      "pokemon"
+    ],
+    "base_weight": 0.035,
+    "conditions": {
+      "min_attributes": {
+        "LUK": 45,
+        "POK": 35
+      }
+    },
+    "choices": [
+      {
+        "text": "Avisar Oak e pedir para ajudar no cuidado",
+        "chance": 0.35,
+        "effects": {
+          "attributes": {
+            "POK": 4,
+            "LUK": 2
+          },
+          "eggs": [
+            {
+              "tier_weights": {
+                "R": 30,
+                "RR": 45,
+                "SR": 25
+              },
+              "origin": "ovo misterioso encontrado perto do laboratorio Oak"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce recebeu um Poke Egg de brilho rarissimo com autorizacao do Professor Oak.",
+        "failure_history_entry": "Oak recolheu o ovo misterioso para pesquisa, mas deixou voce acompanhar os estudos."
+      }
+    ]
+  }
+]
