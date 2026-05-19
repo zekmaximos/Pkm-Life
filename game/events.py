@@ -108,8 +108,25 @@ def choose_weighted_event(
     candidates = valid_events(character, events)
     if not candidates:
         return None
-    weights = [event_weight(character, event, city_focus or []) for event in candidates]
-    return random.choices(candidates, weights=weights, k=1)[0]
+    recent: list[str] = list(character.flags.get("recent_event_ids", []))
+    weights = []
+    for event in candidates:
+        w = event_weight(character, event, city_focus or [])
+        # Penaliza eventos vistos recentemente (cooldown de 5 eventos)
+        if event.event_id in recent:
+            position = len(recent) - 1 - recent[::-1].index(event.event_id)
+            penalty = max(0.05, 1.0 - (len(recent) - position) * 0.18)
+            w *= penalty
+        weights.append(w)
+    chosen = random.choices(candidates, weights=weights, k=1)[0]
+    # Atualiza cooldown (mantém fila de 5 mais recentes)
+    if chosen.event_id in recent:
+        recent.remove(chosen.event_id)
+    recent.append(chosen.event_id)
+    if len(recent) > 5:
+        recent.pop(0)
+    character.flags["recent_event_ids"] = recent
+    return chosen
 
 
 def event_occurrence_chance(character: Character, city_focus: list[str] | None = None) -> float:
@@ -146,8 +163,12 @@ def event_weight(character: Character, event: LifeEvent, city_focus: list[str]) 
     weight = max(0.05, event.base_weight)
     if tags.intersection(city_focus):
         weight += 1.25
-    if character.career and _career_tag(character.career) in tags:
-        weight += 1.0
+    if character.career:
+        career_tag = _career_tag(character.career)
+        if career_tag in tags:
+            weight += 1.75
+        elif tags.intersection({"battle", "care", "contest", "academy"}) and "career_transition" not in tags:
+            weight *= 0.75
     if character.team and tags.intersection({"pokemon", "battle", "care", "contest"}):
         weight += 0.55
     if character.inventory.get("Poke Ball", 0) > 0 and tags.intersection({"capture", "wild"}):
@@ -176,7 +197,7 @@ def apply_choice_result(character: Character, event: LifeEvent, choice: EventCho
     character.health = max(0, min(100, character.health + int(effects.get("health", 0))))
     character.money = max(0, character.money + int(effects.get("money", 0)))
     character.reputation += int(effects.get("reputation", 0))
-    if "career" in effects:
+    if "career" in effects and _can_apply_career_change(event):
         character.career = effects["career"]
     for item, amount in effects.get("inventory", {}).items():
         character.inventory[item] = max(0, character.inventory.get(item, 0) + int(amount))
@@ -204,9 +225,9 @@ def _effective_choice_chance(character: Character, choice: EventChoice) -> float
 def _conditions_match(character: Character, conditions: dict) -> bool:
     if not conditions:
         return True
-    if conditions.get("requires_pokemon") and not character.team:
+    if conditions.get("requires_pokemon") and not (character.team or character.box):
         return False
-    if conditions.get("requires_no_pokemon") and character.team:
+    if conditions.get("requires_no_pokemon") and (character.team or character.box):
         return False
     if "career" in conditions and character.career != conditions["career"]:
         return False
@@ -232,6 +253,12 @@ def _career_tag(career: str) -> str:
         "Criador": "care",
         "Coordenador": "contest",
     }.get(career, career.lower())
+
+
+
+
+def _can_apply_career_change(event: LifeEvent) -> bool:
+    return "career_transition" in set(event.tags or [])
 
 
 def _normalize_attribute_effects(effects: dict[str, int]) -> dict[str, int]:

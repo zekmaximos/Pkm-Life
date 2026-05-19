@@ -8,6 +8,7 @@
       "gym"
     ],
     "shop_inventory": [
+      "Kanto Map",
       "Poke Ball",
       "Potion",
       "Antidote",
@@ -26,6 +27,9 @@
       "academy",
       "family",
       "early_capture"
+    ],
+    "encounter_sources": [
+      "route_1"
     ]
   },
   {
@@ -36,6 +40,7 @@
       "gym"
     ],
     "shop_inventory": [
+      "Kanto Map",
       "Poke Ball",
       "Potion",
       "Antidote",
@@ -52,6 +57,11 @@
       "route",
       "gym",
       "forest"
+    ],
+    "encounter_sources": [
+      "route_1",
+      "route_2",
+      "viridian_forest"
     ]
   },
   {
@@ -63,6 +73,7 @@
       "museum"
     ],
     "shop_inventory": [
+      "Kanto Map",
       "Poke Ball",
       "Potion",
       "Great Ball",
@@ -82,6 +93,10 @@
       "museum",
       "rock",
       "gym"
+    ],
+    "encounter_sources": [
+      "route_3",
+      "mt_moon"
     ]
   },
   {
@@ -111,6 +126,11 @@
       "water",
       "bridge",
       "gym"
+    ],
+    "encounter_sources": [
+      "route_4",
+      "route_24",
+      "route_25"
     ]
   },
   {
@@ -143,6 +163,10 @@
       "port",
       "electric",
       "trade"
+    ],
+    "encounter_sources": [
+      "route_6",
+      "route_11"
     ]
   },
   {
@@ -173,6 +197,11 @@
       "ghost",
       "memorial",
       "care"
+    ],
+    "encounter_sources": [
+      "pokemon_tower",
+      "route_8",
+      "route_10"
     ]
   },
   {
@@ -212,6 +241,10 @@
       "contest",
       "grass",
       "rare_items"
+    ],
+    "encounter_sources": [
+      "route_7",
+      "route_16"
     ]
   },
   {
@@ -246,6 +279,10 @@
       "safari",
       "poison",
       "breeding"
+    ],
+    "encounter_sources": [
+      "safari_zone",
+      "route_18"
     ]
   },
   {
@@ -282,6 +319,12 @@
       "psychic",
       "city",
       "corporate"
+    ],
+    "encounter_sources": [
+      "route_5",
+      "route_6",
+      "route_7",
+      "route_8"
     ]
   },
   {
@@ -318,6 +361,10 @@
       "fire",
       "fossil",
       "research"
+    ],
+    "encounter_sources": [
+      "pokemon_mansion",
+      "route_20"
     ]
   },
   {
@@ -349,6 +396,10 @@
       "league",
       "legacy",
       "elite"
+    ],
+    "encounter_sources": [
+      "route_23",
+      "victory_road"
     ]
   },
   {
@@ -382,6 +433,11 @@
       "ice",
       "seafoam",
       "harbor"
+    ],
+    "encounter_sources": [
+      "seafoam_islands",
+      "route_19",
+      "route_20"
     ]
   }
 ]

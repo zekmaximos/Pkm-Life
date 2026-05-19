@@ -43,6 +43,10 @@ class Character:
     flags: dict[str, bool | str | int | list[str]] = field(default_factory=dict)
     career: str | None = None
     generated_gyms: dict[str, dict] = field(default_factory=dict)
+    career_ranks: dict[str, int] = field(default_factory=dict)
+    career_xp: dict[str, int] = field(default_factory=dict)
+    pokedex_seen: list[str] = field(default_factory=list)
+    pokedex_caught: list[str] = field(default_factory=list)
 
     @property
     def phase(self) -> str:
@@ -82,6 +86,19 @@ class Character:
         for index, pokemon in enumerate(self.team):
             pokemon.active = index == self.active_pokemon_index
 
+    def career_rank(self, career: str | None = None) -> int:
+        key = career or self.career or ""
+        return int(self.career_ranks.get(key, 0))
+
+    def register_seen(self, species_name: str) -> None:
+        if species_name not in self.pokedex_seen:
+            self.pokedex_seen.append(species_name)
+
+    def register_caught(self, species_name: str) -> None:
+        self.register_seen(species_name)
+        if species_name not in self.pokedex_caught:
+            self.pokedex_caught.append(species_name)
+
     def to_dict(self) -> dict:
         return {
             "name": self.name,
@@ -104,6 +121,10 @@ class Character:
             "flags": self.flags,
             "career": self.career,
             "generated_gyms": self.generated_gyms,
+            "career_ranks": self.career_ranks,
+            "career_xp": self.career_xp,
+            "pokedex_seen": self.pokedex_seen,
+            "pokedex_caught": self.pokedex_caught,
         }
 
     @classmethod
@@ -129,4 +150,8 @@ class Character:
         character.flags = data.get("flags", {})
         character.career = data.get("career")
         character.generated_gyms = data.get("generated_gyms", {})
+        character.career_ranks = data.get("career_ranks", {})
+        character.career_xp = data.get("career_xp", {})
+        character.pokedex_seen = data.get("pokedex_seen", [])
+        character.pokedex_caught = data.get("pokedex_caught", [])
         return character

@@ -132,7 +132,7 @@ def resolve_auto_battle(
     win_chance = player_score / max(0.01, player_score + enemy_score)
     win_chance = clamp(win_chance, 0.05, 0.95)
     player_won = random.random() <= win_chance
-    xp_gain = max(3, int(enemy_pokemon.level * (1.2 if player_won else 0.35)))
+    xp_gain = _suggest_xp_gain(enemy_pokemon.level, player_won)
     health_loss = _suggest_health_loss(player_won, win_chance, enemy_score, player_score)
 
     if player_won:
@@ -171,6 +171,8 @@ def simulate_simple_battle(
     enemy = create_owned_pokemon(opponent_species, level=opponent_level, origin="encontro selvagem")
     enemy.nickname = opponent_name
     result = resolve_auto_battle(player_pokemon, enemy, character.attributes)
+    if important:
+        result.xp_gain = int(result.xp_gain * 1.25)
     player_won = result.winner == player_pokemon.display_name()
     player_pokemon.current_health = max(0, player_pokemon.current_health - result.health_loss)
     level_notes = grant_pokemon_xp(player_pokemon, result.xp_gain, species_by_name or {player_species.name: player_species})
@@ -200,3 +202,9 @@ def _suggest_health_loss(player_won: bool, win_chance: float, enemy_score: float
     if player_won:
         return int(clamp(5 + pressure * 25, 1, 35))
     return int(clamp(18 + (1 - win_chance) * 35, 10, 60))
+
+
+def _suggest_xp_gain(enemy_level: int, player_won: bool) -> int:
+    if player_won:
+        return max(18, 12 + enemy_level * 5)
+    return max(6, 4 + enemy_level * 2)

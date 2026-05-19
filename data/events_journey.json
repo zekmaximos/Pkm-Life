@@ -94,11 +94,13 @@
     "tags": [
       "pokemon",
       "career",
-      "starter"
+      "starter",
+      "career_transition"
     ],
     "base_weight": 1.2,
     "conditions": {
-      "requires_pokemon": true
+      "requires_pokemon": true,
+      "career": "Estudante da academia"
     }
   },
   {
@@ -166,7 +168,6 @@
       {
         "text": "Ajudar com paciencia",
         "effects": {
-          "career": "Criador",
           "attributes": {
             "POK": 2,
             "MEN": 1
@@ -214,7 +215,6 @@
         "text": "Participar com criatividade",
         "chance": 0.6,
         "effects": {
-          "career": "Coordenador",
           "attributes": {
             "LUK": 2,
             "POK": 1
@@ -497,5 +497,2640 @@
         "failure_history_entry": "O turno foi cansativo, mas ainda rendeu um pouco de dinheiro."
       }
     ]
+  },
+  {
+    "id": "academy_field_exam",
+    "title": "Prova de campo da academia",
+    "text": "A academia organiza uma avaliacao pratica sobre habitats, comportamento Pokemon e seguranca em rotas.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "academy",
+      "research",
+      "route",
+      "career"
+    ],
+    "base_weight": 0.75,
+    "choices": [
+      {
+        "text": "Estudar antes da prova",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce se dedicou a uma prova de campo da academia Pokemon."
+      },
+      {
+        "text": "Responder usando intuicao",
+        "chance": 0.48,
+        "effects": {
+          "attributes": {
+            "LUK": 2,
+            "POK": 1
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce passou na prova de campo confiando na propria intuicao.",
+        "failure_history_entry": "Voce errou parte da prova de campo e percebeu que precisa estudar mais."
+      }
+    ]
+  },
+  {
+    "id": "student_career_fork",
+    "title": "Orientacao de carreira",
+    "text": "Um mentor da academia conversa com voce sobre transformar estudos em uma profissao Pokemon.",
+    "min_age": 10,
+    "max_age": 18,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "tags": [
+      "academy",
+      "career",
+      "pokemon",
+      "career_transition"
+    ],
+    "base_weight": 1.0,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Estudante da academia"
+    },
+    "choices": [
+      {
+        "text": "Virar Treinador",
+        "effects": {
+          "career": "Treinador",
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce decidiu sair da academia como Treinador Pokemon."
+      },
+      {
+        "text": "Virar Criador",
+        "effects": {
+          "career": "Criador",
+          "attributes": {
+            "MEN": 1,
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce decidiu transformar seus estudos em criacao Pokemon."
+      },
+      {
+        "text": "Virar Coordenador",
+        "effects": {
+          "career": "Coordenador",
+          "attributes": {
+            "LUK": 2,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce decidiu seguir o caminho de Coordenador Pokemon."
+      }
+    ]
+  },
+  {
+    "id": "trainer_route_circuit",
+    "title": "Circuito de treinadores",
+    "text": "Treinadores locais montam um circuito informal de batalhas curtas em uma rota movimentada.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "battle",
+      "route",
+      "money",
+      "pokemon"
+    ],
+    "base_weight": 0.9,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Treinador"
+    },
+    "choices": [
+      {
+        "text": "Entrar no circuito",
+        "chance": 0.62,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          },
+          "money": 120,
+          "reputation": 2
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "money": -40,
+          "health": -3
+        },
+        "history_entry": "Voce venceu um circuito local de treinadores.",
+        "failure_history_entry": "Voce perdeu no circuito local, mas aprendeu bastante sobre ritmo de batalha."
+      }
+    ]
+  },
+  {
+    "id": "breeder_health_check",
+    "title": "Rotina de criador",
+    "text": "Um centro de cuidado pede ajuda para avaliar alimentacao, descanso e comportamento de Pokemon jovens.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "care",
+      "breeding",
+      "work",
+      "pokemon"
+    ],
+    "base_weight": 0.9,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Criador"
+    },
+    "choices": [
+      {
+        "text": "Fazer avaliacao cuidadosa",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 2
+          },
+          "money": 95,
+          "reputation": 1
+        },
+        "history_entry": "Voce ajudou em uma rotina profissional de cuidado Pokemon."
+      },
+      {
+        "text": "Tentar encontrar um ovo abandonado",
+        "chance": 0.22,
+        "effects": {
+          "attributes": {
+            "POK": 2
+          },
+          "eggs": [
+            {
+              "tier_weights": {
+                "C": 60,
+                "I": 30,
+                "R": 8,
+                "RR": 2
+              },
+              "origin": "rotina de criador"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce encontrou um ovo durante trabalho de criador.",
+        "failure_history_entry": "Voce procurou sinais de ovos, mas encontrou apenas rastros antigos."
+      }
+    ]
+  },
+  {
+    "id": "coordinator_city_showcase",
+    "title": "Mostra de coordenadores",
+    "text": "Uma cidade organiza uma mostra pequena onde vinculo, beleza e presenca contam mais que forca bruta.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "contest",
+      "city",
+      "pokemon",
+      "money"
+    ],
+    "base_weight": 0.9,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Coordenador"
+    },
+    "choices": [
+      {
+        "text": "Preparar uma apresentacao elegante",
+        "chance": 0.64,
+        "effects": {
+          "attributes": {
+            "LUK": 2,
+            "POK": 1
+          },
+          "money": 110,
+          "reputation": 2
+        },
+        "failure_effects": {
+          "attributes": {
+            "LUK": 1
+          },
+          "reputation": -1
+        },
+        "history_entry": "Voce teve destaque em uma mostra de coordenadores.",
+        "failure_history_entry": "Sua mostra de coordenador foi irregular, mas rendeu experiencia de palco."
+      }
+    ]
+  },
+  {
+    "id": "city_specialist_work",
+    "title": "Trabalho especializado da cidade",
+    "text": "A cidade oferece uma tarefa ligada ao seu perfil local: museu, porto, laboratorio, loja, palco ou rota proxima.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "city",
+      "work",
+      "money",
+      "research",
+      "contest",
+      "trade"
+    ],
+    "base_weight": 0.65,
+    "choices": [
+      {
+        "text": "Aceitar a tarefa especializada",
+        "chance": 0.7,
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          },
+          "money": 130,
+          "reputation": 1
+        },
+        "failure_effects": {
+          "money": 45,
+          "health": -3
+        },
+        "history_entry": "Voce completou um trabalho especializado ligado a cidade.",
+        "failure_history_entry": "O trabalho especializado foi mais dificil que parecia, mas ainda rendeu algum dinheiro."
+      }
+    ]
+  },
+  {
+    "id": "route_supply_cache",
+    "title": "Mochila esquecida na rota",
+    "text": "Voce encontra uma pequena mochila velha perto de uma placa de rota. Parece abandonada ha dias.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "route",
+      "items",
+      "luck",
+      "wild"
+    ],
+    "base_weight": 0.7,
+    "choices": [
+      {
+        "text": "Levar ao posto mais proximo",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "reputation": 1,
+          "inventory": {
+            "Poke Ball": 1
+          }
+        },
+        "history_entry": "Voce devolveu uma mochila esquecida e recebeu uma Poke Ball de agradecimento."
+      },
+      {
+        "text": "Procurar itens uteis",
+        "chance": 0.45,
+        "effects": {
+          "inventory": {
+            "Potion": 1,
+            "Repel": 1
+          },
+          "attributes": {
+            "LUK": 1
+          }
+        },
+        "failure_effects": {
+          "reputation": -1
+        },
+        "history_entry": "Voce encontrou suprimentos uteis em uma mochila abandonada.",
+        "failure_history_entry": "Voce mexeu em uma mochila abandonada e foi repreendido por um guarda local."
+      }
+    ]
+  },
+  {
+    "id": "bad_weather_route",
+    "title": "Chuva forte na rota",
+    "text": "Uma chuva pesada fecha a visibilidade e deixa a rota escorregadia.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "route",
+      "risk",
+      "wild"
+    ],
+    "base_weight": 0.85,
+    "choices": [
+      {
+        "text": "Esperar a tempestade passar",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce esperou a chuva passar e evitou uma rota perigosa."
+      },
+      {
+        "text": "Atravessar mesmo assim",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "PHY": 2
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "health": -10,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce atravessou uma rota em chuva forte sem perder o ritmo.",
+        "failure_history_entry": "Voce escorregou na chuva e terminou o dia machucado."
+      }
+    ]
+  },
+  {
+    "id": "pokecenter_volunteer",
+    "title": "Turno voluntario no Pokemon Center",
+    "text": "O Pokemon Center esta cheio e precisa de ajuda para organizar fichas, agua e cobertores.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "care",
+      "city",
+      "work",
+      "pokemon"
+    ],
+    "base_weight": 0.8,
+    "choices": [
+      {
+        "text": "Ajudar no atendimento",
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "MEN": 1
+          },
+          "reputation": 1,
+          "money": 45
+        },
+        "history_entry": "Voce ajudou em um Pokemon Center durante um dia cheio."
+      },
+      {
+        "text": "Focar nos Pokemon mais feridos",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "POK": 2
+          },
+          "reputation": 2
+        },
+        "failure_effects": {
+          "health": -3,
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce ajudou Pokemon feridos no centro e ganhou respeito local.",
+        "failure_history_entry": "Voce tentou ajudar Pokemon feridos, mas o ritmo do centro foi exaustivo."
+      }
+    ]
+  },
+  {
+    "id": "trainer_lucky_streak",
+    "title": "Sequencia de vitorias pequenas",
+    "text": "Uma tarde rende varios desafios curtos contra treinadores de rota.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "battle",
+      "money",
+      "pokemon",
+      "rare"
+    ],
+    "base_weight": 0.35,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Treinador",
+      "min_attributes": {
+        "PHY": 35
+      }
+    },
+    "choices": [
+      {
+        "text": "Aceitar todos os desafios",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          },
+          "money": 180,
+          "reputation": 2
+        },
+        "failure_effects": {
+          "money": -60,
+          "health": -5,
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce emendou uma sequencia de vitorias contra treinadores locais.",
+        "failure_history_entry": "Voce aceitou desafios demais e terminou a tarde derrotado."
+      }
+    ]
+  },
+  {
+    "id": "trainer_bad_matchup",
+    "title": "Combate desfavoravel",
+    "text": "Um adversario aparece com um Pokemon que parece ter vantagem clara contra sua equipe.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "battle",
+      "risk",
+      "pokemon"
+    ],
+    "base_weight": 0.65,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Treinador"
+    },
+    "choices": [
+      {
+        "text": "Usar estrategia defensiva",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce estudou uma luta desfavoravel e saiu com mais estrategia."
+      },
+      {
+        "text": "Forcar a virada",
+        "chance": 0.38,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "LUK": 1
+          },
+          "reputation": 2,
+          "money": 120
+        },
+        "failure_effects": {
+          "health": -5,
+          "money": -40
+        },
+        "history_entry": "Voce virou uma batalha que parecia perdida.",
+        "failure_history_entry": "Voce tentou virar uma batalha ruim e pagou caro pelo erro."
+      }
+    ]
+  },
+  {
+    "id": "breeder_sick_hatchling",
+    "title": "Filhote adoecido",
+    "text": "Um filhote Pokemon precisa de cuidado basico e observacao constante.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "care",
+      "breeding",
+      "pokemon",
+      "risk"
+    ],
+    "base_weight": 0.65,
+    "conditions": {
+      "career": "Criador"
+    },
+    "choices": [
+      {
+        "text": "Cuidar com paciencia",
+        "chance": 0.68,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "reputation": 2,
+          "money": 80
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "health": -4
+        },
+        "history_entry": "Voce ajudou um filhote Pokemon a se recuperar.",
+        "failure_history_entry": "Voce cuidou de um filhote adoecido, mas a noite sem dormir cobrou seu preco."
+      }
+    ]
+  },
+  {
+    "id": "breeder_food_formula",
+    "title": "Receita de racao caseira",
+    "text": "Um criador local testa uma mistura de frutas, graos e suplementos leves.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "care",
+      "breeding",
+      "research",
+      "work"
+    ],
+    "base_weight": 0.6,
+    "conditions": {
+      "career": "Criador"
+    },
+    "choices": [
+      {
+        "text": "Ajustar a receita com cuidado",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          },
+          "money": 90
+        },
+        "history_entry": "Voce ajudou a ajustar uma receita de racao Pokemon."
+      },
+      {
+        "text": "Apostar em uma mistura experimental",
+        "chance": 0.36,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "LUK": 1
+          },
+          "money": 160,
+          "reputation": 1
+        },
+        "failure_effects": {
+          "money": -50,
+          "reputation": -1
+        },
+        "history_entry": "Sua mistura experimental de racao fez sucesso.",
+        "failure_history_entry": "Sua mistura experimental foi recusada pelos Pokemon."
+      }
+    ]
+  },
+  {
+    "id": "coordinator_costume_problem",
+    "title": "Roupa de apresentacao rasgada",
+    "text": "Pouco antes de uma mostra, um detalhe do figurino do seu Pokemon rasga.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "contest",
+      "city",
+      "risk",
+      "pokemon"
+    ],
+    "base_weight": 0.7,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Coordenador"
+    },
+    "choices": [
+      {
+        "text": "Improvisar com estilo",
+        "chance": 0.58,
+        "effects": {
+          "attributes": {
+            "LUK": 2,
+            "POK": 1
+          },
+          "reputation": 2,
+          "money": 90
+        },
+        "failure_effects": {
+          "reputation": -1,
+          "attributes": {
+            "LUK": 1
+          }
+        },
+        "history_entry": "Voce improvisou uma apresentacao charmosa apesar do figurino rasgado.",
+        "failure_history_entry": "O figurino rasgado atrapalhou sua apresentacao."
+      },
+      {
+        "text": "Retirar enfeites e simplificar",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce simplificou uma apresentacao e salvou o resultado."
+      }
+    ]
+  },
+  {
+    "id": "coordinator_fan_letter",
+    "title": "Carta de um admirador",
+    "text": "Alguem que assistiu sua apresentacao envia uma carta elogiando o vinculo com seu Pokemon.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "contest",
+      "pokemon",
+      "rare"
+    ],
+    "base_weight": 0.35,
+    "conditions": {
+      "requires_pokemon": true,
+      "career": "Coordenador"
+    },
+    "choices": [
+      {
+        "text": "Responder com gratidao",
+        "effects": {
+          "attributes": {
+            "LUK": 1,
+            "POK": 1
+          },
+          "reputation": 2
+        },
+        "history_entry": "Voce respondeu a uma carta de admirador e fortaleceu sua imagem como coordenador."
+      }
+    ]
+  },
+  {
+    "id": "academy_research_assignment",
+    "title": "Trabalho de pesquisa da academia",
+    "text": "A academia pede um relatorio sobre tipos, habitats e seguranca em encontros selvagens.",
+    "min_age": 10,
+    "max_age": 22,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "academy",
+      "research",
+      "pokemon"
+    ],
+    "base_weight": 0.8,
+    "conditions": {
+      "career": "Estudante da academia"
+    },
+    "choices": [
+      {
+        "text": "Entregar um relatorio completo",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 2
+          },
+          "reputation": 1
+        },
+        "history_entry": "Voce entregou um relatorio excelente para a academia Pokemon."
+      },
+      {
+        "text": "Fazer de ultima hora",
+        "chance": 0.42,
+        "effects": {
+          "attributes": {
+            "LUK": 1
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "reputation": -1
+        },
+        "history_entry": "Voce improvisou um relatorio e conseguiu passar.",
+        "failure_history_entry": "Seu relatorio apressado da academia recebeu criticas duras."
+      }
+    ]
+  },
+  {
+    "id": "academy_lab_accident",
+    "title": "Pequeno acidente no laboratorio",
+    "text": "Durante uma aula pratica, um frasco cai perto de materiais de cuidado Pokemon.",
+    "min_age": 10,
+    "max_age": 22,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "academy",
+      "research",
+      "risk"
+    ],
+    "base_weight": 0.55,
+    "conditions": {
+      "career": "Estudante da academia"
+    },
+    "choices": [
+      {
+        "text": "Conter o problema com calma",
+        "chance": 0.62,
+        "effects": {
+          "attributes": {
+            "MEN": 2
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "health": -5,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce conteve um pequeno acidente no laboratorio da academia.",
+        "failure_history_entry": "Um acidente no laboratorio deixou voce tonto pelo resto do dia."
+      }
+    ]
+  },
+  {
+    "id": "lost_child_near_route",
+    "title": "Crianca perdida perto da rota",
+    "text": "Uma familia pede ajuda para encontrar uma crianca que se afastou seguindo pegadas Pokemon.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "route",
+      "risk",
+      "care",
+      "city"
+    ],
+    "base_weight": 0.45,
+    "choices": [
+      {
+        "text": "Ajudar nas buscas",
+        "chance": 0.6,
+        "effects": {
+          "attributes": {
+            "PHY": 1,
+            "POK": 1
+          },
+          "reputation": 3,
+          "money": 70
+        },
+        "failure_effects": {
+          "health": -6,
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce ajudou a encontrar uma crianca perdida perto da rota.",
+        "failure_history_entry": "Voce ajudou nas buscas por uma crianca perdida e terminou exausto."
+      }
+    ]
+  },
+  {
+    "id": "rare_item_sale",
+    "title": "Oferta rara no balcao",
+    "text": "Um vendedor discreto oferece um item incomum por tempo limitado.",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "items",
+      "money",
+      "rare",
+      "city"
+    ],
+    "base_weight": 0.18,
+    "conditions": {
+      "min_attributes": {
+        "LUK": 35
+      }
+    },
+    "choices": [
+      {
+        "text": "Comprar a oferta",
+        "chance": 0.55,
+        "effects": {
+          "money": -700,
+          "inventory": {
+            "Great Ball": 1,
+            "Lucky Charm": 1
+          }
+        },
+        "failure_effects": {
+          "money": -250
+        },
+        "history_entry": "Voce comprou uma oferta rara com itens valiosos.",
+        "failure_history_entry": "A oferta rara era menos util do que parecia e pesou no bolso."
+      },
+      {
+        "text": "Recusar com educacao",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce recusou uma oferta suspeita e guardou seu dinheiro."
+      }
+    ]
+  },
+  {
+    "id": "natural_hot_spring",
+    "title": "Fonte termal escondida",
+    "text": "Durante uma viagem, voce encontra uma pequena fonte termal usada por Pokemon cansados.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "care",
+      "wild",
+      "rare",
+      "pokemon"
+    ],
+    "base_weight": 0.22,
+    "conditions": {
+      "requires_pokemon": true,
+      "min_attributes": {
+        "POK": 35
+      }
+    },
+    "choices": [
+      {
+        "text": "Descansar sem perturbar o local",
+        "effects": {
+          "health": 8,
+          "attributes": {
+            "POK": 1
+          },
+          "reputation": 1
+        },
+        "history_entry": "Voce descansou perto de uma fonte termal usada por Pokemon selvagens."
+      },
+      {
+        "text": "Tentar estudar a fonte",
+        "chance": 0.4,
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 2
+          }
+        },
+        "failure_effects": {
+          "health": -4,
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce registrou detalhes valiosos sobre uma fonte termal Pokemon.",
+        "failure_history_entry": "Voce se aproximou demais da fonte termal e assustou os Pokemon locais."
+      }
+    ]
+  },
+  {
+    "id": "fishing_old_timer",
+    "title": "Pescador veterano",
+    "text": "Um pescador experiente oferece ensinar como ler a agua antes de encontrar Pokemon aquaticos.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "water",
+      "wild",
+      "research",
+      "pokemon"
+    ],
+    "base_weight": 0.55,
+    "choices": [
+      {
+        "text": "Aprender a observar a agua",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce aprendeu tecnicas basicas com um pescador veterano."
+      },
+      {
+        "text": "Tentar pescar sozinho",
+        "chance": 0.35,
+        "effects": {
+          "random_area_pokemon": [
+            {
+              "level": 8,
+              "origin": "pescaria guiada"
+            }
+          ],
+          "attributes": {
+            "LUK": 1
+          }
+        },
+        "failure_effects": {
+          "health": -3
+        },
+        "history_entry": "Voce fisgou um Pokemon durante uma pescaria improvisada.",
+        "failure_history_entry": "Voce tentou pescar sozinho e acabou molhado ate os joelhos."
+      }
+    ]
+  },
+  {
+    "id": "safari_tip",
+    "title": "Dica sobre a Safari Zone",
+    "text": "Um viajante compartilha anotacoes sobre rastros, distancia segura e paciencia com Pokemon raros.",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "safari",
+      "capture",
+      "wild",
+      "rare"
+    ],
+    "base_weight": 0.24,
+    "conditions": {
+      "min_attributes": {
+        "POK": 40
+      }
+    },
+    "choices": [
+      {
+        "text": "Estudar as anotacoes",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce estudou dicas valiosas sobre encontros na Safari Zone."
+      },
+      {
+        "text": "Comprar um mapa anotado",
+        "effects": {
+          "money": -150,
+          "attributes": {
+            "POK": 2
+          },
+          "inventory": {
+            "Repel": 1
+          }
+        },
+        "history_entry": "Voce comprou um mapa anotado da Safari Zone."
+      }
+    ]
+  },
+  {
+    "id": "team_rocket_whisper",
+    "title": "Sussurro sobre a Equipe Rocket",
+    "text": "Voce ouve dois desconhecidos falando baixo sobre vender Pokemon raros no mercado paralelo.",
+    "min_age": 13,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "risk",
+      "city",
+      "rare",
+      "money"
+    ],
+    "base_weight": 0.2,
+    "choices": [
+      {
+        "text": "Avisar as autoridades",
+        "chance": 0.55,
+        "effects": {
+          "reputation": 3,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "failure_effects": {
+          "health": -5
+        },
+        "history_entry": "Voce repassou informacoes suspeitas sobre a Equipe Rocket.",
+        "failure_history_entry": "Voce tentou denunciar uma conversa suspeita e acabou seguido por desconhecidos."
+      },
+      {
+        "text": "Ignorar e sair dali",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce ignorou uma conversa suspeita e evitou problemas."
+      }
+    ]
+  },
+  {
+    "id": "friendly_trade_offer",
+    "title": "Oferta de troca amigavel",
+    "text": "Um treinador educado pergunta se voce tem interesse em conversar sobre trocas e criacao de equipe.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "trade",
+      "pokemon",
+      "city"
+    ],
+    "base_weight": 0.45,
+    "conditions": {
+      "requires_pokemon": true
+    },
+    "choices": [
+      {
+        "text": "Conversar sobre composicao de equipe",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce aprendeu sobre composicao de equipe conversando sobre trocas."
+      },
+      {
+        "text": "Tentar uma troca arriscada",
+        "chance": 0.32,
+        "effects": {
+          "random_area_pokemon": [
+            {
+              "level": 10,
+              "origin": "troca amigavel"
+            }
+          ],
+          "reputation": 1
+        },
+        "failure_effects": {
+          "reputation": -1
+        },
+        "history_entry": "Voce fez uma troca amigavel que mudou sua equipe.",
+        "failure_history_entry": "Voce quase fez uma troca ruim e desistiu a tempo."
+      }
+    ]
+  },
+  {
+    "id": "gym_assistant_errand",
+    "title": "Favor para assistente de ginasio",
+    "text": "Um assistente de ginasio precisa entregar documentos e revisar horarios de desafios.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "tags": [
+      "gym",
+      "work",
+      "city",
+      "battle"
+    ],
+    "base_weight": 0.5,
+    "choices": [
+      {
+        "text": "Ajudar com organizacao",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          },
+          "money": 75,
+          "reputation": 1
+        },
+        "history_entry": "Voce ajudou um assistente de ginasio com tarefas de organizacao."
+      },
+      {
+        "text": "Pedir dicas de batalha em troca",
+        "effects": {
+          "attributes": {
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce trocou ajuda por dicas praticas de desafio de ginasio."
+      }
+    ]
+  },
+  {
+    "id": "museum_fossil_lesson",
+    "title": "Aula sobre fosseis",
+    "text": "Uma exposicao sobre fosseis Pokemon mostra como especies antigas ainda influenciam Kanto.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Pewter City",
+    "once": false,
+    "tags": [
+      "museum",
+      "research",
+      "rock",
+      "academy"
+    ],
+    "base_weight": 0.85,
+    "choices": [
+      {
+        "text": "Estudar a exposicao",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce estudou fosseis Pokemon no museu de Pewter."
+      },
+      {
+        "text": "Conversar com pesquisadores",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "POK": 2
+          },
+          "reputation": 1
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Pesquisadores do museu explicaram detalhes raros sobre fosseis.",
+        "failure_history_entry": "Voce tentou falar com pesquisadores ocupados e saiu apenas com anotacoes basicas."
+      }
+    ]
+  },
+  {
+    "id": "port_cargo_shift",
+    "title": "Carga no porto",
+    "text": "No porto, caixas de itens Pokemon precisam ser separadas antes da proxima partida.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Vermilion City",
+    "once": false,
+    "tags": [
+      "port",
+      "work",
+      "money",
+      "items"
+    ],
+    "base_weight": 0.85,
+    "choices": [
+      {
+        "text": "Trabalhar carregando caixas",
+        "chance": 0.72,
+        "effects": {
+          "attributes": {
+            "PHY": 2
+          },
+          "money": 140
+        },
+        "failure_effects": {
+          "health": -5,
+          "money": 60
+        },
+        "history_entry": "Voce ganhou dinheiro ajudando com carga no porto de Vermilion.",
+        "failure_history_entry": "O trabalho no porto foi pesado demais, mas ainda rendeu algum pagamento."
+      }
+    ]
+  },
+  {
+    "id": "celadon_department_sale",
+    "title": "Promocao na loja de departamentos",
+    "text": "A loja de departamentos anuncia descontos relampago em itens de treino e cuidado.",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Celadon City",
+    "once": false,
+    "tags": [
+      "shopping",
+      "items",
+      "city",
+      "money"
+    ],
+    "base_weight": 0.8,
+    "choices": [
+      {
+        "text": "Comprar itens de cuidado",
+        "effects": {
+          "money": -500,
+          "inventory": {
+            "Grooming Kit": 1,
+            "Potion": 1
+          }
+        },
+        "history_entry": "Voce aproveitou uma promocao de itens de cuidado em Celadon."
+      },
+      {
+        "text": "Comprar suplemento de treino",
+        "effects": {
+          "money": -700,
+          "inventory": {
+            "Protein": 1
+          }
+        },
+        "history_entry": "Voce comprou suplemento de treino em promocao."
+      }
+    ]
+  },
+  {
+    "id": "lavender_memorial_night",
+    "title": "Noite no memorial",
+    "text": "Lavender fica silenciosa durante uma vigilia para lembrar Pokemon que partiram.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Lavender Town",
+    "once": false,
+    "tags": [
+      "ghost",
+      "memorial",
+      "care",
+      "occult"
+    ],
+    "base_weight": 0.8,
+    "choices": [
+      {
+        "text": "Participar com respeito",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          },
+          "reputation": 1
+        },
+        "history_entry": "Voce participou de uma vigilia respeitosa em Lavender Town."
+      },
+      {
+        "text": "Investigar energia estranha",
+        "chance": 0.35,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "LUK": 1
+          }
+        },
+        "failure_effects": {
+          "health": -4
+        },
+        "history_entry": "Voce sentiu uma energia Ghost incomum em Lavender Town.",
+        "failure_history_entry": "Voce investigou energia estranha em Lavender e ficou abalado."
+      }
+    ]
+  },
+  {
+    "id": "cinnabar_lab_request",
+    "title": "Pedido do laboratorio de Cinnabar",
+    "text": "Pesquisadores precisam de ajuda para catalogar amostras de calor, cinzas e comportamento Fire.",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": "Cinnabar Island",
+    "once": false,
+    "tags": [
+      "fire",
+      "research",
+      "work",
+      "fossil"
+    ],
+    "base_weight": 0.85,
+    "choices": [
+      {
+        "text": "Catalogar as amostras",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          },
+          "money": 120
+        },
+        "history_entry": "Voce ajudou o laboratorio de Cinnabar a catalogar amostras."
+      },
+      {
+        "text": "Testar uma hipotese arriscada",
+        "chance": 0.34,
+        "effects": {
+          "attributes": {
+            "POK": 3
+          },
+          "reputation": 2
+        },
+        "failure_effects": {
+          "health": -8,
+          "reputation": -1
+        },
+        "history_entry": "Sua hipotese ajudou pesquisadores de Cinnabar.",
+        "failure_history_entry": "Um teste arriscado em Cinnabar terminou em fumaca e correria."
+      }
+    ]
+  },
+  {
+    "id": "rival_challenge",
+    "title": "Desafio do rival",
+    "text": "Um treinador que voce conhece desde crianca aparece na sua frente. 'Vamos ver quem cresceu mais!', ele diz, apontando para o seu Pokemon.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Aceitar o desafio",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          },
+          "money": 150,
+          "reputation": 2
+        },
+        "failure_effects": {
+          "money": -80,
+          "health": -5
+        },
+        "history_entry": "Voce venceu o desafio do rival e provou seu valor.",
+        "failure_history_entry": "Voce perdeu para o rival desta vez, mas vai melhorar."
+      },
+      {
+        "text": "Recusar educadamente",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce preferiu nao se envolver com a provocacao do rival."
+      }
+    ],
+    "tags": [
+      "battle",
+      "rival"
+    ],
+    "base_weight": 1.1
+  },
+  {
+    "id": "injured_pokemon_road",
+    "title": "Pokemon ferido na estrada",
+    "text": "Voce encontra um Rattata mancando na beira da trilha. Parece assustado, mas nao e agressivo.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Cuidar do Pokemon",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "inventory": {
+            "Potion": -1
+          }
+        },
+        "history_entry": "Voce parou para cuidar de um Rattata ferido. Ele pareceu grato."
+      },
+      {
+        "text": "Chamar um Criador proximo",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "reputation": 1
+        },
+        "history_entry": "Voce pediu ajuda a um Criador da regiao para socorrer o Pokemon ferido."
+      },
+      {
+        "text": "Seguir em frente",
+        "effects": {
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce continuou sua jornada, torcendo para o Pokemon se recuperar sozinho."
+      }
+    ],
+    "tags": [
+      "care",
+      "wild",
+      "route"
+    ],
+    "base_weight": 1.0
+  },
+  {
+    "id": "legendary_rumor",
+    "title": "Rumor sobre um lendario",
+    "text": "Um velho pescador conta que avistou uma sombra enorme nas aguas do Lago Cerulean. 'Nunca vi nada igual em 40 anos', ele murmurou.",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "choices": [
+      {
+        "text": "Anota tudo em um diario",
+        "effects": {
+          "attributes": {
+            "POK": 3,
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce registrou o relato do pescador sobre o lendario. Quem sabe um dia..."
+      },
+      {
+        "text": "Ir investigar a area",
+        "chance": 0.35,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "LUK": 2
+          },
+          "reputation": 2
+        },
+        "failure_effects": {
+          "health": -10,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce foi investigar o lago e voltou sem respostas, mas cheio de historias.",
+        "failure_history_entry": "A investigacao foi arriscada demais. Voce se machucou e nao encontrou nada."
+      },
+      {
+        "text": "Nao acreditar no pescador",
+        "effects": {},
+        "history_entry": "Voce achou que o pescador estava exagerando."
+      }
+    ],
+    "tags": [
+      "rare",
+      "capture",
+      "wild",
+      "route"
+    ],
+    "base_weight": 0.8
+  },
+  {
+    "id": "pokecenter_old_friend",
+    "title": "Reencontro no Pokemon Center",
+    "text": "Enquanto aguardava sua equipe ser curada, voce reconhece um rosto: um treinador que partiu de Pallet Town antes de voce.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Trocar dicas de treinamento",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce passou a tarde trocando dicas com um velho amigo no Pokemon Center."
+      },
+      {
+        "text": "Pedir indicacao de rotas",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          },
+          "flags": {
+            "knows_next_route": true
+          }
+        },
+        "history_entry": "Voce obteve informacoes uteis sobre os proximos caminhos."
+      },
+      {
+        "text": "Apenas cumprimentar e seguir",
+        "effects": {
+          "reputation": 1
+        },
+        "history_entry": "Voce encontrou um velho amigo, deu um oi rapido e seguiu em frente."
+      }
+    ],
+    "tags": [
+      "battle",
+      "care",
+      "academy"
+    ],
+    "base_weight": 1.0
+  },
+  {
+    "id": "market_day_special",
+    "title": "Dia de feira especial",
+    "text": "Uma feira temporaria de itens Pokemon montou barraca na cidade. Precos menores que o normal e raridades que voce nunca viu.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Comprar Poke Balls com desconto",
+        "effects": {
+          "inventory": {
+            "Poke Ball": 4
+          },
+          "money": -300
+        },
+        "history_entry": "Voce aproveitou a feira e saiu com 4 Poke Balls por um preco justo."
+      },
+      {
+        "text": "Procurar itens de treinamento",
+        "chance": 0.6,
+        "effects": {
+          "inventory": {
+            "Protein": 1
+          },
+          "money": -800
+        },
+        "failure_effects": {
+          "money": -200
+        },
+        "history_entry": "Voce encontrou uma Protein rara por um preco razoavel na feira.",
+        "failure_history_entry": "Os itens de treinamento ja tinham esgotado. Voce so conseguiu uns petiscos caros."
+      },
+      {
+        "text": "Observar sem comprar",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce passeou pela feira sem gastar, aprendendo sobre os itens disponíveis."
+      }
+    ],
+    "tags": [
+      "money",
+      "capture",
+      "wild"
+    ],
+    "base_weight": 0.9
+  },
+  {
+    "id": "team_rocket_encounter",
+    "title": "Encontro com a Equipe Rocket",
+    "text": "Dois sujeitos de uniforme preto com um 'R' vermelho no peito bloqueiam o caminho. 'Entregue seus Pokemon ou sofra as consequencias!'",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Usar seu Pokemon para defender",
+        "chance": 0.65,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          },
+          "money": 200,
+          "reputation": 3
+        },
+        "failure_effects": {
+          "health": -15,
+          "money": -100
+        },
+        "history_entry": "Voce enfrentou os Rockets e os expulsou. Eles fugiram deixando algumas moedas.",
+        "failure_history_entry": "Os Rockets eram mais fortes que voce esperava. Voce recuou com alguns arranhoes."
+      },
+      {
+        "text": "Chamar por ajuda",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "reputation": 1
+        },
+        "history_entry": "Voce gritou por socorro. Outros treinadores apareceram e os Rockets fugiram."
+      },
+      {
+        "text": "Desviar e encontrar outro caminho",
+        "effects": {
+          "attributes": {
+            "PHY": 1
+          },
+          "health": -5
+        },
+        "history_entry": "Voce deu um longo desvio para evitar os Rockets, chegando cansado mas seguro."
+      }
+    ],
+    "tags": [
+      "battle",
+      "risk",
+      "route"
+    ],
+    "base_weight": 0.85
+  },
+  {
+    "id": "cave_exploration",
+    "title": "Exploracao de caverna",
+    "text": "Uma entrada de caverna escura se abre na montanha. Treinadores falam de Pokemon raros la dentro, mas tambem de caminhos tortuosos.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Entrar e explorar com cuidado",
+        "chance": 0.7,
+        "effects": {
+          "attributes": {
+            "PHY": 1,
+            "POK": 2
+          },
+          "random_area_pokemon": [
+            {
+              "level": 5,
+              "origin": "encontrado em caverna"
+            }
+          ]
+        },
+        "failure_effects": {
+          "health": -12,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "A exploracao da caverna rendeu um novo companheiro Pokemon.",
+        "failure_history_entry": "A caverna era mais complexa que voce pensava. Voce saiu ferido sem encontrar nada de especial."
+      },
+      {
+        "text": "Observar a entrada e anotar",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce estudou a entrada da caverna e registrou os tipos de Pokemon que aparecem por ali."
+      },
+      {
+        "text": "Nao e hora disso, seguir em frente",
+        "effects": {},
+        "history_entry": "Voce decidiu deixar a caverna para outro momento."
+      }
+    ],
+    "tags": [
+      "capture",
+      "wild",
+      "risk",
+      "route"
+    ],
+    "base_weight": 0.9
+  },
+  {
+    "id": "fishing_lesson",
+    "title": "Licao de pesca",
+    "text": "Um pescador experiente oferece te ensinar a pescar da forma certa. 'Com a vara correta, voce vai encontrar Pokemon que nunca imaginou.'",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "choices": [
+      {
+        "text": "Aprender a tecnica de pesca",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "flags": {
+            "learned_fishing": true
+          }
+        },
+        "history_entry": "Voce aprendeu a tecnica basica de pesca. Novos Pokemon aquaticos ficam mais acessiveis."
+      },
+      {
+        "text": "Tentar uma vez por curiosidade",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "random_area_pokemon": [
+            {
+              "type_hint": "Water",
+              "level": 3,
+              "origin": "pescado"
+            }
+          ]
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce pescou um Pokemon aquatico com a ajuda do velho pescador!",
+        "failure_history_entry": "Voce tentou pescar mas so fisgou uma bota velha. O pescador riu."
+      },
+      {
+        "text": "Agradecer e continuar",
+        "effects": {},
+        "history_entry": "Voce agradeceu ao pescador mas preferiu seguir seu caminho."
+      }
+    ],
+    "tags": [
+      "capture",
+      "wild",
+      "route"
+    ],
+    "base_weight": 0.9
+  },
+  {
+    "id": "pokemon_fan_club",
+    "title": "Clube dos fas de Pokemon",
+    "text": "Um grupo de entusiastas de Pokemon se reune toda semana para falar sobre seus companheiros favoritos. O presidente te convida para entrar.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Participar e compartilhar suas historias",
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "MEN": 1
+          },
+          "reputation": 2
+        },
+        "history_entry": "Voce participou do clube e fez novos amigos que compartilham sua paixao por Pokemon."
+      },
+      {
+        "text": "Pedir conselhos sobre criacao",
+        "effects": {
+          "attributes": {
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce aprendeu dicas valiosas sobre criacao de Pokemon com membros experientes do clube."
+      },
+      {
+        "text": "Observar e ir embora",
+        "effects": {},
+        "history_entry": "Voce achou o clube interessante mas preferiu nao participar."
+      }
+    ],
+    "tags": [
+      "care",
+      "academy",
+      "battle"
+    ],
+    "base_weight": 0.85
+  },
+  {
+    "id": "silph_co_internship",
+    "title": "Estagio na Silph Co.",
+    "text": "A maior empresa de tecnologia Pokemon de Kanto esta contratando estagiarios. Um recrutador aborda voce na cidade.",
+    "min_age": 15,
+    "max_age": 35,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "choices": [
+      {
+        "text": "Aceitar o estagio tecnico",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          },
+          "money": 400,
+          "reputation": 3
+        },
+        "history_entry": "Voce trabalhou como estagiario na Silph Co. e aprendeu muito sobre tecnologia Pokemon."
+      },
+      {
+        "text": "Negociar um projeto de pesquisa",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "MEN": 3,
+            "POK": 2
+          },
+          "money": 600,
+          "reputation": 4
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce convenceu a Silph Co. a financiar sua pesquisa. Uma oportunidade incrivel.",
+        "failure_history_entry": "A negociacao nao foi como planejado, mas voce aprendeu bastante sobre o mercado Pokemon."
+      },
+      {
+        "text": "Recusar, prefere liberdade na jornada",
+        "effects": {
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce recusou o estagio. Nenhuma empresa vai prender sua jornada."
+      }
+    ],
+    "tags": [
+      "work",
+      "academy",
+      "research"
+    ],
+    "base_weight": 0.7
+  },
+  {
+    "id": "fossil_discovery",
+    "title": "Descoberta de fosil",
+    "text": "Escavando proximo a rochas antigas com outros exploradores, seu Pokemon escava algo duro. Um fosil Pokemon emerge do solo.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "conditions": {
+      "requires_pokemon": true
+    },
+    "choices": [
+      {
+        "text": "Guardar e levar ao laboratorio",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "reputation": 2,
+          "flags": {
+            "has_fossil": true
+          }
+        },
+        "history_entry": "Voce encontrou um fosil raro e o levou ao laboratorio para restauracao."
+      },
+      {
+        "text": "Documentar e deixar para especialistas",
+        "effects": {
+          "attributes": {
+            "MEN": 2
+          },
+          "reputation": 3
+        },
+        "history_entry": "Voce reportou o fosil para as autoridades cientificas. Seu nome ficou no relatorio."
+      }
+    ],
+    "tags": [
+      "rare",
+      "research",
+      "academy"
+    ],
+    "base_weight": 0.6
+  },
+  {
+    "id": "wilderness_camp",
+    "title": "Noite acampando no campo",
+    "text": "O sol se poe e voce decide acampar sob as estrelas com sua equipe. O silencio da natureza parece aproximar voce dos seus Pokemon.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "requires_pokemon": true
+    },
+    "choices": [
+      {
+        "text": "Treinar levemente antes de dormir",
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "PHY": 1
+          }
+        },
+        "history_entry": "O treino noturno ao ar livre foi tranquilo e fortaleceu seu vinculo com a equipe."
+      },
+      {
+        "text": "Apenas descansar e observar os Pokemon",
+        "effects": {
+          "attributes": {
+            "POK": 2
+          },
+          "health": 10
+        },
+        "history_entry": "Voce dormiu sob as estrelas com sua equipe. Nunca se sentiu tao conectado a eles."
+      },
+      {
+        "text": "Ficar em guarda a noite toda",
+        "chance": 0.6,
+        "effects": {
+          "attributes": {
+            "PHY": 1
+          },
+          "random_area_pokemon": [
+            {
+              "level": 4,
+              "origin": "encontrado acampando"
+            }
+          ]
+        },
+        "failure_effects": {
+          "health": -8
+        },
+        "history_entry": "Sua vigilancia noturna foi recompensada: um Pokemon apareceu no acampamento.",
+        "failure_history_entry": "Voce ficou acordado a noite toda, mas so encontrou insetos e um frio intenso."
+      }
+    ],
+    "tags": [
+      "care",
+      "wild",
+      "route"
+    ],
+    "base_weight": 1.0
+  },
+  {
+    "id": "tournament_announcement",
+    "title": "Anuncio de torneio",
+    "text": "Cartazes na cidade anunciam um torneio local de treinadores. As inscricoes estao abertas e o premio parece interessante.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "requires_pokemon": true
+    },
+    "choices": [
+      {
+        "text": "Se inscrever imediatamente",
+        "effects": {
+          "attributes": {
+            "PHY": 1,
+            "POK": 1
+          },
+          "flags": {
+            "tournament_invite_pending": true
+          }
+        },
+        "history_entry": "Voce se inscreveu no torneio. A preparacao comecou."
+      },
+      {
+        "text": "Observar primeiro para aprender",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce assistiu ao torneio como espectador e aprendeu bastante sobre estrategia."
+      },
+      {
+        "text": "Nao e o momento certo",
+        "effects": {},
+        "history_entry": "Voce viu o anuncio mas decidiu esperar um torneio mais adequado ao seu nivel."
+      }
+    ],
+    "tags": [
+      "battle",
+      "money"
+    ],
+    "base_weight": 1.0
+  },
+  {
+    "id": "pokemon_trade_offer",
+    "title": "Oferta de troca de Pokemon",
+    "text": "Um treinador se aproxima com um sorriso largo. 'Tenho um Alakazam aqui que nao consigo treinar. Que tal uma troca por algum do seu time?'",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "requires_pokemon": true
+    },
+    "choices": [
+      {
+        "text": "Recusar: sua equipe nao e negociavel",
+        "effects": {
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce recusou a troca. Seus Pokemon sao parceiros, nao mercadoria."
+      },
+      {
+        "text": "Considerar, depende da oferta",
+        "chance": 0.45,
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "LUK": 2
+          },
+          "money": 300
+        },
+        "failure_effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "A troca valeu a pena e voce saiu com uma boa negociacao.",
+        "failure_history_entry": "Voce negociou mas a outra parte desistiu. Aprenda a ler as pessoas melhor."
+      },
+      {
+        "text": "Pedir para ver o Pokemon dele antes",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce pediu mais informacoes antes de decidir. O treinador mostrou o Alakazam mas nao fechou negocio."
+      }
+    ],
+    "tags": [
+      "battle",
+      "money",
+      "rare"
+    ],
+    "base_weight": 0.8
+  },
+  {
+    "id": "abandoned_pokemon",
+    "title": "Pokemon abandonado",
+    "text": "Perto de uma lixeira na cidade, um Meowth magro e assustado te olha com curiosidade. Parece que foi abandonado ha dias.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Acolher o Pokemon",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          },
+          "pokemon": [
+            {
+              "species": "Meowth",
+              "level": 4,
+              "origin": "resgatado na cidade"
+            }
+          ]
+        },
+        "history_entry": "Voce encontrou um Meowth abandonado e o acolheu. Ele vai precisar de muito carinho."
+      },
+      {
+        "text": "Deixar comida e chamar um Criador",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          },
+          "reputation": 2,
+          "money": -50
+        },
+        "history_entry": "Voce chamou um Criador para resgatar o Meowth. Fez a coisa certa."
+      },
+      {
+        "text": "Seguir em frente sem interferir",
+        "effects": {},
+        "history_entry": "Voce viu o Pokemon sozinho mas preferiu nao se envolver."
+      }
+    ],
+    "tags": [
+      "care",
+      "wild"
+    ],
+    "base_weight": 0.85
+  },
+  {
+    "id": "gym_spectator",
+    "title": "Espectador num ginasio",
+    "text": "Voce observa a batalha de outro treinador num ginasio. A estrategia do lider e sofisticada, quase como uma danca.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Analisar a estrategia do lider",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce estudou os movimentos do lider do ginasio e aprendeu novas estrategias."
+      },
+      {
+        "text": "Torcer pelo treinador desafiante",
+        "effects": {
+          "attributes": {
+            "PHY": 1
+          },
+          "reputation": 1
+        },
+        "history_entry": "Voce animou o desafiante durante a batalha. Todos notaram seu entusiasmo."
+      },
+      {
+        "text": "Desafiar o lider em seguida",
+        "chance": 0.5,
+        "effects": {
+          "attributes": {
+            "PHY": 2,
+            "POK": 1
+          },
+          "money": 200,
+          "reputation": 2
+        },
+        "failure_effects": {
+          "money": -100,
+          "health": -5
+        },
+        "history_entry": "Aproveitando o momento, voce desafiou o lider e saiu vitorioso.",
+        "failure_history_entry": "Voce tentou desafiar o lider impulsivamente e perdeu. A proxima vai ser diferente."
+      }
+    ],
+    "tags": [
+      "battle",
+      "gym"
+    ],
+    "base_weight": 0.95
+  },
+  {
+    "id": "ss_anne_boarding",
+    "title": "Convite para o SS Anne",
+    "text": "O famoso navio de treinadores SS Anne esta ancorado no porto. Um funcionario oferece convites para o torneio a bordo.",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "conditions": {
+      "requires_pokemon": true
+    },
+    "choices": [
+      {
+        "text": "Embarcar e participar",
+        "chance": 0.55,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "PHY": 1
+          },
+          "money": 500,
+          "reputation": 4
+        },
+        "failure_effects": {
+          "money": -150,
+          "health": -5
+        },
+        "history_entry": "Voce competiu no SS Anne e fez um otimo resultado.",
+        "failure_history_entry": "O torneio no SS Anne foi uma experiencia incrivel, mas voce saiu nas semifinais."
+      },
+      {
+        "text": "Ir so para conhecer o navio",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce visitou o SS Anne como turista e conheceu treinadores de todo o mundo."
+      },
+      {
+        "text": "Recusar, nao curte navios",
+        "effects": {},
+        "history_entry": "Voce optou por nao embarcar no SS Anne."
+      }
+    ],
+    "tags": [
+      "battle",
+      "money",
+      "rare"
+    ],
+    "base_weight": 0.7
+  },
+  {
+    "id": "professor_research_assist",
+    "title": "Pedido do Professor Oak",
+    "text": "Uma mensagem do Professor Oak chega ate voce: ele precisa de dados de campo sobre o comportamento de Pokemon selvagens.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Ajudar com entusiasmo",
+        "effects": {
+          "attributes": {
+            "POK": 3,
+            "MEN": 1
+          },
+          "reputation": 2,
+          "money": 200
+        },
+        "history_entry": "Voce coletou dados de campo para o Prof. Oak e foi recompensado pela dedicacao."
+      },
+      {
+        "text": "Enviar dados que ja tem",
+        "effects": {
+          "attributes": {
+            "POK": 1,
+            "MEN": 1
+          },
+          "money": 100
+        },
+        "history_entry": "Voce compartilhou suas anotacoes com o Prof. Oak. Simples, mas util."
+      },
+      {
+        "text": "Nao ter tempo agora",
+        "effects": {},
+        "history_entry": "Voce respondeu que estava ocupado. O Prof. Oak entendeu."
+      }
+    ],
+    "tags": [
+      "academy",
+      "research",
+      "pokemon"
+    ],
+    "base_weight": 0.9
+  },
+  {
+    "id": "pokeflute_melody",
+    "title": "A melodia da Pokefluta",
+    "text": "Um musico de rua toca uma melodia estranha em uma flauta. Voce percebe que os Pokemon ao redor parecem hipnotizados pela musica.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "choices": [
+      {
+        "text": "Aprender a melodia",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "LUK": 1
+          },
+          "flags": {
+            "knows_pokeflute": true
+          }
+        },
+        "history_entry": "Voce aprendeu a melodia da Pokefluta. Uma habilidade peculiar, mas quem sabe..."
+      },
+      {
+        "text": "Observar o efeito nos Pokemon",
+        "effects": {
+          "attributes": {
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce estudou o efeito da musica nos Pokemon ao redor. Fascinante."
+      },
+      {
+        "text": "Continuar andando",
+        "effects": {},
+        "history_entry": "A musica era estranha demais. Voce preferiu ir embora."
+      }
+    ],
+    "tags": [
+      "rare",
+      "academy",
+      "capture"
+    ],
+    "base_weight": 0.65
+  },
+  {
+    "id": "dangerous_route_storm",
+    "title": "Tempestade inesperada na rota",
+    "text": "Uma tempestade forte se forma em minutos. Voce e sua equipe ficam presos numa rota sem abrigo visivel.",
+    "min_age": 10,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Buscar abrigo com seus Pokemon",
+        "effects": {
+          "health": -8,
+          "attributes": {
+            "PHY": 1,
+            "POK": 1
+          }
+        },
+        "history_entry": "A tempestade foi dura, mas voce e sua equipe se abrigaram juntos e sobreviveram."
+      },
+      {
+        "text": "Usar Escape Rope para voltar",
+        "effects": {
+          "inventory": {
+            "Escape Rope": -1
+          }
+        },
+        "history_entry": "A corda de escape te tirou da tempestade a tempo. Valeu o investimento."
+      },
+      {
+        "text": "Esperar a tempestade passar",
+        "chance": 0.7,
+        "effects": {
+          "health": -5,
+          "attributes": {
+            "PHY": 2
+          },
+          "random_area_pokemon": [
+            {
+              "level": 6,
+              "origin": "encontrado durante tempestade"
+            }
+          ]
+        },
+        "failure_effects": {
+          "health": -20
+        },
+        "history_entry": "Voce esperou pacientemente e encontrou um Pokemon refugiado da chuva.",
+        "failure_history_entry": "Voce ficou exposto por muito tempo. A gripe que veio depois nao foi legal."
+      }
+    ],
+    "tags": [
+      "risk",
+      "route",
+      "wild"
+    ],
+    "base_weight": 0.85
+  },
+  {
+    "id": "water_route_crossing",
+    "title": "Travessia de rota aquatica",
+    "text": "Uma rota aquatica corta o caminho. Sem um Pokemon aquatico ou uma embarcacao, a travessia parece arriscada.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Contratar um barqueiro",
+        "effects": {
+          "money": -150,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce pagou um barqueiro local para cruzar a rota aquatica."
+      },
+      {
+        "text": "Usar seu Pokemon aquatico para atravessar",
+        "chance": 0.75,
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "PHY": 1
+          }
+        },
+        "failure_effects": {
+          "health": -10,
+          "attributes": {
+            "PHY": 1
+          }
+        },
+        "history_entry": "Seu Pokemon aquatico levou voce pelo outro lado com facilidade.",
+        "failure_history_entry": "A travessia foi dificil demais para seu Pokemon aquatico no momento."
+      },
+      {
+        "text": "Contornar pelo caminho terrestre",
+        "effects": {
+          "health": -5,
+          "attributes": {
+            "PHY": 2
+          }
+        },
+        "history_entry": "Voce escolheu o longo caminho terrestre. Cansativo, mas sem riscos aquaticos."
+      }
+    ],
+    "tags": [
+      "route",
+      "wild",
+      "capture"
+    ],
+    "base_weight": 0.8
+  },
+  {
+    "id": "celadon_department_visit",
+    "title": "Visita ao Celadon Department Store",
+    "text": "A maior loja de itens Pokemon de Kanto fica em Celadon. Varios andares de produtos que voce nunca viu antes.",
+    "min_age": 12,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Comprar Potions e Balls em estoque",
+        "effects": {
+          "inventory": {
+            "Potion": 3,
+            "Poke Ball": 3
+          },
+          "money": -1200
+        },
+        "history_entry": "Voce aproveitou a visita ao departamento para reabastecer totalmente."
+      },
+      {
+        "text": "Investir em itens de treinamento",
+        "effects": {
+          "inventory": {
+            "Protein": 1,
+            "Calcium": 1
+          },
+          "money": -2400
+        },
+        "history_entry": "Voce gastou bastante mas saiu com itens raros de treinamento."
+      },
+      {
+        "text": "So olhar as vitrines",
+        "effects": {
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce passeou pelo departamento sem comprar nada, mas anotou tudo para a proxima vez."
+      }
+    ],
+    "tags": [
+      "money",
+      "capture",
+      "care"
+    ],
+    "base_weight": 0.75
+  },
+  {
+    "id": "lavender_haunting",
+    "title": "Noite inquieta em Lavender",
+    "text": "A Torre Pokemon de Lavender Town exerce uma atmosfera perturbadora. Durante a noite, voce ouve sons estranhos vindo da torre.",
+    "min_age": 11,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "choices": [
+      {
+        "text": "Entrar na torre para investigar",
+        "chance": 0.6,
+        "effects": {
+          "attributes": {
+            "PHY": 1,
+            "POK": 2,
+            "MEN": 1
+          }
+        },
+        "failure_effects": {
+          "health": -12,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce enfrentou seu medo e encontrou algo valioso na Torre Pokemon.",
+        "failure_history_entry": "O que voce viu la dentro te assustou de verdade. Nao foi uma boa ideia."
+      },
+      {
+        "text": "Rezar e deixar uma oferenda",
+        "effects": {
+          "attributes": {
+            "MEN": 1,
+            "LUK": 2
+          }
+        },
+        "history_entry": "Voce prestou respeito aos Pokemon da torre. Uma paz estranha tomou conta de voce."
+      },
+      {
+        "text": "Colocar rolhas nos ouvidos e dormir",
+        "effects": {
+          "health": 5
+        },
+        "history_entry": "Voce ignorou os sons e acordou descansado. As vezes ignorar e o melhor remedio."
+      }
+    ],
+    "tags": [
+      "risk",
+      "rare",
+      "route"
+    ],
+    "base_weight": 0.7
   }
 ]

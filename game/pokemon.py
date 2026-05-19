@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import random
 
+from .utils import clamp
+
 
 @dataclass
 class PokemonSpecies:
@@ -84,8 +86,17 @@ class OwnedPokemon:
         return self.nickname or self.species
 
     def max_health(self, species_data: PokemonSpecies | None = None) -> int:
-        base_hp = species_data.base_stats["hp"] if species_data else 20
-        return base_hp + self.level * 2
+        base_hp = species_data.base_stats["hp"] if species_data else self.healthy
+        return calculate_max_health(self.healthy, self.level, base_hp)
+
+    def health_percent(self, species_data: PokemonSpecies | None = None) -> float:
+        return self.current_health / max(1, self.max_health(species_data))
+
+    def heal(self, amount: int, species_data: PokemonSpecies | None = None) -> None:
+        self.current_health = int(clamp(self.current_health + amount, 0, self.max_health(species_data)))
+
+    def heal_full(self, species_data: PokemonSpecies | None = None) -> None:
+        self.current_health = self.max_health(species_data)
 
     def to_dict(self) -> dict:
         return {
@@ -139,7 +150,7 @@ def create_owned_pokemon(species: PokemonSpecies, level: int = 5, origin: str = 
         personality=random.choice(personalities),
         origin=origin,
     )
-    pokemon.current_health = pokemon.healthy
+    pokemon.heal_full(species)
     return pokemon
 
 
@@ -176,8 +187,14 @@ def evolve_pokemon(pokemon: OwnedPokemon, target_species: PokemonSpecies) -> str
     pokemon.beauty = _evolved_stat(pokemon.beauty, target_species.base_beauty)
     pokemon.healthy = _evolved_stat(pokemon.healthy, target_species.base_healthy)
     pokemon.occult = _evolved_stat(pokemon.occult, target_species.base_occult)
-    pokemon.current_health = pokemon.healthy
+    pokemon.heal_full(target_species)
     return f"{old_name} evoluiu para {target_species.name}!"
+
+
+def calculate_max_health(healthy: int, level: int, species_base_hp: int | None = None) -> int:
+    base = species_base_hp if species_base_hp is not None else healthy
+    value = 18 + level * 2 + healthy * 0.55 + base * 0.20
+    return int(clamp(round(value), 20, 320))
 
 
 def can_evolve(pokemon: OwnedPokemon, species: PokemonSpecies) -> bool:

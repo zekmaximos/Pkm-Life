@@ -73,6 +73,7 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertGreater(result.enemy_score, 0)
         self.assertGreaterEqual(result.win_chance, 0.05)
         self.assertLessEqual(result.win_chance, 0.95)
+        self.assertGreaterEqual(result.xp_gain, 6)
         self.assertIn(result.winner, {bulbasaur.display_name(), geodude.display_name()})
 
     def test_money_gain_is_positive(self) -> None:
@@ -178,6 +179,20 @@ class CoreSystemsTest(unittest.TestCase):
             if "gym" in city:
                 self.assertIn(city["gym"], gyms)
 
+    def test_journey_events_have_40_unique_varied_entries(self) -> None:
+        events = json.loads(Path("data/events_journey.json").read_text(encoding="utf-8"))
+        event_ids = [event["id"] for event in events]
+        tags = {tag for event in events for tag in event.get("tags", [])}
+        careers = {
+            event.get("conditions", {}).get("career")
+            for event in events
+            if event.get("conditions", {}).get("career")
+        }
+        self.assertEqual(len(events), 40)
+        self.assertEqual(len(event_ids), len(set(event_ids)))
+        self.assertTrue({"battle", "care", "contest", "academy", "risk", "rare", "city"}.issubset(tags))
+        self.assertTrue({"Treinador", "Criador", "Coordenador", "Estudante da academia"}.issubset(careers))
+
     def test_city_shop_and_healing_actions_work(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Green")
@@ -193,7 +208,7 @@ class CoreSystemsTest(unittest.TestCase):
         character.age = 10
         engine.move_to_city(character, "Viridian City")
         self.assertEqual(engine.heal_team_in_city(character), "Sua equipe foi curada.")
-        self.assertEqual(character.team[0].current_health, character.team[0].healthy)
+        self.assertEqual(character.team[0].current_health, character.team[0].max_health(engine.pokemon[character.team[0].species]))
         self.assertEqual(character.team[0].status, "healthy")
 
     def test_city_gym_lookup_uses_current_city(self) -> None:
@@ -221,12 +236,44 @@ class CoreSystemsTest(unittest.TestCase):
             self.assertGreaterEqual(gym["recommended_level"], 12)
             self.assertLessEqual(gym["recommended_level"], 38)
             self.assertEqual(gym["level_range"][1], gym["level_range"][0] + 3)
+            very_rare_count = 0
             for member in gym["team"]:
                 self.assertIn(gym["main_type"], engine.pokemon[member["species"]].types)
+                if engine.pokemon[member["species"]].rarity == "very_rare":
+                    very_rare_count += 1
+                if gym["difficulty"] <= 2:
+                    self.assertLessEqual(engine.pokemon[member["species"]].evolution_stage, 1)
+                    self.assertNotIn(engine.pokemon[member["species"]].rarity, {"very_rare", "legendary", "mythic"})
                 self.assertGreaterEqual(member["level"], 12)
                 self.assertLessEqual(member["level"], 41)
                 self.assertGreaterEqual(member["level"], gym["level_range"][0])
                 self.assertLessEqual(member["level"], gym["level_range"][1])
+            self.assertLessEqual(very_rare_count, 1)
+
+    def test_city_gym_scales_to_strongest_player_pokemon(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Leaf")
+        character.age = 10
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=26))
+        engine.move_to_city(character, "Pewter City")
+        gym = engine.get_city_gym(character)
+        self.assertEqual(gym["recommended_level"], 25)
+        self.assertEqual(gym["level_range"], [25, 28])
+        for member in gym["team"]:
+            self.assertGreaterEqual(member["level"], 25)
+            self.assertLessEqual(member["level"], 28)
+
+    def test_city_gym_scales_by_top_three_average_not_single_outlier(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Leaf")
+        character.age = 10
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=50))
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Rattata"], level=12))
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Caterpie"], level=12))
+        engine.move_to_city(character, "Pewter City")
+        gym = engine.get_city_gym(character)
+        self.assertLess(gym["recommended_level"], 41)
+        self.assertEqual(gym["recommended_level"], 24)
 
     def test_generated_gyms_are_saved_with_character(self) -> None:
         engine = GameEngine()
@@ -305,6 +352,7 @@ class CoreSystemsTest(unittest.TestCase):
             event = engine.advance_year(character)
         self.assertEqual(event.event_id if event else None, "oak_starter")
         self.assertFalse(character.team)
+        self.assertIn("aos 10 anos", character.flags["last_year_report"])
 
     def test_oak_starter_requires_pokemon_career_choice(self) -> None:
         engine = GameEngine()
@@ -391,6 +439,9 @@ class CoreSystemsTest(unittest.TestCase):
         xp_before = character.active_pokemon().experience
         engine.manual_action_train_team(character)
         self.assertGreaterEqual(character.active_pokemon().experience + character.active_pokemon().level * 100, xp_before + 500)
+        intensive_before = character.active_pokemon().experience + character.active_pokemon().level * 100
+        self.assertIn("Treino intensivo", engine.manual_action_intensive_training(character))
+        self.assertGreater(character.active_pokemon().experience + character.active_pokemon().level * 100, intensive_before)
 
     def test_use_items_apply_simple_effects(self) -> None:
         engine = GameEngine()
@@ -484,6 +535,118 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIsNotNone(message)
         self.assertTrue(message.startswith("Uso automatico:"))
         self.assertGreater(character.active_pokemon().current_health, 1)
+
+    def test_pokemon_max_health_is_separate_from_healthy_stat(self) -> None:
+        engine = GameEngine()
+        pokemon = create_owned_pokemon(engine.pokemon["Rattata"], level=2)
+        self.assertGreaterEqual(pokemon.max_health(engine.pokemon[pokemon.species]), 20)
+        self.assertNotEqual(pokemon.max_health(engine.pokemon[pokemon.species]), pokemon.healthy)
+        pokemon.current_health = 1
+        pokemon.heal_full(engine.pokemon[pokemon.species])
+        self.assertEqual(pokemon.current_health, pokemon.max_health(engine.pokemon[pokemon.species]))
+
+    def test_annual_report_is_recorded_after_year_progression(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        character.career = CAREER_TRAINER
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=5))
+        engine.advance_year(character)
+        self.assertIn("Resumo anual", character.flags["last_year_report"])
+        self.assertIn("Local:", character.flags["last_year_report"])
+        self.assertIn("Pokemon:", character.flags["last_year_report"])
+        self.assertIn("Encontros:", character.flags["last_year_report"])
+        self.assertIn("Dinheiro:", character.flags["last_year_report"])
+        self.assertTrue(any("annual_report" in entry.tags for entry in character.history))
+
+    def test_event_choice_is_appended_to_current_annual_report(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        character.career = CAREER_TRAINER
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=5))
+        engine.advance_year(character)
+        event = LifeEvent(
+            event_id="annual_note",
+            title="Annual",
+            text="Annual",
+            min_age=1,
+            max_age=99,
+            phase=None,
+            region=None,
+            city=None,
+            choices=[],
+        )
+        choice = type("Choice", (), {"effects": {}, "history_entry": "Voce tomou uma decisao importante.", "chance": None, "failure_effects": None, "failure_history_entry": None})()
+        event.choices = [choice]
+        engine.apply_event_choice(character, event, 0)
+        self.assertIn("Evento: Voce tomou uma decisao importante.", character.flags["last_year_report"])
+
+    def test_career_only_changes_on_transition_events(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.career = "Treinador"
+        normal_event = LifeEvent(
+            event_id="normal_career_effect",
+            title="Normal",
+            text="Normal",
+            min_age=1,
+            max_age=99,
+            phase=None,
+            region=None,
+            city=None,
+            choices=[],
+            tags=["care"],
+        )
+        transition_event = LifeEvent(
+            event_id="transition_career_effect",
+            title="Transition",
+            text="Transition",
+            min_age=1,
+            max_age=99,
+            phase=None,
+            region=None,
+            city=None,
+            choices=[],
+            tags=["career_transition"],
+        )
+        choice = type("Choice", (), {"effects": {"career": "Criador"}, "history_entry": "", "chance": None, "failure_effects": None, "failure_history_entry": None})()
+        normal_event.choices = [choice]
+        transition_event.choices = [choice]
+        engine.apply_event_choice(character, normal_event, 0)
+        self.assertEqual(character.career, "Treinador")
+        engine.apply_event_choice(character, transition_event, 0)
+        self.assertEqual(character.career, "Criador")
+
+    def test_path_choice_event_is_only_valid_for_student_career(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.career = "Criador"
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=5))
+        path_event = next(event for event in engine.journey_events if event.event_id == "choose_path_after_starter")
+        self.assertNotIn(path_event, valid_events(character, engine.journey_events))
+        character.career = "Estudante da academia"
+        self.assertIn(path_event, valid_events(character, engine.journey_events))
+
+    def test_automatic_gym_invite_can_trigger_for_ready_team(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.career = CAREER_TRAINER
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=16))
+        engine.move_to_city(character, "Pewter City")
+        with patch("game.engine.random.random", return_value=0.0):
+            invite = engine.resolve_automatic_gym_invite(character)
+        self.assertIsNotNone(invite)
+        self.assertIn("Convite de ginasio", invite)
+
+    def test_city_services_have_nearby_encounter_sources(self) -> None:
+        services = json.loads(Path("data/city_services_kanto.json").read_text(encoding="utf-8"))
+        by_city = {row["city"]: row for row in services}
+        self.assertIn("route_1", by_city["Pallet Town"]["encounter_sources"])
+        self.assertIn("safari_zone", by_city["Fuchsia City"]["encounter_sources"])
 
 
 if __name__ == "__main__":

@@ -7,14 +7,17 @@ Poke Life e um simulador textual de vida inspirado na estrutura de BitLife, ambi
 - Criacao de personagem nascido em Pallet Town, Kanto.
 - Atributos centrais do jogador: PHY, MEN, POK e LUK, gerados de forma natural entre 0 e 100.
 - Pokemon individuais com COMBAT, BEAUTY, HEALTHY, OCCULT, LEVEL, TYPE, ABILITY e condicao.
+- HP de batalha separado de HEALTHY: o HP maximo deriva de HEALTHY, nivel e base da especie.
 - Evolucoes por nivel com atualizacao de especie, tipos, habilidade, estagio e atributos individuais.
 - Fases de vida por idade.
 - Eventos de infancia carregados por JSON.
 - Eventos aleatorios ao avancar tempo: podem acontecer ou nao, com chance influenciada por atributos, equipe, itens, carreira e cidade atual.
+- Jornada pos-10 com 40 eventos distintos, incluindo ocorrencias comuns, incomuns e raras para estilos de Treinador, Criador, Coordenador e Estudante.
 - Avanco de tempo ano a ano.
 - Passagem de ano com efeitos reais: carreira, dinheiro, reputacao, XP, nivel, felicidade, saude e condicao dos Pokemon.
+- Resumo anual estilo BitLife registrado no historico, com linhas para local, treino, Pokemon, encontros, dinheiro, ovos, ginasios e evento escolhido.
 - Viagem manual bloqueada antes dos 10 anos.
-- Acoes manuais do ano: Pokemon Center, estudar, trabalhar, treinar e procurar ovos em habitats.
+- Acoes manuais do ano: Pokemon Center, estudar, trabalhar, treinar, treino intensivo e procurar ovos em habitats.
 - Carreiras iniciais: Estudante da academia, Treinador, Criador e Coordenador.
 - Evento especial do Professor Oak aos 10 anos.
 - Escolha entre Bulbasaur, Charmander e Squirtle, recusa da jornada, ou suprimentos caso o jogador ja tenha um companheiro.
@@ -41,8 +44,11 @@ Poke Life e um simulador textual de vida inspirado na estrutura de BitLife, ambi
 - Banco de encontros por cidades, rotas, cavernas e areas especiais de Kanto.
 - Banco de locais de Kanto com cidades, rotas e areas especiais usado para controlar onde Pokemon podem aparecer e ser capturados.
 - Cidades como hubs: servicos, lojas, carreiras locais e ginasios.
+- Cidades tambem puxam habitats/rotas proximas para encontros, deixando cada hub mais caracteristico.
 - Database de nomes e sobrenomes para NPCs e lideres de ginasio.
 - Liga de Kanto gerada no inicio do jogo: lideres aleatorios e times por tipo, persistidos no save.
+- Ginasios usam Pokemon de Kanto do tipo do ginasio, com variedade e limite de raridade para evitar times discrepantes.
+- Nivel dos ginasios escala no desafio conforme o Pokemon mais forte do jogador, mantendo a experiencia sandbox.
 
 ## Como rodar
 

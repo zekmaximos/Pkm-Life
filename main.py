@@ -54,18 +54,21 @@ def show_team(character: Character) -> None:
     table.add_column("COMBAT", justify="right")
     table.add_column("BEAUTY", justify="right")
     table.add_column("HEALTHY", justify="right")
+    table.add_column("HP", justify="right")
     table.add_column("OCCULT", justify="right")
     table.add_column("Condicao", justify="right")
     table.add_column("Ativo", justify="center")
     if not character.team:
-        table.add_row("Nenhum Pokemon na equipe", "-", "-", "-", "-", "-", "-", "-")
+        table.add_row("Nenhum Pokemon na equipe", "-", "-", "-", "-", "-", "-", "-", "-")
     for index, pokemon in enumerate(character.team):
+        species = engine.pokemon.get(pokemon.species)
         table.add_row(
             pokemon.display_name(),
             str(pokemon.level),
             str(pokemon.combat),
             str(pokemon.beauty),
             str(pokemon.healthy),
+            f"{pokemon.current_health}/{pokemon.max_health(species)}",
             str(pokemon.occult),
             pokemon.status,
             "*" if index == character.active_pokemon_index else "",
@@ -183,13 +186,17 @@ def box_menu(character: Character) -> None:
 
 def yearly_actions_menu(character: Character) -> None:
     while True:
+        rank_info = engine.career_rank_info(character)
+        console.print(f"[dim]{rank_info}[/dim]")
         console.print("1. Ir ao Pokemon Center")
         console.print("2. Ler sobre Pokemon")
-        console.print("3. Trabalhar na cidade")
-        console.print("4. Treinar Pokemon ativo")
-        console.print("5. Procurar ovos no habitat")
-        console.print("6. Voltar")
-        choice = Prompt.ask("Acao anual", choices=["1", "2", "3", "4", "5", "6"], default="6")
+        console.print("3. Trabalhar na cidade (renda extra)")
+        console.print("4. Focar na carreira (XP de rank + renda)")
+        console.print("5. Treinar Pokemon ativo")
+        console.print("6. Treino intensivo")
+        console.print("7. Procurar ovos no habitat")
+        console.print("8. Voltar")
+        choice = Prompt.ask("Acao anual", choices=["1", "2", "3", "4", "5", "6", "7", "8"], default="8")
         if choice == "1":
             console.print(engine.heal_team_in_city(character))
         elif choice == "2":
@@ -197,8 +204,12 @@ def yearly_actions_menu(character: Character) -> None:
         elif choice == "3":
             console.print(engine.manual_action_work_city(character))
         elif choice == "4":
-            console.print(engine.manual_action_train_team(character))
+            console.print(engine.manual_action_focus_career(character))
         elif choice == "5":
+            console.print(engine.manual_action_train_team(character))
+        elif choice == "6":
+            console.print(engine.manual_action_intensive_training(character))
+        elif choice == "7":
             console.print(engine.manual_action_search_for_egg(character))
         else:
             return
@@ -299,6 +310,9 @@ def handle_event(character: Character, event: LifeEvent | None) -> None:
 def advance_time(character: Character) -> None:
     event = engine.advance_year(character)
     handle_event(character, event)
+    report = character.flags.get("last_year_report")
+    if report:
+        console.print(Panel(str(report), title="Resumo anual"))
 
 
 def explore(character: Character) -> None:
@@ -328,6 +342,86 @@ def explore(character: Character) -> None:
         character.add_history(f"Voce evitou um encontro com {species.name} em {character.current_city}.")
         console.print("Voce se afasta com cuidado.")
         return
+
+
+def travel_menu(character: Character) -> None:
+    if character.age < 10:
+        console.print("Voce ainda e jovem demais para viajar sozinho.")
+        return
+    has_map = bool(character.flags.get("has_kanto_map"))
+    if not has_map:
+        console.print("[dim]Dica: com o Mapa de Kanto (loja) voce ve descricoes e servicos de cada destino.[/dim]")
+    destinations = engine.travel_destinations(character)
+    if not destinations:
+        console.print("Nenhum destino disponivel.")
+        return
+    for index, dest in enumerate(destinations, start=1):
+        if has_map:
+            services_str = ", ".join(dest.get("services", [])) or "sem servicos"
+            gym_mark = " [Ginasio]" if dest.get("has_gym") else ""
+            console.print(f"{index}. {dest['name']}{gym_mark} — {dest.get('description', '')} ({services_str})")
+        else:
+            console.print(f"{index}. {dest['name']} (destino desconhecido)")
+    console.print(f"{len(destinations) + 1}. Voltar")
+    choice = Prompt.ask(
+        "Viajar para",
+        choices=[str(i) for i in range(1, len(destinations) + 2)],
+        default=str(len(destinations) + 1),
+    )
+    idx = int(choice) - 1
+    if idx >= len(destinations):
+        return
+    ok, msg = engine.travel_to(character, destinations[idx]["name"])
+    console.print(msg)
+
+
+def show_pokedex(character: Character) -> None:
+    summary = engine.pokedex_summary(character)
+    table = Table(title=f"Pokedex — {summary['caught']}/{summary['total']} capturados, {summary['seen']} vistos")
+    table.add_column("Status")
+    table.add_column("Pokemon")
+    caught_set = set(summary["caught_list"])
+    for name in summary["seen_list"]:
+        status = "[green]Capturado[/green]" if name in caught_set else "[yellow]Visto[/yellow]"
+        table.add_row(status, name)
+    if not summary["seen_list"]:
+        table.add_row("-", "Nenhum Pokemon registrado ainda.")
+    console.print(table)
+
+
+def tournament_menu(character: Character) -> None:
+    tournaments = engine.available_tournaments(character)
+    console.print(Panel(
+        "\n".join(
+            f"{'[green]' if t['available'] else '[red]'}{t['label']}[/] — "
+            f"Inscricao: {t['entry_fee']}P | Premio total: ~{t['prize_pool']}P | "
+            f"Rodadas: {t['rounds']} | Insignias min.: {t['min_badges']}"
+            + (f"\n  [dim]{t['reason']}[/dim]" if not t['available'] else "")
+            for t in tournaments
+        ),
+        title="Torneios disponíveis",
+    ))
+    available = [t for t in tournaments if t["available"]]
+    if not available:
+        console.print("Nenhum torneio disponivel no momento.")
+        return
+    for index, t in enumerate(available, start=1):
+        console.print(f"{index}. {t['label']}")
+    console.print(f"{len(available) + 1}. Voltar")
+    choice = Prompt.ask(
+        "Participar de",
+        choices=[str(i) for i in range(1, len(available) + 2)],
+        default=str(len(available) + 1),
+    )
+    idx = int(choice) - 1
+    if idx >= len(available):
+        return
+    kind = available[idx]["kind"]
+    ok, result, msg = engine.enter_tournament(character, kind)
+    if not ok:
+        console.print(f"[red]{msg}[/red]")
+        return
+    console.print(Panel("\n".join(result.log), title="Resultado do torneio"))
 
 
 def save_menu(character: Character) -> None:
@@ -365,23 +459,26 @@ def main() -> None:
     while True:
         show_header(character)
         show_history(character, limit=3)
-        console.print("1. Avancar tempo")
-        console.print("2. Ver personagem")
-        console.print("3. Ver equipe")
-        console.print("4. Ver historico")
-        console.print("5. Ver insignias")
-        console.print("6. Ver inventario")
-        console.print("7. Usar item")
-        console.print("8. Acoes da cidade")
-        console.print("9. Explorar cidade/rota")
-        console.print("10. Escolher rotina/carreira")
-        console.print("11. Escolher Pokemon ativo")
-        console.print("12. Box Pokemon")
-        console.print("13. Acoes do ano")
-        console.print("14. Salvar jogo")
-        console.print("15. Carregar jogo")
-        console.print("16. Sair")
-        choice = Prompt.ask("Menu", choices=[str(i) for i in range(1, 17)], default="1")
+        console.print("1.  Avancar tempo")
+        console.print("2.  Ver personagem")
+        console.print("3.  Ver equipe")
+        console.print("4.  Ver historico")
+        console.print("5.  Ver insignias")
+        console.print("6.  Ver inventario")
+        console.print("7.  Usar item")
+        console.print("8.  Acoes da cidade")
+        console.print("9.  Explorar cidade/rota")
+        console.print("10. Viajar para outra cidade")
+        console.print("11. Escolher rotina/carreira")
+        console.print("12. Escolher Pokemon ativo")
+        console.print("13. Box Pokemon")
+        console.print("14. Acoes do ano")
+        console.print("15. Torneios")
+        console.print("16. Pokedex")
+        console.print("17. Salvar jogo")
+        console.print("18. Carregar jogo")
+        console.print("19. Sair")
+        choice = Prompt.ask("Menu", choices=[str(i) for i in range(1, 20)], default="1")
 
         if choice == "1":
             advance_time(character)
@@ -402,20 +499,26 @@ def main() -> None:
         elif choice == "9":
             explore(character)
         elif choice == "10":
-            career_menu(character)
+            travel_menu(character)
         elif choice == "11":
-            active_pokemon_menu(character)
+            career_menu(character)
         elif choice == "12":
-            box_menu(character)
+            active_pokemon_menu(character)
         elif choice == "13":
-            yearly_actions_menu(character)
+            box_menu(character)
         elif choice == "14":
-            save_menu(character)
+            yearly_actions_menu(character)
         elif choice == "15":
+            tournament_menu(character)
+        elif choice == "16":
+            show_pokedex(character)
+        elif choice == "17":
+            save_menu(character)
+        elif choice == "18":
             loaded = load_menu()
             if loaded:
                 character = loaded
-        elif choice == "16":
+        elif choice == "19":
             if Prompt.ask("Salvar antes de sair?", choices=["s", "n"], default="s") == "s":
                 save_game(character, "autosave")
             console.print("Ate a proxima jornada.")

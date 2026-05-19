@@ -45,11 +45,10 @@ def decide_auto_encounter_action(
             capture_desire += 12
         if capture_desire >= 35:
             return "capture"
-    if active and active.current_health > active.healthy * 0.35:
+    if active and active.health_percent() > 0.35:
         battle_desire = 35 + character.attributes.PHY * 0.12 + character.attributes.POK * 0.10
         if character.career == "Treinador":
             battle_desire += 12
         if level <= active.level + 5 and random.random() < battle_desire / 100:
             return "battle"
     return "observe"
-

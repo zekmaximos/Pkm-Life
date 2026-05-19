@@ -6,7 +6,7 @@ import random
 
 from .battle import simulate_simple_battle
 from .auto_year import automatic_encounter_chance, decide_auto_encounter_action
-from .careers import available_careers
+from .careers import available_careers, career_progress, try_career_rank_up, career_rank_label
 from .capture import try_capture
 from .character import Character
 from .city import CityServices
@@ -20,6 +20,10 @@ from .pokemon import PokemonSpecies, assign_evolution_stages, create_owned_pokem
 from .progression import progress_year
 from .progression import grant_pokemon_xp
 from .economy import calculate_money_gain
+from .tournaments import (
+    generate_tournament, run_tournament, can_enter_tournament,
+    TOURNAMENT_KINDS, TournamentResult,
+)
 
 
 DATA_DIR = Path("data")
@@ -94,23 +98,72 @@ class GameEngine:
         character.generated_gyms = generate_gyms(self.gym_templates, self.pokemon, self.name_database)
 
     def advance_year(self, character: Character) -> LifeEvent | None:
+        # --- Verifica hospitalização por saúde zerada ---
+        if character.health <= 0:
+            hosp_note = self._apply_hospitalization(character)
+            character.add_history(hosp_note, ["health", "hospitalization"])
+
+        before = self._year_snapshot(character)
         character.age += 1
-        character.add_history(f"Voce completou {character.age} anos.", ["age"])
+        # Marcos de idade relevantes entram no histórico; anos comuns, não
+        if character.age in {5, 10, 15, 18, 20, 25, 30, 40, 50, 60, 70}:
+            character.add_history(f"Voce completou {character.age} anos.", ["age", "milestone"])
+
+        year_notes: list[str] = []
+        # Passa rank de carreira para progress_year via career_progress
         for note in progress_year(character, self.pokemon):
+            year_notes.append(note)
             if _is_history_worthy(note):
                 character.add_history(note, ["progression"])
 
+        # XP de carreira automático por passar o ano
+        if character.career:
+            rank_xp = 3 + (1 if character.career != "Estudante da academia" else 0)
+            character.career_ranks, character.career_xp, rank_msg = try_career_rank_up(
+                character.career, character.career_ranks, character.career_xp, rank_xp
+            )
+            if rank_msg:
+                year_notes.append(rank_msg)
+                character.add_history(rank_msg, ["career", "rank_up"])
+
         if character.age == 10 and not character.flags.get("oak_event_done") and not self.character_has_pokemon(character):
+            report = self.build_annual_report(character, before, year_notes)
+            character.flags["last_year_report"] = report
             return self.professor_oak_event()
 
         for note in self.resolve_automatic_year_encounter(character):
+            year_notes.append(note)
             character.add_history(note, ["auto_encounter"])
+
+        gym_invite = self.resolve_automatic_gym_invite(character)
+        if gym_invite:
+            year_notes.append(gym_invite)
+            character.add_history(gym_invite, ["gym", "invite"])
+
+        report = self.build_annual_report(character, before, year_notes)
+        character.flags["last_year_report"] = report
+        # Relatório anual fica SOMENTE em flags, não polui o histórico
 
         event_pool = self.childhood_events if character.age < 10 else self.journey_events
         city_focus = self._event_focus_for(character)
         if not should_roll_life_event(character, event_pool, city_focus):
             return None
         return choose_weighted_event(character, event_pool, city_focus)
+
+    def _apply_hospitalization(self, character: Character) -> str:
+        """Aplica penalidades de hospitalização quando saúde chega a 0."""
+        cost = min(character.money, 200 + len(character.team) * 50)
+        character.money = max(0, character.money - cost)
+        character.health = 30  # recuperação mínima
+        for pokemon in character.team:
+            pokemon.healthy = max(1, pokemon.healthy - 10)
+            if pokemon.status == "healthy":
+                pokemon.status = "tired"
+        note = (
+            f"Sua saude colapsou completamente. Voce foi hospitalizado, "
+            f"perdeu {cost} Pokedollar em tratamentos e sua equipe ficou abalada."
+        )
+        return note
 
     def resolve_automatic_year_encounter(self, character: Character) -> list[str]:
         location = self.get_location(character.current_city)
@@ -139,6 +192,107 @@ class GameEngine:
             notes.append(f"Voce observou {species.name} e aprendeu sobre seu comportamento. POK +1.")
         return notes
 
+    def resolve_automatic_gym_invite(self, character: Character) -> str | None:
+        gym = self.get_city_gym(character)
+        if not gym or not character.team or gym["badge"] in character.badges:
+            return None
+        if character.flags.get(f"gym_invite_{gym['id']}_age") == character.age:
+            return None
+        strongest = max(pokemon.level for pokemon in character.team)
+        recommended = int(gym["recommended_level"])
+        gap = recommended - strongest
+        chance = 0.18
+        if abs(gap) <= 3:
+            chance += 0.22
+        if character.career == "Treinador":
+            chance += 0.12
+        if character.reputation > 5:
+            chance += 0.05
+        if gap > 8:
+            chance *= 0.35
+        if random.random() > min(0.65, chance):
+            return None
+        character.flags[f"gym_invite_{gym['id']}_age"] = character.age
+        if gap > 5:
+            advice = "O assistente avisou que sua equipe talvez precise de mais preparo."
+        elif gap < -6:
+            advice = "O assistente comentou que o lider ajustaria o desafio ao seu nivel atual."
+        else:
+            advice = "O assistente disse que sua equipe parece pronta para tentar."
+        return f"Convite de ginasio em {gym['city']}: {gym['leader']} aceita seu desafio pela {gym['badge']}. {advice}"
+
+    def _year_snapshot(self, character: Character) -> dict:
+        return {
+            "money": character.money,
+            "team_count": len(character.team),
+            "box_count": len(character.box),
+            "egg_count": len(character.eggs),
+            "badges": len(character.badges),
+            "levels": {id(pokemon): pokemon.level for pokemon in character.team + character.box},
+            "species": {id(pokemon): pokemon.species for pokemon in character.team + character.box},
+            "health": character.health,
+            "city": character.current_city,
+        }
+
+    def build_annual_report(self, character: Character, before: dict, notes: list[str]) -> str:
+        money_delta = character.money - int(before["money"])
+        new_pokemon = (len(character.team) + len(character.box)) - int(before["team_count"]) - int(before["box_count"])
+        egg_delta = len(character.eggs) - int(before["egg_count"])
+        badge_delta = len(character.badges) - int(before["badges"])
+        level_ups = 0
+        evolutions: list[str] = []
+        for pokemon in character.team + character.box:
+            previous = before["levels"].get(id(pokemon), pokemon.level)
+            level_ups += max(0, pokemon.level - previous)
+            previous_species = before["species"].get(id(pokemon), pokemon.species)
+            if previous_species != pokemon.species:
+                evolutions.append(f"{previous_species} -> {pokemon.species}")
+        battles = sum(1 for note in notes if "Batalha automatica" in note)
+        captures = sum(1 for note in notes if "Captura automatica" in note and "foi capturado" in note)
+        observations = sum(1 for note in notes if "observou" in note)
+        lines = [f"Resumo anual aos {character.age} anos"]
+        lines.append(f"Local: {before['city']}." if before["city"] == character.current_city else f"Local: {before['city']} -> {character.current_city}.")
+        if level_ups:
+            lines.append(f"Treino: sua equipe ganhou {level_ups} nivel(is).")
+        else:
+            lines.append("Treino: nenhum nivel ganho.")
+        pokemon_parts = []
+        if new_pokemon > 0:
+            pokemon_parts.append(f"{new_pokemon} novo(s) Pokemon")
+        if evolutions:
+            pokemon_parts.append("evolucoes: " + ", ".join(evolutions))
+        if not pokemon_parts:
+            pokemon_parts.append("sem novas capturas ou evolucoes")
+        lines.append("Pokemon: " + "; ".join(pokemon_parts) + ".")
+        encounter_parts = []
+        if captures:
+            encounter_parts.append(f"{captures} captura(s)")
+        if battles:
+            encounter_parts.append(f"{battles} batalha(s)")
+        if observations:
+            encounter_parts.append(f"{observations} observacao(oes)")
+        lines.append("Encontros: " + (", ".join(encounter_parts) if encounter_parts else "nenhum encontro marcante") + ".")
+        if money_delta:
+            action = "ganhou" if money_delta > 0 else "gastou/perdeu"
+            lines.append(f"Dinheiro: voce {action} {abs(money_delta)} Pokedollar.")
+        else:
+            lines.append("Dinheiro: sem mudanca.")
+        if egg_delta > 0:
+            lines.append(f"Ovos: voce recebeu/encontrou {egg_delta} ovo(s).")
+        elif egg_delta < 0:
+            lines.append(f"Ovos: {abs(egg_delta)} ovo(s) chocaram ou sairam da incubacao.")
+        else:
+            lines.append("Ovos: sem mudanca.")
+        if badge_delta:
+            lines.append(f"Ginasios: voce conquistou {badge_delta} insignia(s).")
+        else:
+            lines.append("Ginasios: nenhuma insignia nova.")
+        if notes:
+            lines.append("Registro: " + " | ".join(_clean_sentence(note) for note in notes[:4]) + ".")
+        else:
+            lines.append("Registro: nada marcante mudou alem da passagem do tempo.")
+        return "\n".join(lines)
+
     def professor_oak_event(self) -> LifeEvent:
         return LifeEvent(
             event_id="oak_starter",
@@ -163,23 +317,31 @@ class GameEngine:
         character.flags["oak_event_done"] = True
         allowed_careers = {"Treinador", "Criador", "Coordenador"}
         if starter_name is None:
-            character.add_history("Aos 10 anos, voce recusou iniciar uma jornada Pokemon por enquanto.", ["oak"])
+            history = "Aos 10 anos, voce recusou iniciar uma jornada Pokemon por enquanto."
+            character.add_history(history, ["oak"])
+            self._append_to_annual_report(character, history)
             return "Voce decidiu esperar antes de iniciar uma jornada Pokemon."
         if career not in allowed_careers:
-            character.add_history("Aos 10 anos, voce conversou com o Professor Oak, mas nao escolheu uma profissao Pokemon.", ["oak"])
+            history = "Aos 10 anos, voce conversou com o Professor Oak, mas nao escolheu uma profissao Pokemon."
+            character.add_history(history, ["oak"])
+            self._append_to_annual_report(character, history)
             return "Professor Oak decidiu esperar ate voce escolher uma profissao ligada a Pokemon."
         species = self.pokemon[starter_name]
         pokemon = create_owned_pokemon(species, level=5, origin="presente do Professor Oak")
         character.add_pokemon(pokemon)
         character.career = career
-        character.add_history(f"Aos 10 anos, voce decidiu ser {career} e recebeu um {starter_name} do Professor Oak.", ["oak", "starter"])
+        history = f"Aos 10 anos, voce decidiu ser {career} e recebeu um {starter_name} do Professor Oak."
+        character.add_history(history, ["oak", "starter"])
+        self._append_to_annual_report(character, history)
         return f"{starter_name} entrou para sua equipe. Profissao escolhida: {career}."
 
     def receive_oak_supplies(self, character: Character) -> str:
         character.flags["oak_event_done"] = True
         character.inventory["Poke Ball"] = character.inventory.get("Poke Ball", 0) + 5
         character.inventory["Potion"] = character.inventory.get("Potion", 0) + 2
-        character.add_history("Aos 10 anos, o Professor Oak reconheceu seu companheiro Pokemon e entregou suprimentos.", ["oak", "items"])
+        history = "Aos 10 anos, o Professor Oak reconheceu seu companheiro Pokemon e entregou suprimentos."
+        character.add_history(history, ["oak", "items"])
+        self._append_to_annual_report(character, history)
         return "Professor Oak entregou 5 Poke Balls e 2 Potions para sua jornada."
 
     def set_career(self, character: Character, career: str) -> bool:
@@ -258,8 +420,9 @@ class GameEngine:
             if active is None:
                 return False, "Voce precisa de um Pokemon ativo para usar este item."
             consume_item(character.inventory, item_name)
-            active.current_health = min(active.healthy, active.current_health + item.healing)
-            if active.current_health >= active.healthy * 0.75 and active.status in {"tired", "injured", "badly_injured"}:
+            species = self.pokemon.get(active.species)
+            active.heal(item.healing, species)
+            if active.health_percent(species) >= 0.75 and active.status in {"tired", "injured", "badly_injured"}:
                 active.status = "healthy"
             return True, f"{active.display_name()} recuperou {item.healing} de saude."
 
@@ -278,7 +441,7 @@ class GameEngine:
             return True, "Repel ativo: encontros selvagens ficarao menos provaveis neste ano."
         if effect == "level_up_active":
             active.level = min(100, active.level + 1)
-            active.current_health = active.healthy
+            active.heal_full(self.pokemon.get(active.species))
             return True, f"{active.display_name()} subiu para o nivel {active.level}."
         if effect == "boost_combat":
             active.combat = min(100, active.combat + 3)
@@ -298,6 +461,17 @@ class GameEngine:
                 character.current_city = character.hometown
                 return True, f"Voce voltou em seguranca para {character.hometown}."
             return True, "Voce guardou o item; ainda e cedo para viajar sozinho."
+        if effect == "reveal_map":
+            character.flags["has_kanto_map"] = True
+            return True, "Mapa de Kanto ativado! Agora voce ve descricoes e servicos de cada cidade ao viajar."
+        if effect == "create_common_egg":
+            egg = create_random_egg(
+                self.pokemon,
+                tier="C",
+                origin=f"ovo comprado em {character.current_city}",
+            )
+            character.eggs.append(egg)
+            return True, f"O ovo foi incubado com cuidado. Um ovo {egg.color} ({egg.rarity_label}) foi adicionado."
         return False, f"{item_name} nao tem uso implementado."
 
     def heal_team_in_city(self, character: Character) -> str:
@@ -305,7 +479,7 @@ class GameEngine:
         if not city or not city.has_service("pokemon_center"):
             return "Esta cidade nao tem Pokemon Center disponivel."
         for pokemon in character.team:
-            pokemon.current_health = pokemon.healthy
+            pokemon.heal_full(self.pokemon.get(pokemon.species))
             pokemon.status = "healthy"
         character.add_history(f"Sua equipe descansou no Pokemon Center de {character.current_city}.", ["city", "heal"])
         return "Sua equipe foi curada."
@@ -339,15 +513,33 @@ class GameEngine:
         active = character.active_pokemon()
         if active is None:
             return "Voce precisa de um Pokemon para treinar."
-        xp = 18 + character.attributes.POK // 6 + character.attributes.PHY // 10
+        xp = 38 + character.attributes.POK // 4 + character.attributes.PHY // 8
         notes = grant_pokemon_xp(active, xp, self.pokemon)
         active.current_health = max(0, active.current_health - random.randint(1, 5))
-        if active.current_health <= active.healthy * 0.25:
+        if active.health_percent(self.pokemon.get(active.species)) <= 0.25:
             active.status = "tired"
         character.attributes.modify({"PHY": 1, "POK": 1})
         character.add_history(f"Voce treinou com {active.display_name()} em {character.current_city}.", ["manual", "train"])
         extra = f" {' '.join(notes)}" if notes else ""
         return f"{active.display_name()} ganhou {xp} XP. PHY +1, POK +1.{extra}"
+
+    def manual_action_intensive_training(self, character: Character) -> str:
+        active = character.active_pokemon()
+        if active is None:
+            return "Voce precisa de um Pokemon para treino intensivo."
+        xp = 80 + character.attributes.POK // 3 + character.attributes.PHY // 5
+        if character.career == "Treinador":
+            xp += 35
+        notes = grant_pokemon_xp(active, xp, self.pokemon)
+        health_cost = random.randint(8, 18)
+        active.current_health = max(0, active.current_health - health_cost)
+        if active.health_percent(self.pokemon.get(active.species)) <= 0.35:
+            active.status = "injured"
+        character.health = max(0, character.health - 2)
+        character.attributes.modify({"PHY": 1, "POK": 2})
+        character.add_history(f"Voce fez treino intensivo com {active.display_name()} em {character.current_city}.", ["manual", "intensive_train"])
+        extra = f" {' '.join(notes)}" if notes else ""
+        return f"Treino intensivo: {active.display_name()} ganhou {xp} XP, mas perdeu {health_cost} HP.{extra}"
 
     def manual_action_search_for_egg(self, character: Character) -> str:
         location = self.get_location(character.current_city)
@@ -373,7 +565,31 @@ class GameEngine:
         city = self.get_city_services(character.current_city)
         if not city or not city.gym:
             return None
-        return character.generated_gyms.get(city.gym)
+        gym = character.generated_gyms.get(city.gym)
+        if not gym:
+            return None
+        return self._scaled_gym_for_character(gym, character)
+
+    def _scaled_gym_for_character(self, gym: dict, character: Character) -> dict:
+        team_levels = sorted((pokemon.level for pokemon in character.team), reverse=True)
+        if not team_levels:
+            team_levels = sorted((pokemon.level for pokemon in character.box), reverse=True)
+        strongest = team_levels[0] if team_levels else 12
+        top_three = team_levels[:3] or [strongest]
+        average_top = round(sum(top_three) / len(top_three))
+        badge_pressure = min(4, len(character.badges))
+        base_level = average_top + badge_pressure - 1
+        base_level = min(base_level, strongest + 1)
+        base_level = max(12, min(41, base_level))
+        scaled = dict(gym)
+        scaled["recommended_level"] = base_level
+        scaled["level_range"] = [base_level, min(41, base_level + 3)]
+        scaled_team = []
+        for index, member in enumerate(gym["team"]):
+            level = min(41, base_level + (index % 4))
+            scaled_team.append({**member, "level": level})
+        scaled["team"] = scaled_team
+        return scaled
 
     def challenge_city_gym(self, character: Character) -> tuple[bool, list[str]]:
         self.ensure_world_generated(character)
@@ -427,7 +643,15 @@ class GameEngine:
         choice = event.choices[choice_index]
         result = apply_choice_result(character, event, choice)
         self._apply_engine_effects(character, result.effects)
+        if result.history_entry:
+            self._append_to_annual_report(character, result.history_entry)
         return result.history_entry
+
+    def _append_to_annual_report(self, character: Character, text: str) -> None:
+        report = character.flags.get("last_year_report")
+        if not report or text in str(report):
+            return
+        character.flags["last_year_report"] = f"{report}\nEvento: {_clean_sentence(text)}."
 
     def _apply_engine_effects(self, character: Character, effects: dict) -> None:
         for reward in effects.get("pokemon", []):
@@ -439,6 +663,7 @@ class GameEngine:
             pokemon = create_owned_pokemon(self.pokemon[species_name], level=level, origin=origin)
             destination = character.add_pokemon(pokemon)
             location = "equipe ativa" if destination == "team" else "Box"
+            character.register_caught(species_name)
             character.add_history(f"{pokemon.display_name()} entrou para sua {location} por meio de um evento.", ["pokemon", "event"])
         for reward in effects.get("random_area_pokemon", []):
             location_name = reward.get("location", character.current_city)
@@ -450,6 +675,7 @@ class GameEngine:
             pokemon = create_owned_pokemon(species, level=level, origin=reward.get("origin", f"evento em {location_name}"))
             destination = character.add_pokemon(pokemon)
             place = "equipe ativa" if destination == "team" else "Box"
+            character.register_caught(species.name)
             character.add_history(f"{pokemon.species} se juntou a sua {place} em {location_name}.", ["pokemon", "event"])
         for egg_reward in effects.get("eggs", []):
             tier = egg_reward.get("tier") or choose_egg_tier(egg_reward.get("tier_weights"))
@@ -469,6 +695,7 @@ class GameEngine:
         if int(character.flags.get("repel_years", 0)) > 0 and random.random() < 0.65:
             character.flags["repel_years"] = int(character.flags.get("repel_years", 0)) - 1
             species = self.pokemon["Magikarp"]
+            character.register_seen(species.name)
             return species, 1, "O Repel afastou os encontros selvagens mais perigosos. Voce so viu um Magikarp distante."
         location = self.get_location(character.current_city)
         if location and not location.encounter_enabled:
@@ -485,6 +712,7 @@ class GameEngine:
             ]
             species = random.choice(possible)
             level = random.randint(3, max(4, min(12, character.age + 2)))
+        character.register_seen(species.name)
         text = f"Um {species.name} selvagem de nivel {level} apareceu perto de {character.current_city}."
         return species, level, text
 
@@ -493,7 +721,7 @@ class GameEngine:
         location = self.locations.get(location_id)
         if location and not location.capture_enabled:
             return None
-        encounter_location = self.encounters.get(location_id)
+        encounter_location = self._choose_encounter_table(location_name, location_id)
         if not encounter_location and location_name == "Pallet Town":
             encounter_location = self.encounters.get("route_1")
         if not encounter_location:
@@ -503,6 +731,16 @@ class GameEngine:
             return None
         return random.choices(encounters, weights=[item.get("weight", 1) for item in encounters], k=1)[0]
 
+    def _choose_encounter_table(self, location_name: str, location_id: str) -> dict | None:
+        sources = [location_id]
+        city = self.city_services.get(location_name)
+        if city and city.encounter_sources:
+            sources.extend(city.encounter_sources)
+        tables = [self.encounters[source] for source in sources if source in self.encounters]
+        if not tables:
+            return None
+        return random.choice(tables)
+
     def get_location(self, location_name_or_id: str) -> Location | None:
         location_id = self.location_ids_by_name.get(location_name_or_id, location_name_or_id)
         return self.locations.get(location_id)
@@ -510,6 +748,10 @@ class GameEngine:
     def capture_wild(self, character: Character, species_name: str, level: int) -> tuple[bool, str]:
         ball = self.best_available_ball(character, self.pokemon[species_name])
         success, message, _ = try_capture(character, self.pokemon[species_name], level, ball=ball, item=self.items.get(ball))
+        if success:
+            character.register_caught(species_name)
+        else:
+            character.register_seen(species_name)
         return success, message
 
     def best_available_ball(self, character: Character, species: PokemonSpecies) -> str:
@@ -542,7 +784,7 @@ class GameEngine:
         return won, log
 
     def _auto_use_healing_item(self, character: Character, pokemon) -> str | None:
-        if pokemon.current_health > pokemon.healthy * 0.45:
+        if pokemon.health_percent(self.pokemon.get(pokemon.species)) > 0.45:
             return None
         for item_name in ("Super Potion", "Potion"):
             if character.inventory.get(item_name, 0) > 0:
@@ -597,6 +839,160 @@ class GameEngine:
         character.add_pokemon(pokemon)
         return True, f"{pokemon.display_name()} entrou na equipe."
 
+    # ------------------------------------------------------------------ #
+    # VIAGEM                                                               #
+    # ------------------------------------------------------------------ #
+
+    def travel_destinations(self, character: Character) -> list[dict]:
+        """Retorna todas as cidades acessíveis (exceto a atual). Com mapa, inclui serviços e descrição."""
+        if not self.can_travel(character):
+            return []
+        has_map = bool(character.flags.get("has_kanto_map"))
+        destinations = []
+        for loc in self.locations.values():
+            if loc.kind != "city" or loc.name == character.current_city:
+                continue
+            entry: dict = {"name": loc.name, "id": loc.location_id}
+            if has_map:
+                entry["description"] = loc.description
+                city_svc = self.city_services.get(loc.name)
+                entry["services"] = city_svc.services if city_svc else []
+                entry["has_gym"] = bool(city_svc and city_svc.gym) if city_svc else False
+            destinations.append(entry)
+        return sorted(destinations, key=lambda d: d["name"])
+
+    def travel_to(self, character: Character, city_name: str) -> tuple[bool, str]:
+        if not self.can_travel(character):
+            return False, "Voce ainda e jovem demais para viajar sozinho."
+        location = self.get_location(city_name)
+        if not location or location.kind != "city":
+            return False, f"{city_name} nao e um destino valido."
+        if location.name == character.current_city:
+            return False, f"Voce ja esta em {character.current_city}."
+        old_city = character.current_city
+        character.current_city = location.name
+        character.add_history(f"Voce viajou de {old_city} para {location.name}.", ["travel"])
+        return True, f"Voce chegou a {location.name}."
+
+    # ------------------------------------------------------------------ #
+    # CARREIRA — PROGRESSÃO MANUAL                                         #
+    # ------------------------------------------------------------------ #
+
+    def manual_action_focus_career(self, character: Character) -> str:
+        """Foca na carreira atual: ganha XP de rank e dinheiro proporcional."""
+        if not character.career:
+            return "Voce nao tem uma carreira definida. Escolha uma primeiro."
+        rank = character.career_rank()
+        rank_mult = 1.0 + rank * 0.20
+        # Renda da sessão de trabalho dedicada
+        base = {"Treinador": 120, "Criador": 100, "Coordenador": 110, "Estudante da academia": 40}.get(character.career, 80)
+        income = int(calculate_money_gain(base, character.attributes) * rank_mult)
+        character.money += income
+        # Sobe atributo relevante
+        attr_map = {
+            "Treinador": {"PHY": 1, "POK": 1},
+            "Criador": {"POK": 1, "MEN": 1},
+            "Coordenador": {"LUK": 1, "POK": 1},
+            "Estudante da academia": {"MEN": 2},
+        }
+        character.attributes.modify(attr_map.get(character.career, {}))
+        # XP de carreira
+        xp_gain = 8 + rank * 2
+        character.career_ranks, character.career_xp, rank_msg = try_career_rank_up(
+            character.career, character.career_ranks, character.career_xp, xp_gain
+        )
+        suffix = f" {rank_msg}" if rank_msg else ""
+        character.add_history(
+            f"Voce se dedicou a sua carreira de {character.career} e ganhou {income} Pokedollar.",
+            ["manual", "work", "career"],
+        )
+        return f"Dedicacao a carreira: +{income} Pokedollar.{suffix}"
+
+
+    def career_rank_info(self, character: Character) -> str:
+        if not character.career:
+            return "Sem carreira definida."
+        from .careers import CAREER_RANK_XP
+        rank = character.career_rank()
+        label = career_rank_label(character.career, character.career_ranks)
+        xp = character.career_xp.get(character.career, 0)
+        needed = CAREER_RANK_XP[rank] if rank < 5 else 0
+        if rank >= 5:
+            return f"{character.career} — {label} (rank maximo)"
+        return f"{character.career} — {label} (rank {rank}/5, {xp}/{needed} XP)"
+
+    # ------------------------------------------------------------------ #
+    # POKÉDEX                                                              #
+    # ------------------------------------------------------------------ #
+
+    def pokedex_summary(self, character: Character) -> dict:
+        caught = list(character.pokedex_caught)
+        seen_set = set(character.pokedex_seen) | set(caught)
+        return {
+            "seen": len(seen_set),
+            "caught": len(caught),
+            "total": len(self.pokemon),
+            "seen_list": sorted(seen_set),
+            "caught_list": sorted(caught),
+        }
+
+    # ------------------------------------------------------------------ #
+    # TORNEIOS                                                             #
+    # ------------------------------------------------------------------ #
+
+    def available_tournaments(self, character: Character) -> list[dict]:
+        result = []
+        for kind, cfg in TOURNAMENT_KINDS.items():
+            ok, reason = can_enter_tournament(character, kind)
+            result.append({
+                "kind": kind,
+                "label": cfg["label"],
+                "available": ok,
+                "reason": reason,
+                "entry_fee": cfg["entry_fee"],
+                "prize_pool": cfg["base_prize"] * cfg["rounds"],
+                "rounds": cfg["rounds"],
+                "min_badges": cfg.get("min_badges", 0),
+            })
+        return result
+
+    def enter_tournament(self, character: Character, kind: str) -> tuple[bool, "TournamentResult | None", str]:
+        ok, reason = can_enter_tournament(character, kind)
+        if not ok:
+            return False, None, reason
+        cfg = TOURNAMENT_KINDS[kind]
+        character.money = max(0, character.money - cfg["entry_fee"])
+        opponents = generate_tournament(character, self.pokemon, kind)
+        result = run_tournament(character, opponents, self.pokemon, kind)
+        if result.prize_money > 0:
+            character.money += result.prize_money
+        character.reputation += result.rounds_won * (2 if kind == "regional" else 1)
+        if result.champion:
+            summary = f"Voce venceu o {cfg['label']}! Premio: {result.prize_money} Pokedollar."
+            character.add_history(summary, ["tournament", "win"])
+        else:
+            summary = f"Voce chegou ate a rodada {result.rounds_won + 1} no {cfg['label']}."
+            character.add_history(summary, ["tournament"])
+        return True, result, summary
+
+
+# ------------------------------------------------------------------ #
+# Helpers de módulo                                                    #
+# ------------------------------------------------------------------ #
 
 def _is_history_worthy(note: str) -> bool:
-    return any(keyword in note for keyword in ("subiu para", "Pokedollar", "problema", "entrou na rotina"))
+    """Filtra notas de progressão que realmente merecem entrar no histórico."""
+    keywords = (
+        "subiu para o nivel", "evoluiu", "aprendeu", "conseguiu", "venceu",
+        "badge", "insignia", "torneio", "rank", "ovo chocou",
+    )
+    lower = note.lower()
+    return any(kw in lower for kw in keywords)
+
+
+def _clean_sentence(text: str) -> str:
+    """Normaliza uma frase para o relatório anual."""
+    text = text.strip().rstrip(".")
+    if text and text[0].islower():
+        text = text[0].upper() + text[1:]
+    return text

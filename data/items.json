@@ -148,5 +148,12 @@
     "type": "utility",
     "price": 550,
     "effect": "safe_return"
+  },
+  {
+    "id": "kanto_map",
+    "name": "Mapa de Kanto",
+    "type": "utility",
+    "price": 500,
+    "effect": "reveal_map"
   }
 ]
