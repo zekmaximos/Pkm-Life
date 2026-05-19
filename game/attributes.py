@@ -47,6 +47,9 @@ class PlayerAttributes:
     def to_dict(self) -> dict[str, int]:
         return {"PHY": self.PHY, "MEN": self.MEN, "POK": self.POK, "LUK": self.LUK}
 
+    def total(self) -> int:
+        return sum(self.to_dict().values())
+
     def as_items(self) -> list[tuple[str, int]]:
         return list(self.to_dict().items())
 

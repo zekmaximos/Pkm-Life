@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import random
 
-from .careers import career_progress, default_career_for_age
+from .careers import career_progress, default_career_for_age, pokemon_work_bonus
 from .character import Character
 from .eggs import progress_eggs
 from .pokemon import OwnedPokemon, PokemonSpecies, can_evolve, evolve_pokemon
@@ -25,6 +25,13 @@ def progress_year(character: Character, species_by_name: dict[str, PokemonSpecie
     if career.money_gain:
         character.money = max(0, character.money + career.money_gain)
         notes.append(f"Voce ganhou {career.money_gain} Pokedollar.")
+        work_factor, work_notes = pokemon_work_bonus(character.career, character.team)
+        if work_factor > 1.0:
+            bonus = int(career.money_gain * (work_factor - 1.0))
+            if bonus > 0:
+                character.money += bonus
+                notes.append(f"Bonus de trabalho com Pokemon: +{bonus} Pokedollar.")
+            notes.extend(work_notes)
     if career.reputation_change:
         character.reputation += career.reputation_change
     if career.note and (career.attribute_changes or career.money_gain or character.team):

@@ -155,5 +155,68 @@
     "type": "utility",
     "price": 500,
     "effect": "reveal_map"
+  },
+  {
+    "id": "field_boots",
+    "name": "Field Boots",
+    "type": "gear",
+    "price": 1800,
+    "effect": "boost_phy"
+  },
+  {
+    "id": "study_notebook",
+    "name": "Study Notebook",
+    "type": "gear",
+    "price": 1400,
+    "effect": "boost_men"
+  },
+  {
+    "id": "pokedex_manual",
+    "name": "Pokedex Manual",
+    "type": "book",
+    "price": 2200,
+    "effect": "boost_pok"
+  },
+  {
+    "id": "work_gloves",
+    "name": "Work Gloves",
+    "type": "gear",
+    "price": 1600,
+    "effect": "boost_work_phy"
+  },
+  {
+    "id": "tool_kit",
+    "name": "Tool Kit",
+    "type": "career",
+    "price": 3500,
+    "effect": "career_focus"
+  },
+  {
+    "id": "business_ledger",
+    "name": "Business Ledger",
+    "type": "career",
+    "price": 4200,
+    "effect": "business_focus"
+  },
+  {
+    "id": "lab_pass",
+    "name": "Lab Pass",
+    "type": "career",
+    "price": 5000,
+    "effect": "research_focus"
+  },
+  {
+    "id": "travel_voucher",
+    "name": "Travel Voucher",
+    "type": "utility",
+    "price": 2800,
+    "effect": "minor_rest"
+  },
+  {
+    "id": "black_market_contact",
+    "name": "Black Market Contact",
+    "type": "rare",
+    "price": 15000,
+    "effect": "unlock_black_market"
   }
 ]

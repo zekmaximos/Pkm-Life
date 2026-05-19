@@ -11,8 +11,37 @@ CAREER_STUDENT = "Estudante da academia"
 CAREER_TRAINER = "Treinador"
 CAREER_BREEDER = "Criador"
 CAREER_COORDINATOR = "Coordenador"
+CAREER_RESEARCHER = "Pesquisador"
+CAREER_EXPLORER = "Explorador"
+CAREER_SCIENTIST = "Cientista"
+CAREER_BERRY_COLLECTOR = "Coletor de Berrys"
+CAREER_BALL_CRAFTER = "Construtor de Pokebolas"
+CAREER_FARM_CARETAKER = "Cuidador de Fazenda"
+CAREER_BUILDER = "Construtor"
+CAREER_MERCHANT = "Comerciante"
 
-CAREERS = (CAREER_STUDENT, CAREER_TRAINER, CAREER_BREEDER, CAREER_COORDINATOR)
+CAREERS = (
+    CAREER_STUDENT,
+    CAREER_TRAINER,
+    CAREER_BREEDER,
+    CAREER_COORDINATOR,
+    CAREER_RESEARCHER,
+    CAREER_EXPLORER,
+    CAREER_SCIENTIST,
+    CAREER_BERRY_COLLECTOR,
+    CAREER_BALL_CRAFTER,
+    CAREER_FARM_CARETAKER,
+    CAREER_BUILDER,
+    CAREER_MERCHANT,
+)
+
+COMMON_CAREERS = (
+    CAREER_BERRY_COLLECTOR,
+    CAREER_BALL_CRAFTER,
+    CAREER_FARM_CARETAKER,
+    CAREER_BUILDER,
+    CAREER_MERCHANT,
+)
 
 CAREER_RANK_XP = [30, 60, 100, 150, 220]
 
@@ -44,6 +73,10 @@ def available_careers(age: int, has_pokemon: bool) -> list[str]:
     careers = [CAREER_STUDENT]
     if has_pokemon:
         careers.extend([CAREER_TRAINER, CAREER_BREEDER, CAREER_COORDINATOR])
+    if age >= 16:
+        careers.extend(COMMON_CAREERS)
+    if age >= 18:
+        careers.extend([CAREER_RESEARCHER, CAREER_EXPLORER, CAREER_SCIENTIST])
     return careers
 
 
@@ -120,7 +153,196 @@ def career_progress(
             pokemon_beauty_bonus=3 + career_rank,
             note="Ensaios e apresentacoes melhoraram a presenca da sua equipe.",
         )
+    if career == CAREER_RESEARCHER:
+        base = calculate_money_gain(120, attributes, specialty_factor=1 + ((attributes.MEN + attributes.POK) / 320))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"MEN": 2, "POK": 1},
+            money_gain=money,
+            reputation_change=1 + (career_rank // 2),
+            pokemon_xp_bonus=4 + career_rank,
+            pokemon_happiness_bonus=1,
+            pokemon_health_bonus=0,
+            pokemon_beauty_bonus=0,
+            note="Pesquisas e catalogacao ampliaram seu conhecimento sobre Pokemon.",
+        )
+    if career == CAREER_EXPLORER:
+        base = calculate_money_gain(105, attributes, specialty_factor=1 + ((attributes.PHY + attributes.LUK + attributes.POK) / 420))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"PHY": 1, "POK": 1, "LUK": 1},
+            money_gain=money,
+            reputation_change=1,
+            pokemon_xp_bonus=9 + career_rank * 2,
+            pokemon_happiness_bonus=1,
+            pokemon_health_bonus=-1,
+            pokemon_beauty_bonus=0,
+            note="Exploracoes por habitats perigosos renderam experiencia e descobertas.",
+        )
+    if career == CAREER_SCIENTIST:
+        base = calculate_money_gain(135, attributes, specialty_factor=1 + ((attributes.MEN * 2 + attributes.POK) / 450))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"MEN": 2, "POK": 1},
+            money_gain=money,
+            reputation_change=1 + (career_rank // 3),
+            pokemon_xp_bonus=3 + career_rank,
+            pokemon_happiness_bonus=0,
+            pokemon_health_bonus=1,
+            pokemon_beauty_bonus=0,
+            note="Trabalho cientifico em laboratorio trouxe renda e dados confiaveis.",
+        )
+    if career == CAREER_BERRY_COLLECTOR:
+        base = calculate_money_gain(70, attributes, specialty_factor=1 + ((attributes.PHY + attributes.LUK + attributes.POK) / 500))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"PHY": 1, "POK": 1},
+            money_gain=money,
+            reputation_change=0,
+            pokemon_xp_bonus=3 + career_rank,
+            pokemon_happiness_bonus=1,
+            pokemon_health_bonus=0,
+            pokemon_beauty_bonus=0,
+            note="Rotas de coleta renderam berries, pequenos contratos e conhecimento de habitats.",
+        )
+    if career == CAREER_BALL_CRAFTER:
+        base = calculate_money_gain(100, attributes, specialty_factor=1 + ((attributes.MEN + attributes.POK) / 360))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"MEN": 1, "POK": 1},
+            money_gain=money,
+            reputation_change=1 if career_rank >= 2 else 0,
+            pokemon_xp_bonus=2 + career_rank,
+            pokemon_happiness_bonus=0,
+            pokemon_health_bonus=0,
+            pokemon_beauty_bonus=0,
+            note="Oficinas de Pokebolas pagaram por precisao, paciencia e conhecimento tecnico.",
+        )
+    if career == CAREER_FARM_CARETAKER:
+        base = calculate_money_gain(80, attributes, specialty_factor=1 + ((attributes.POK + attributes.MEN + attributes.PHY) / 460))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"POK": 1, "MEN": 1},
+            money_gain=money,
+            reputation_change=1 if career_rank >= 1 else 0,
+            pokemon_xp_bonus=3 + career_rank,
+            pokemon_happiness_bonus=3,
+            pokemon_health_bonus=2,
+            pokemon_beauty_bonus=0,
+            note="Cuidados de fazenda melhoraram sua rotina com Pokemon domesticos e habitats calmos.",
+        )
+    if career == CAREER_BUILDER:
+        base = calculate_money_gain(105, attributes, specialty_factor=1 + ((attributes.PHY * 2 + attributes.MEN) / 450))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"PHY": 2},
+            money_gain=money,
+            reputation_change=1,
+            pokemon_xp_bonus=4 + career_rank,
+            pokemon_happiness_bonus=0,
+            pokemon_health_bonus=-1,
+            pokemon_beauty_bonus=0,
+            note="Obras, pontes e reparos urbanos trouxeram renda e resistencia fisica.",
+        )
+    if career == CAREER_MERCHANT:
+        base = calculate_money_gain(115, attributes, specialty_factor=1 + ((attributes.MEN + attributes.LUK) / 340))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"MEN": 1, "LUK": 1},
+            money_gain=money,
+            reputation_change=1 + (career_rank // 2),
+            pokemon_xp_bonus=2 + career_rank,
+            pokemon_happiness_bonus=1,
+            pokemon_health_bonus=0,
+            pokemon_beauty_bonus=1,
+            note="Compras, vendas e contatos locais fortaleceram sua presenca no comercio.",
+        )
     return CareerProgress({}, 0, 0, 0, 0, 0, 0, "Voce passou o ano sem uma rotina definida.")
+
+
+CAREER_POKEMON_BONUSES = {
+    CAREER_TRAINER: {
+        "species": {"Pidgeot", "Primeape", "Arcanine", "Gyarados", "Dragonite"},
+        "types": {"Fighting", "Dragon"},
+        "label": "Pokemon fortes ajudaram nos treinos e combates locais",
+    },
+    CAREER_BREEDER: {
+        "species": {"Chansey", "Clefairy", "Jigglypuff", "Eevee", "Vulpix"},
+        "types": {"Normal", "Fairy"},
+        "label": "Pokemon gentis facilitaram cuidados e criacao",
+    },
+    CAREER_COORDINATOR: {
+        "species": {"Vulpix", "Ninetales", "Persian", "Starmie", "Lapras", "Eevee"},
+        "types": {"Psychic", "Ice"},
+        "label": "Pokemon elegantes elevaram apresentacoes e eventos",
+    },
+    CAREER_RESEARCHER: {
+        "species": {"Abra", "Kadabra", "Alakazam", "Magnemite", "Porygon", "Ditto"},
+        "types": {"Psychic", "Electric"},
+        "label": "Pokemon raros ou inteligentes aceleraram pesquisas",
+    },
+    CAREER_EXPLORER: {
+        "species": {"Onix", "Dugtrio", "Lapras", "Scyther", "Pidgeot", "Rhyhorn"},
+        "types": {"Ground", "Flying", "Water"},
+        "label": "Pokemon de travessia ajudaram em rotas e cavernas",
+    },
+    CAREER_SCIENTIST: {
+        "species": {"Magnemite", "Magneton", "Voltorb", "Electrode", "Porygon", "Grimer"},
+        "types": {"Electric", "Poison"},
+        "label": "Pokemon de laboratorio apoiaram experimentos controlados",
+    },
+    CAREER_BERRY_COLLECTOR: {
+        "species": {"Oddish", "Gloom", "Bellsprout", "Weepinbell", "Paras", "Farfetchd"},
+        "types": {"Grass", "Bug"},
+        "label": "Pokemon de mata encontraram berries melhores",
+    },
+    CAREER_BALL_CRAFTER: {
+        "species": {"Magnemite", "Magneton", "Voltorb", "Electrode", "Geodude", "Graveler"},
+        "types": {"Electric", "Rock", "Steel"},
+        "label": "Pokemon eletricos e minerais ajudaram na oficina",
+    },
+    CAREER_FARM_CARETAKER: {
+        "species": {"Chansey", "Tauros", "Ponyta", "Rapidash", "Oddish", "Paras"},
+        "types": {"Normal", "Grass"},
+        "label": "Pokemon calmos e rurais mantiveram a fazenda estavel",
+    },
+    CAREER_BUILDER: {
+        "species": {"Machop", "Machoke", "Machamp", "Geodude", "Graveler", "Golem", "Onix"},
+        "types": {"Fighting", "Rock", "Ground"},
+        "label": "Pokemon fortes ajudaram em obras e reparos",
+    },
+    CAREER_MERCHANT: {
+        "species": {"Meowth", "Persian", "Porygon", "Abra", "Kadabra", "Eevee"},
+        "types": {"Normal", "Psychic"},
+        "label": "Pokemon carismaticos ou calculistas melhoraram negocios",
+    },
+}
+
+
+def pokemon_work_bonus(career: str | None, pokemon_team: list) -> tuple[float, list[str]]:
+    if not career or not pokemon_team:
+        return 1.0, []
+    rules = CAREER_POKEMON_BONUSES.get(career)
+    if not rules:
+        return 1.0, []
+    matched = 0
+    species_matches: list[str] = []
+    wanted_species = set(rules.get("species", set()))
+    wanted_types = set(rules.get("types", set()))
+    for pokemon in pokemon_team:
+        species = getattr(pokemon, "species", "")
+        types = set(getattr(pokemon, "types", []) or [])
+        if species in wanted_species or types.intersection(wanted_types):
+            matched += 1
+            if species and species not in species_matches:
+                species_matches.append(species)
+    if matched <= 0:
+        return 1.0, []
+    factor = float(clamp(1.0 + matched * 0.06, 1.0, 1.24))
+    label = str(rules.get("label", "Seus Pokemon ajudaram no trabalho"))
+    detail = ", ".join(species_matches[:3])
+    note = f"{label}: {detail}." if detail else f"{label}."
+    return factor, [note]
 
 
 def try_career_rank_up(

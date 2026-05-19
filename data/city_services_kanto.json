@@ -8,7 +8,7 @@
       "gym"
     ],
     "shop_inventory": [
-      "Kanto Map",
+      "Mapa de Kanto",
       "Poke Ball",
       "Potion",
       "Antidote",
@@ -19,6 +19,10 @@
     ],
     "careers": [
       "Estudante da academia",
+      "Coletor de Berrys",
+      "Cuidador de Fazenda",
+      "Pesquisador",
+      "Cientista",
       "Criador"
     ],
     "gym": "pallet_normal",
@@ -40,7 +44,7 @@
       "gym"
     ],
     "shop_inventory": [
-      "Kanto Map",
+      "Mapa de Kanto",
       "Poke Ball",
       "Potion",
       "Antidote",
@@ -50,6 +54,9 @@
     ],
     "careers": [
       "Treinador",
+      "Explorador",
+      "Coletor de Berrys",
+      "Comerciante",
       "Criador"
     ],
     "gym": "viridian_ground",
@@ -73,7 +80,7 @@
       "museum"
     ],
     "shop_inventory": [
-      "Kanto Map",
+      "Mapa de Kanto",
       "Poke Ball",
       "Potion",
       "Great Ball",
@@ -81,11 +88,16 @@
       "Repel",
       "Grooming Kit",
       "Escape Rope",
+      "Field Boots",
+      "Study Notebook",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
+      "Pesquisador",
+      "Explorador",
+      "Construtor",
       "Estudante da academia"
     ],
     "gym": "pewter_rock",
@@ -119,6 +131,7 @@
     ],
     "careers": [
       "Treinador",
+      "Coletor de Berrys",
       "Coordenador"
     ],
     "gym": "cerulean_water",
@@ -150,12 +163,15 @@
       "Repel",
       "Grooming Kit",
       "Escape Rope",
+      "Tool Kit",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
       "Coordenador",
+      "Construtor de Pokebolas",
+      "Comerciante",
       "Criador"
     ],
     "gym": "vermilion_electric",
@@ -190,6 +206,8 @@
     ],
     "careers": [
       "Estudante da academia",
+      "Pesquisador",
+      "Cuidador de Fazenda",
       "Criador"
     ],
     "gym": "lavender_ghost",
@@ -225,6 +243,7 @@
       "Common Egg",
       "Grooming Kit",
       "Escape Rope",
+      "Business Ledger",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -233,6 +252,8 @@
     "careers": [
       "Treinador",
       "Coordenador",
+      "Comerciante",
+      "Construtor de Pokebolas",
       "Criador"
     ],
     "gym": "celadon_grass",
@@ -267,11 +288,14 @@
       "Common Egg",
       "Grooming Kit",
       "Escape Rope",
+      "Field Boots",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
+      "Coletor de Berrys",
+      "Cuidador de Fazenda",
       "Criador"
     ],
     "gym": "fuchsia_poison",
@@ -304,6 +328,8 @@
       "Repel",
       "Grooming Kit",
       "Escape Rope",
+      "Business Ledger",
+      "Lab Pass",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -312,6 +338,10 @@
     "careers": [
       "Treinador",
       "Coordenador",
+      "Cientista",
+      "Pesquisador",
+      "Comerciante",
+      "Construtor",
       "Estudante da academia"
     ],
     "gym": "saffron_psychic",
@@ -346,6 +376,7 @@
       "Common Egg",
       "Grooming Kit",
       "Escape Rope",
+      "Lab Pass",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -354,6 +385,9 @@
     "careers": [
       "Treinador",
       "Estudante da academia",
+      "Pesquisador",
+      "Cientista",
+      "Construtor de Pokebolas",
       "Criador"
     ],
     "gym": "cinnabar_fire",
@@ -382,6 +416,7 @@
       "Repel",
       "Grooming Kit",
       "Escape Rope",
+      "Travel Voucher",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -389,6 +424,8 @@
     ],
     "careers": [
       "Treinador",
+      "Explorador",
+      "Comerciante",
       "Coordenador"
     ],
     "gym": "indigo_dragon",
@@ -421,11 +458,14 @@
       "Common Egg",
       "Grooming Kit",
       "Escape Rope",
+      "Field Boots",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
+      "Explorador",
+      "Coletor de Berrys",
       "Criador"
     ],
     "gym": "seafoam_ice",

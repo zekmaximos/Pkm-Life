@@ -40,13 +40,14 @@ class Character:
     eggs: list[PokeEgg] = field(default_factory=list)
     badges: list[str] = field(default_factory=list)
     inventory: dict[str, int] = field(default_factory=lambda: {"Poke Ball": 5, "Potion": 1})
-    flags: dict[str, bool | str | int | list[str]] = field(default_factory=dict)
+    flags: dict[str, bool | str | int | list[str] | dict] = field(default_factory=dict)
     career: str | None = None
     generated_gyms: dict[str, dict] = field(default_factory=dict)
     career_ranks: dict[str, int] = field(default_factory=dict)
     career_xp: dict[str, int] = field(default_factory=dict)
     pokedex_seen: list[str] = field(default_factory=list)
     pokedex_caught: list[str] = field(default_factory=list)
+    assets: dict[str, int] = field(default_factory=dict)
 
     @property
     def phase(self) -> str:
@@ -125,6 +126,7 @@ class Character:
             "career_xp": self.career_xp,
             "pokedex_seen": self.pokedex_seen,
             "pokedex_caught": self.pokedex_caught,
+            "assets": self.assets,
         }
 
     @classmethod
@@ -154,4 +156,5 @@ class Character:
         character.career_xp = data.get("career_xp", {})
         character.pokedex_seen = data.get("pokedex_seen", [])
         character.pokedex_caught = data.get("pokedex_caught", [])
+        character.assets = data.get("assets", {})
         return character

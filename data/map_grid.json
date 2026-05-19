@@ -1,0 +1,40 @@
+{
+  "rows": ["A", "B", "C", "D", "E"],
+  "cols": [1, 2, 3, 4, 5, 6],
+  "cells": [
+    {"coord": "A1", "location_id": "route_23",       "name": "Rota 23",          "kind": "route",    "icon": "~~"},
+    {"coord": "A2", "location_id": "viridian_forest", "name": "Floresta Viridian","kind": "forest",   "icon": "%%"},
+    {"coord": "A3", "location_id": "pewter_city",     "name": "Pewter City",      "kind": "city",     "icon": "[]"},
+    {"coord": "A4", "location_id": "route_3",         "name": "Rota 3",           "kind": "route",    "icon": "~~"},
+    {"coord": "A5", "location_id": "mt_moon",         "name": "Mt. Moon",         "kind": "cave",     "icon": "^^"},
+    {"coord": "A6", "location_id": "cerulean_city",   "name": "Cerulean City",    "kind": "city",     "icon": "[]"},
+
+    {"coord": "B1", "location_id": "route_22",        "name": "Rota 22",          "kind": "route",    "icon": "~~"},
+    {"coord": "B2", "location_id": "viridian_city",   "name": "Viridian City",    "kind": "city",     "icon": "[]"},
+    {"coord": "B3", "location_id": "route_2",         "name": "Rota 2",           "kind": "route",    "icon": "~~"},
+    {"coord": "B4", "location_id": "route_4",         "name": "Rota 4",           "kind": "route",    "icon": "~~"},
+    {"coord": "B5", "location_id": "route_9",         "name": "Rota 9",           "kind": "route",    "icon": "~~"},
+    {"coord": "B6", "location_id": "lavender_town",   "name": "Lavender Town",    "kind": "city",     "icon": "[]"},
+
+    {"coord": "C1", "location_id": "pallet_town",     "name": "Pallet Town",      "kind": "city",     "icon": "[]"},
+    {"coord": "C2", "location_id": "route_1",         "name": "Rota 1",           "kind": "route",    "icon": "~~"},
+    {"coord": "C3", "location_id": null,              "name": null,               "kind": "ocean",    "icon": ".."},
+    {"coord": "C4", "location_id": "vermilion_city",  "name": "Vermilion City",   "kind": "city",     "icon": "[]"},
+    {"coord": "C5", "location_id": "route_11",        "name": "Rota 11",          "kind": "route",    "icon": "~~"},
+    {"coord": "C6", "location_id": "rock_tunnel",     "name": "Rock Tunnel",      "kind": "cave",     "icon": "^^"},
+
+    {"coord": "D1", "location_id": "route_21",        "name": "Rota 21",          "kind": "route",    "icon": "~~"},
+    {"coord": "D2", "location_id": "digletts_cave",   "name": "Diglett's Cave",   "kind": "cave",     "icon": "^^"},
+    {"coord": "D3", "location_id": "route_6",         "name": "Rota 6",           "kind": "route",    "icon": "~~"},
+    {"coord": "D4", "location_id": "saffron_city",    "name": "Saffron City",     "kind": "city",     "icon": "[]"},
+    {"coord": "D5", "location_id": "celadon_city",    "name": "Celadon City",     "kind": "city",     "icon": "[]"},
+    {"coord": "D6", "location_id": "route_7",         "name": "Rota 7",           "kind": "route",    "icon": "~~"},
+
+    {"coord": "E1", "location_id": "cinnabar_island", "name": "Cinnabar Island",  "kind": "city",     "icon": "[]"},
+    {"coord": "E2", "location_id": "route_20",        "name": "Rota 20",          "kind": "route",    "icon": "~~"},
+    {"coord": "E3", "location_id": "route_19",        "name": "Rota 19",          "kind": "route",    "icon": "~~"},
+    {"coord": "E4", "location_id": "route_17",        "name": "Rota 17",          "kind": "route",    "icon": "~~"},
+    {"coord": "E5", "location_id": "fuchsia_city",    "name": "Fuchsia City",     "kind": "city",     "icon": "[]"},
+    {"coord": "E6", "location_id": "route_15",        "name": "Rota 15",          "kind": "route",    "icon": "~~"}
+  ]
+}

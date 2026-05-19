@@ -28,10 +28,10 @@ def show_header(character: Character) -> None:
         f"[bold]{character.name}[/bold]\n"
         f"Idade: {character.age}\n"
         f"Fase: {character.phase}\n"
-        f"Local: {character.current_city}, {character.region}",
-        f"Saude: {character.health}\n"
+        f"Local: {engine.display_location_name(character.current_city)}, {character.region}",
+        f"Saude: {character.health} ({engine.health_status(character)})\n"
         f"Dinheiro: {character.money} Pokedollar\n"
-        f"Reputacao: {character.reputation}\n"
+        f"Reputacao: {engine.reputation_info(character)}\n"
         f"Carreira: {character.career or 'indefinida'}",
     )
     console.print(Panel(table, title="Poke Life"))
@@ -225,7 +225,7 @@ def city_menu(character: Character) -> None:
         console.print(Panel(
             f"Servicos: {', '.join(city.services)}\n"
             f"Carreiras locais: {', '.join(city.careers) if city.careers else 'nenhuma'}",
-            title=character.current_city,
+            title=engine.display_location_name(character.current_city),
         ))
         console.print("1. Loja")
         console.print("2. Pokemon Center")
@@ -249,7 +249,8 @@ def city_menu(character: Character) -> None:
                     f"Lider: {gym['leader']}\n"
                     f"Tipo: {gym['main_type']}\n"
                     f"Insignia: {gym['badge']}\n"
-                    f"Nivel recomendado: {gym['recommended_level']}",
+                    f"Nivel recomendado: {gym['recommended_level']}\n"
+                    f"{_format_gym_risk(character)}",
                     title=f"Ginasio de {gym['city']}",
                 )
             )
@@ -258,6 +259,19 @@ def city_menu(character: Character) -> None:
                 console.print(Panel("\n".join(log), title="Resultado do ginasio"))
         else:
             return
+
+
+def _format_gym_risk(character: Character) -> str:
+    preview = engine.gym_risk_preview(character)
+    if not preview:
+        return "Previa: indisponivel."
+    if not preview.get("available"):
+        return f"Previa: {preview['summary']}"
+    return (
+        f"Previa: risco {preview['risk']} | chance estimada {preview['estimated_win_chance']}%\n"
+        f"Seu time: media top 3 Lv.{preview['team_average']} | mais forte Lv.{preview['strongest_level']}\n"
+        f"Nota: {preview['summary']}"
+    )
 
 
 def shop_menu(character: Character) -> None:
@@ -308,11 +322,16 @@ def handle_event(character: Character, event: LifeEvent | None) -> None:
 
 
 def advance_time(character: Character) -> None:
-    event = engine.advance_year(character)
+    console.print("1. 3 meses")
+    console.print("2. 6 meses")
+    console.print("3. 1 ano")
+    choice = Prompt.ask("Avancar", choices=["1", "2", "3"], default="3")
+    months = {"1": 3, "2": 6, "3": 12}[choice]
+    event = engine.advance_time(character, months)
     handle_event(character, event)
     report = character.flags.get("last_year_report")
     if report:
-        console.print(Panel(str(report), title="Resumo anual"))
+        console.print(Panel(str(report), title="Resumo do periodo"))
 
 
 def explore(character: Character) -> None:
@@ -344,25 +363,75 @@ def explore(character: Character) -> None:
         return
 
 
+def _render_grid(character: Character) -> None:
+    """Exibe a grade completa de Kanto estilo batalha naval (so com mapa)."""
+    grid_data = engine.full_grid_for_display(character)
+    if not grid_data:
+        return
+    t = Table(title="Mapa de Kanto", show_header=True, header_style="bold cyan")
+    t.add_column(" ", style="bold cyan", width=2)
+    cols = engine.grid.cols if engine.grid else list(range(1, 7))
+    for col in cols:
+        t.add_column(str(col), justify="center", width=14)
+    for row_cells in grid_data:
+        row_label = row_cells[0]["coord"][0]
+        cells_rendered = []
+        for cell in row_cells:
+            if not cell.get("passable", False):
+                cells_rendered.append("[dim]..[/dim]")
+                continue
+            icon = cell.get("icon", "~~")
+            name = (cell.get("name") or cell["coord"])[:10]
+            coord = cell["coord"]
+            if cell.get("current", False):
+                cells_rendered.append(f"[bold green]{icon} {coord}[/bold green]\n[bold green]{name}[/bold green]")
+            else:
+                kind = cell.get("kind", "route")
+                color = {"city": "yellow", "cave": "red", "forest": "green", "route": "white"}.get(kind, "white")
+                cells_rendered.append(f"[{color}]{icon} {coord}[/{color}]\n[dim]{name}[/dim]")
+        t.add_row(row_label, *cells_rendered)
+    console.print(t)
+
+
 def travel_menu(character: Character) -> None:
     if character.age < 10:
         console.print("Voce ainda e jovem demais para viajar sozinho.")
         return
+
     has_map = bool(character.flags.get("has_kanto_map"))
+
     if not has_map:
-        console.print("[dim]Dica: com o Mapa de Kanto (loja) voce ve descricoes e servicos de cada destino.[/dim]")
+        # Sem mapa: viagem aleatoria para setor adjacente — sem escolha do jogador
+        if Prompt.ask("Partir sem saber para onde vai?", choices=["s", "n"], default="s") != "s":
+            return
+        ok, destination = engine.travel_random(character)
+        if ok:
+            console.print(f"Voce pegou a estrada e chegou a [bold]{destination}[/bold].")
+        else:
+            console.print(f"[red]{destination}[/red]")
+        return
+
+    # Com mapa: exibe grade visual e deixa o jogador escolher destino adjacente
+    _render_grid(character)
+    current_coord = engine.current_coord(character)
+    console.print(f"\n[bold]Posicao atual:[/bold] {current_coord} — {character.current_city}")
+
     destinations = engine.travel_destinations(character)
     if not destinations:
-        console.print("Nenhum destino disponivel.")
+        console.print("Nao ha para onde ir daqui.")
         return
+
+    console.print("\n[bold]Destinos adjacentes:[/bold]")
     for index, dest in enumerate(destinations, start=1):
-        if has_map:
-            services_str = ", ".join(dest.get("services", [])) or "sem servicos"
-            gym_mark = " [Ginasio]" if dest.get("has_gym") else ""
-            console.print(f"{index}. {dest['name']}{gym_mark} — {dest.get('description', '')} ({services_str})")
-        else:
-            console.print(f"{index}. {dest['name']} (destino desconhecido)")
-    console.print(f"{len(destinations) + 1}. Voltar")
+        coord = dest["coord"]
+        name = dest.get("name", coord)
+        gym_mark = " [bold yellow][Ginasio][/bold yellow]" if dest.get("has_gym") else ""
+        svcs = ", ".join(dest.get("services", [])) or dest.get("kind", "rota")
+        kind_icons = {"city": "[]", "cave": "^^", "forest": "%%", "route": "~~"}
+        icon = kind_icons.get(dest.get("kind", "route"), "~~")
+        console.print(f"  [cyan]{index}.[/cyan] {icon} [bold]{coord}[/bold] — {name}{gym_mark}  [dim]({svcs})[/dim]")
+    console.print(f"  [cyan]{len(destinations) + 1}.[/cyan] Voltar")
+
     choice = Prompt.ask(
         "Viajar para",
         choices=[str(i) for i in range(1, len(destinations) + 2)],
@@ -371,8 +440,8 @@ def travel_menu(character: Character) -> None:
     idx = int(choice) - 1
     if idx >= len(destinations):
         return
-    ok, msg = engine.travel_to(character, destinations[idx]["name"])
-    console.print(msg)
+    ok, msg = engine.travel_to(character, destinations[idx]["coord"])
+    console.print(f"[green]{msg}[/green]" if ok else f"[red]{msg}[/red]")
 
 
 def show_pokedex(character: Character) -> None:
@@ -395,7 +464,7 @@ def tournament_menu(character: Character) -> None:
         "\n".join(
             f"{'[green]' if t['available'] else '[red]'}{t['label']}[/] — "
             f"Inscricao: {t['entry_fee']}P | Premio total: ~{t['prize_pool']}P | "
-            f"Rodadas: {t['rounds']} | Insignias min.: {t['min_badges']}"
+            f"Rodadas: {t['rounds']} | Insignias min.: {t['min_badges']} | Rep min.: {t.get('min_reputation', 0)}"
             + (f"\n  [dim]{t['reason']}[/dim]" if not t['available'] else "")
             for t in tournaments
         ),
@@ -422,6 +491,45 @@ def tournament_menu(character: Character) -> None:
         console.print(f"[red]{msg}[/red]")
         return
     console.print(Panel("\n".join(result.log), title="Resultado do torneio"))
+
+
+def contest_menu(character: Character) -> None:
+    if not character.team:
+        console.print("Voce precisa de Pokemon para participar de contests.")
+        return
+    for index, pokemon in enumerate(character.team, start=1):
+        console.print(f"{index}. {pokemon.display_name()} Lv.{pokemon.level} | BEAUTY {pokemon.beauty}")
+    pokemon_choice = int(Prompt.ask("Pokemon", choices=[str(i) for i in range(1, len(character.team) + 1)], default="1"))
+    levels = ["local", "city", "regional"]
+    for index, level in enumerate(levels, start=1):
+        console.print(f"{index}. {level}")
+    level_choice = int(Prompt.ask("Dificuldade", choices=["1", "2", "3"], default="1"))
+    ok, result, msg = engine.enter_contest(character, pokemon_choice - 1, levels[level_choice - 1])
+    if not ok:
+        console.print(f"[red]{msg}[/red]")
+        return
+    console.print(Panel("\n".join(result.log), title="Contest"))
+
+
+def breeding_menu(character: Character) -> None:
+    if len(character.team) < 2:
+        console.print("Voce precisa de pelo menos dois Pokemon na equipe.")
+        return
+    for index, pokemon in enumerate(character.team, start=1):
+        console.print(f"{index}. {pokemon.display_name()} | Felicidade {pokemon.happiness} | Tipos: {', '.join(pokemon.types)}")
+    first = int(Prompt.ask("Primeiro Pokemon", choices=[str(i) for i in range(1, len(character.team) + 1)], default="1")) - 1
+    second = int(Prompt.ask("Segundo Pokemon", choices=[str(i) for i in range(1, len(character.team) + 1)], default="2")) - 1
+    preview = engine.breeding_preview(character, first, second)
+    if not preview.get("available"):
+        console.print(preview["summary"])
+        return
+    console.print(Panel(
+        f"{preview['first']} + {preview['second']}\nChance estimada: {preview['chance']}%\nBonus de criador: {'sim' if preview['career_bonus'] else 'nao'}",
+        title="Criacao Pokemon",
+    ))
+    if Prompt.ask("Tentar gerar ovo?", choices=["s", "n"], default="s") == "s":
+        _, message = engine.breed_pokemon(character, first, second)
+        console.print(message)
 
 
 def save_menu(character: Character) -> None:
@@ -474,11 +582,13 @@ def main() -> None:
         console.print("13. Box Pokemon")
         console.print("14. Acoes do ano")
         console.print("15. Torneios")
-        console.print("16. Pokedex")
-        console.print("17. Salvar jogo")
-        console.print("18. Carregar jogo")
-        console.print("19. Sair")
-        choice = Prompt.ask("Menu", choices=[str(i) for i in range(1, 20)], default="1")
+        console.print("16. Contests")
+        console.print("17. Criacao Pokemon")
+        console.print("18. Pokedex")
+        console.print("19. Salvar jogo")
+        console.print("20. Carregar jogo")
+        console.print("21. Sair")
+        choice = Prompt.ask("Menu", choices=[str(i) for i in range(1, 22)], default="1")
 
         if choice == "1":
             advance_time(character)
@@ -511,14 +621,18 @@ def main() -> None:
         elif choice == "15":
             tournament_menu(character)
         elif choice == "16":
-            show_pokedex(character)
+            contest_menu(character)
         elif choice == "17":
-            save_menu(character)
+            breeding_menu(character)
         elif choice == "18":
+            show_pokedex(character)
+        elif choice == "19":
+            save_menu(character)
+        elif choice == "20":
             loaded = load_menu()
             if loaded:
                 character = loaded
-        elif choice == "19":
+        elif choice == "21":
             if Prompt.ask("Salvar antes de sair?", choices=["s", "n"], default="s") == "s":
                 save_game(character, "autosave")
             console.print("Ate a proxima jornada.")

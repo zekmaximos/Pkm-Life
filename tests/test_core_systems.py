@@ -10,12 +10,28 @@ from game.economy import calculate_money_gain
 from game.inventory import Item
 from game.pokemon import PokemonSpecies, assign_evolution_stages, create_owned_pokemon
 from game.character import Character
-from game.careers import CAREER_TRAINER, available_careers
+from game.careers import (
+    CAREER_BALL_CRAFTER,
+    CAREER_BERRY_COLLECTOR,
+    CAREER_BREEDER,
+    CAREER_COORDINATOR,
+    CAREER_EXPLORER,
+    CAREER_FARM_CARETAKER,
+    CAREER_MERCHANT,
+    CAREER_RESEARCHER,
+    CAREER_SCIENTIST,
+    CAREER_TRAINER,
+    CAREERS,
+    available_careers,
+    pokemon_work_bonus,
+)
 from game.progression import progress_year
 from game.progression import grant_pokemon_xp
 from game.engine import GameEngine
 from game.events import LifeEvent, event_occurrence_chance, event_weight, valid_events
 from game.eggs import create_random_egg, progress_eggs
+from game.year_simulation import apply_activity_results, simulate_year_activities
+from game.tournaments import can_enter_tournament, generate_tournament
 
 
 class CoreSystemsTest(unittest.TestCase):
@@ -97,6 +113,15 @@ class CoreSystemsTest(unittest.TestCase):
     def test_available_careers_are_age_and_team_aware(self) -> None:
         self.assertEqual(available_careers(7, False), ["Estudante da academia"])
         self.assertIn(CAREER_TRAINER, available_careers(10, True))
+        teen_careers = available_careers(16, False)
+        self.assertIn(CAREER_BERRY_COLLECTOR, teen_careers)
+        self.assertIn(CAREER_BALL_CRAFTER, teen_careers)
+        self.assertIn(CAREER_FARM_CARETAKER, teen_careers)
+        self.assertIn(CAREER_MERCHANT, teen_careers)
+        adult_careers = available_careers(18, False)
+        self.assertIn(CAREER_RESEARCHER, adult_careers)
+        self.assertIn(CAREER_EXPLORER, adult_careers)
+        self.assertIn(CAREER_SCIENTIST, adult_careers)
 
     def test_capture_penalizes_level_and_evolution_stage(self) -> None:
         attrs = PlayerAttributes(PHY=50, MEN=50, POK=50, LUK=50)
@@ -176,6 +201,8 @@ class CoreSystemsTest(unittest.TestCase):
             self.assertTrue(city["services"])
             for item in city.get("shop_inventory", []):
                 self.assertIn(item, items)
+            for career in city.get("careers", []):
+                self.assertIn(career, CAREERS)
             if "gym" in city:
                 self.assertIn(city["gym"], gyms)
 
@@ -188,10 +215,20 @@ class CoreSystemsTest(unittest.TestCase):
             for event in events
             if event.get("conditions", {}).get("career")
         }
-        self.assertEqual(len(events), 40)
+        self.assertGreaterEqual(len(events), 40)
         self.assertEqual(len(event_ids), len(set(event_ids)))
         self.assertTrue({"battle", "care", "contest", "academy", "risk", "rare", "city"}.issubset(tags))
-        self.assertTrue({"Treinador", "Criador", "Coordenador", "Estudante da academia"}.issubset(careers))
+        self.assertTrue({
+            "Treinador",
+            "Criador",
+            "Coordenador",
+            "Estudante da academia",
+            "Coletor de Berrys",
+            "Construtor de Pokebolas",
+            "Cuidador de Fazenda",
+            "Construtor",
+            "Comerciante",
+        }.issubset(careers))
 
     def test_city_shop_and_healing_actions_work(self) -> None:
         engine = GameEngine()
@@ -511,6 +548,32 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIn("Durante o ano", notes[0])
         self.assertTrue(any(word in " ".join(notes) for word in ("Captura automatica", "Batalha automatica", "observou")))
 
+    def test_annual_capture_adds_owned_pokemon_to_team_or_box(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        character.career = CAREER_TRAINER
+        character.inventory = {"Master Ball": 1}
+        before_owned = len(character.team) + len(character.box)
+        with patch("game.year_simulation.random.choices", return_value=["capture"]), patch("game.capture.random.random", return_value=0.0):
+            results = simulate_year_activities(character, engine.pokemon)
+        _, report = apply_activity_results(character, results, engine.pokemon)
+        self.assertGreater(len(character.team) + len(character.box), before_owned)
+        self.assertTrue(character.pokedex_caught)
+        self.assertGreaterEqual(len(report["captures"]), 1)
+
+    def test_grid_travel_stores_canonical_location_id(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        ok, message = engine.travel_to(character, "C2")
+        self.assertTrue(ok, message)
+        self.assertEqual(character.current_city, "route_1")
+        self.assertEqual(engine.get_location(character.current_city).name, "Route 1")
+        species, _, text = engine.wild_encounter(character)
+        self.assertIn(species.name, engine.pokemon)
+        self.assertIn("Rota 1", text)
+
     def test_repel_reduces_automatic_year_encounter_chance(self) -> None:
         from game.auto_year import automatic_encounter_chance
 
@@ -557,7 +620,9 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIn("Pokemon:", character.flags["last_year_report"])
         self.assertIn("Encontros:", character.flags["last_year_report"])
         self.assertIn("Dinheiro:", character.flags["last_year_report"])
-        self.assertTrue(any("annual_report" in entry.tags for entry in character.history))
+        self.assertIn("last_year_activity_report", character.flags)
+        self.assertIn("captures", character.flags["last_year_activity_report"])
+        self.assertFalse(any("annual_report" in entry.tags for entry in character.history))
 
     def test_event_choice_is_appended_to_current_annual_report(self) -> None:
         engine = GameEngine()
@@ -642,11 +707,208 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIsNotNone(invite)
         self.assertIn("Convite de ginasio", invite)
 
+    def test_gym_risk_preview_and_annual_notice_are_contextual(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.career = CAREER_TRAINER
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=16))
+        engine.move_to_city(character, "Pewter City")
+        preview = engine.gym_risk_preview(character)
+        self.assertIsNotNone(preview)
+        self.assertIn(preview["risk"], {"baixo", "moderado", "alto", "muito alto"})
+        report = engine.build_annual_report(character, engine._year_snapshot(character), [], {})
+        self.assertIn("Ginasios:", report)
+
+    def test_adult_student_can_transition_to_research_careers(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.career = "Estudante da academia"
+        ids = {
+            event.event_id
+            for event in valid_events(character, engine.journey_events)
+            if "career_transition" in event.tags
+        }
+        self.assertIn("adult_student_research_offer", ids)
+        self.assertIn("adult_student_explorer_offer", ids)
+        self.assertIn("adult_student_scientist_offer", ids)
+
+    def test_annual_report_mentions_large_health_drop_reason(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        before = engine._year_snapshot(character)
+        character.health -= 15
+        report = engine.build_annual_report(
+            character,
+            before,
+            [],
+            {"health_reasons": [{"delta": -15, "reason": "teste de esforco"}]},
+        )
+        self.assertIn("Saude: caiu 15", report)
+        self.assertIn("teste de esforco", report)
+
+    def test_profession_pokemon_bonus_uses_coherent_species(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Meowth"], level=8))
+        factor, notes = pokemon_work_bonus(CAREER_MERCHANT, character.team)
+        self.assertGreater(factor, 1.0)
+        self.assertTrue(notes)
+
+    def test_profession_missions_feed_annual_report_and_inventory(self) -> None:
+        from game.year_simulation import ActivityResult, apply_activity_results
+
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.career = CAREER_BALL_CRAFTER
+        result = ActivityResult(
+            kind="career_mission",
+            note="Missao de profissao: montagem de lote simples concluida.",
+            money_delta=100,
+            items_delta={"Poke Ball": 1},
+            mission_name="montagem de lote simples",
+            mission_success=True,
+        )
+        notes, activity_report = apply_activity_results(character, [result], engine.pokemon)
+        report = engine.build_annual_report(character, engine._year_snapshot(character), notes, activity_report)
+        self.assertEqual(character.inventory.get("Poke Ball", 0), 6)
+        self.assertEqual(activity_report["career_missions"][0]["success"], True)
+        self.assertIn("Profissao:", report)
+
+    def test_lifestyle_courses_and_trips_use_city_economy_tiers(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 20
+        character.money = 200000
+        engine.move_to_city(character, "Saffron City")
+        self.assertEqual(engine.current_city_economy_tier(character), 6)
+        success, message = engine.buy_lifestyle_asset(character, "saffron_penthouse")
+        self.assertTrue(success, message)
+        self.assertIn("saffron_penthouse", character.assets)
+        men_before = character.attributes.MEN
+        success, message = engine.take_course(character, "lab_methods")
+        self.assertTrue(success, message)
+        self.assertGreater(character.attributes.MEN, men_before)
+        character.health = 40
+        success, message = engine.take_trip(character, "sevii_island_trip")
+        self.assertTrue(success, message)
+        self.assertGreater(character.health, 40)
+
+    def test_selling_items_eggs_and_black_market_pokemon(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 20
+        character.money = 50000
+        character.inventory["Potion"] = 2
+        success, message = engine.sell_item(character, "Potion", 1)
+        self.assertTrue(success, message)
+        self.assertEqual(character.inventory["Potion"], 1)
+        from game.eggs import create_random_egg
+        egg = create_random_egg(engine.pokemon, tier="R", origin="test")
+        character.eggs.append(egg)
+        success, message = engine.sell_egg(character, 0)
+        self.assertTrue(success, message)
+        self.assertFalse(character.eggs)
+        engine.move_to_city(character, "Saffron City")
+        offers = engine.black_market_pokemon_offers(character)
+        self.assertTrue(offers)
+        species, _ = offers[0]
+        owned_before = len(character.team) + len(character.box)
+        success, message = engine.buy_black_market_pokemon(character, species.name)
+        self.assertTrue(success, message)
+        self.assertGreater(len(character.team) + len(character.box), owned_before)
+
+    def test_career_business_and_retirement_goals(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 62
+        character.career = CAREER_MERCHANT
+        character.money = 100000
+        character.career_ranks[CAREER_MERCHANT] = 4
+        character.flags["career_years"] = {CAREER_MERCHANT: 22}
+        success, message = engine.start_business(character)
+        self.assertTrue(success, message)
+        self.assertIn(CAREER_MERCHANT, character.flags["businesses"])
+        success, message = engine.retire_from_career(character)
+        self.assertTrue(success, message)
+        self.assertIsNone(character.career)
+        self.assertGreater(character.flags["retirement_pension"], 0)
+
     def test_city_services_have_nearby_encounter_sources(self) -> None:
         services = json.loads(Path("data/city_services_kanto.json").read_text(encoding="utf-8"))
         by_city = {row["city"]: row for row in services}
         self.assertIn("route_1", by_city["Pallet Town"]["encounter_sources"])
         self.assertIn("safari_zone", by_city["Fuchsia City"]["encounter_sources"])
+
+    def test_advance_time_supports_three_and_six_month_periods(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        character.career = CAREER_TRAINER
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=8))
+        engine.advance_time(character, 3)
+        self.assertEqual(character.age, 10)
+        self.assertEqual(character.flags["age_month_progress"], 3)
+        self.assertIn("Resumo de 3 meses", character.flags["last_year_report"])
+        engine.advance_time(character, 6)
+        self.assertEqual(character.age, 10)
+        self.assertEqual(character.flags["age_month_progress"], 9)
+        engine.advance_time(character, 3)
+        self.assertEqual(character.age, 11)
+        self.assertEqual(character.flags["age_month_progress"], 0)
+
+    def test_kanto_league_requires_eight_badges_and_uses_fixed_levels(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.money = 10000
+        character.reputation = 40
+        character.career = CAREER_TRAINER
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Charizard"], level=60))
+        ok, reason = can_enter_tournament(character, "kanto_league")
+        self.assertFalse(ok)
+        character.badges = [f"Badge {i}" for i in range(8)]
+        ok, reason = can_enter_tournament(character, "kanto_league")
+        self.assertTrue(ok, reason)
+        opponents = generate_tournament(character, engine.pokemon, "kanto_league")
+        self.assertEqual(len(opponents), 16)
+        self.assertTrue(all(50 <= opponent.pokemon_level <= 60 for opponent in opponents))
+
+    def test_contest_uses_beauty_and_rewards_reputation(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.money = 1000
+        character.career = CAREER_COORDINATOR
+        pokemon = create_owned_pokemon(engine.pokemon["Vulpix"], level=18)
+        pokemon.beauty = 95
+        character.add_pokemon(pokemon)
+        success, result, message = engine.enter_contest(character, 0, "local")
+        self.assertTrue(success, message)
+        self.assertIsNotNone(result)
+        self.assertGreaterEqual(result.participants, result.rank)
+
+    def test_breeder_has_better_breed_egg_path(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.career = CAREER_BREEDER
+        first = create_owned_pokemon(engine.pokemon["Eevee"], level=12)
+        second = create_owned_pokemon(engine.pokemon["Rattata"], level=12)
+        first.happiness = 90
+        second.happiness = 90
+        character.add_pokemon(first)
+        character.add_pokemon(second)
+        preview = engine.breeding_preview(character, 0, 1)
+        self.assertTrue(preview["available"])
+        self.assertGreater(preview["chance"], 30)
+        with patch("game.breeding.random.random", return_value=0.0):
+            success, message = engine.breed_pokemon(character, 0, 1)
+        self.assertTrue(success, message)
+        self.assertEqual(len(character.eggs), 1)
 
 
 if __name__ == "__main__":
