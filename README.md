@@ -57,11 +57,22 @@ pip install -r requirements.txt
 python main.py
 ```
 
+Interface web local:
+
+```bash
+pip install -r requirements.txt
+python web/app.py
+```
+
+Depois acesse `http://127.0.0.1:5000`.
+No Windows, tambem da para abrir com duplo clique em `abrir_poke_life_web.bat`.
+
 ## Estrutura
 
 ```text
 poke-life/
 +-- main.py
++-- abrir_poke_life_web.bat
 +-- game/
 |   +-- engine.py
 |   +-- attributes.py
@@ -92,6 +103,13 @@ poke-life/
 |   +-- items.json
 |   +-- starters.json
 +-- saves/
++-- web/
+|   +-- app.py
+|   +-- templates/
+|   |   +-- index.html
+|   +-- static/
+|       +-- style.css
+|       +-- game.js
 ```
 
 ## Banco de dados local

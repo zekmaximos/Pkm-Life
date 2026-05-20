@@ -218,5 +218,40 @@
     "type": "rare",
     "price": 15000,
     "effect": "unlock_black_market"
+  },
+  {
+    "id": "contest_outfit_item",
+    "name": "Contest Outfit",
+    "type": "contest",
+    "price": 2800,
+    "effect": "contest_bonus"
+  },
+  {
+    "id": "silk_ribbon",
+    "name": "Silk Ribbon",
+    "type": "contest",
+    "price": 1800,
+    "effect": "contest_bonus"
+  },
+  {
+    "id": "stage_cologne",
+    "name": "Stage Cologne",
+    "type": "contest",
+    "price": 1200,
+    "effect": "contest_bonus"
+  },
+  {
+    "id": "mystic_veil",
+    "name": "Mystic Veil",
+    "type": "contest",
+    "price": 3200,
+    "effect": "contest_mysterious_bonus"
+  },
+  {
+    "id": "cool_jacket",
+    "name": "Cool Jacket",
+    "type": "contest",
+    "price": 2400,
+    "effect": "contest_cool_bonus"
   }
 ]

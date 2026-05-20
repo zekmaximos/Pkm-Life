@@ -34,7 +34,13 @@
     ],
     "encounter_sources": [
       "route_1"
-    ]
+    ],
+    "work": {
+      "name": "Ajudante do Laboratorio Oak",
+      "base_income": 45,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.03
+    }
   },
   {
     "city": "Viridian City",
@@ -69,7 +75,13 @@
       "route_1",
       "route_2",
       "viridian_forest"
-    ]
+    ],
+    "work": {
+      "name": "Guia de rota",
+      "base_income": 62,
+      "primary_attributes": ["PHY", "POK"],
+      "health_risk": 0.08
+    }
   },
   {
     "city": "Pewter City",
@@ -87,6 +99,8 @@
       "Antidote",
       "Repel",
       "Grooming Kit",
+      "Silk Ribbon",
+      "Stage Cologne",
       "Escape Rope",
       "Field Boots",
       "Study Notebook",
@@ -109,7 +123,13 @@
     "encounter_sources": [
       "route_3",
       "mt_moon"
-    ]
+    ],
+    "work": {
+      "name": "Assistente do museu",
+      "base_income": 72,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.04
+    }
   },
   {
     "city": "Cerulean City",
@@ -144,7 +164,13 @@
       "route_4",
       "route_24",
       "route_25"
-    ]
+    ],
+    "work": {
+      "name": "Monitor da ponte",
+      "base_income": 78,
+      "primary_attributes": ["POK", "LUK"],
+      "health_risk": 0.06
+    }
   },
   {
     "city": "Vermilion City",
@@ -162,6 +188,11 @@
       "Super Potion",
       "Repel",
       "Grooming Kit",
+      "Contest Outfit",
+      "Silk Ribbon",
+      "Stage Cologne",
+      "Mystic Veil",
+      "Cool Jacket",
       "Escape Rope",
       "Tool Kit",
       "Protein",
@@ -172,7 +203,8 @@
       "Coordenador",
       "Construtor de Pokebolas",
       "Comerciante",
-      "Criador"
+      "Criador",
+      "Criminoso"
     ],
     "gym": "vermilion_electric",
     "event_focus": [
@@ -183,7 +215,13 @@
     "encounter_sources": [
       "route_6",
       "route_11"
-    ]
+    ],
+    "work": {
+      "name": "Auxiliar do porto",
+      "base_income": 105,
+      "primary_attributes": ["PHY", "MEN"],
+      "health_risk": 0.12
+    }
   },
   {
     "city": "Lavender Town",
@@ -220,7 +258,13 @@
       "pokemon_tower",
       "route_8",
       "route_10"
-    ]
+    ],
+    "work": {
+      "name": "Cuidador do memorial",
+      "base_income": 58,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.05
+    }
   },
   {
     "city": "Celadon City",
@@ -242,6 +286,9 @@
       "Repel",
       "Common Egg",
       "Grooming Kit",
+      "Contest Outfit",
+      "Silk Ribbon",
+      "Mystic Veil",
       "Escape Rope",
       "Business Ledger",
       "Rare Candy",
@@ -254,7 +301,8 @@
       "Coordenador",
       "Comerciante",
       "Construtor de Pokebolas",
-      "Criador"
+      "Criador",
+      "Criminoso"
     ],
     "gym": "celadon_grass",
     "event_focus": [
@@ -266,7 +314,13 @@
     "encounter_sources": [
       "route_7",
       "route_16"
-    ]
+    ],
+    "work": {
+      "name": "Atendente da loja de departamento",
+      "base_income": 132,
+      "primary_attributes": ["MEN", "LUK"],
+      "health_risk": 0.06
+    }
   },
   {
     "city": "Fuchsia City",
@@ -307,7 +361,13 @@
     "encounter_sources": [
       "safari_zone",
       "route_18"
-    ]
+    ],
+    "work": {
+      "name": "Auxiliar da Safari Zone",
+      "base_income": 92,
+      "primary_attributes": ["POK", "PHY"],
+      "health_risk": 0.10
+    }
   },
   {
     "city": "Saffron City",
@@ -342,7 +402,8 @@
       "Pesquisador",
       "Comerciante",
       "Construtor",
-      "Estudante da academia"
+      "Estudante da academia",
+      "Criminoso"
     ],
     "gym": "saffron_psychic",
     "event_focus": [
@@ -355,7 +416,13 @@
       "route_6",
       "route_7",
       "route_8"
-    ]
+    ],
+    "work": {
+      "name": "Estagio corporativo na Silph",
+      "base_income": 160,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.05
+    }
   },
   {
     "city": "Cinnabar Island",
@@ -399,7 +466,13 @@
     "encounter_sources": [
       "pokemon_mansion",
       "route_20"
-    ]
+    ],
+    "work": {
+      "name": "Assistente de laboratorio",
+      "base_income": 122,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.07
+    }
   },
   {
     "city": "Indigo Plateau",
@@ -437,7 +510,13 @@
     "encounter_sources": [
       "route_23",
       "victory_road"
-    ]
+    ],
+    "work": {
+      "name": "Apoio da Liga Pokemon",
+      "base_income": 150,
+      "primary_attributes": ["POK", "MEN"],
+      "health_risk": 0.08
+    }
   },
   {
     "city": "Seafoam Harbor",
@@ -478,6 +557,12 @@
       "seafoam_islands",
       "route_19",
       "route_20"
-    ]
+    ],
+    "work": {
+      "name": "Operador do cais",
+      "base_income": 96,
+      "primary_attributes": ["PHY", "LUK"],
+      "health_risk": 0.11
+    }
   }
 ]

@@ -4,6 +4,7 @@ import random
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
+from .academy import beauty_bonus, capture_bonus_for, care_bonus, training_xp_bonus, work_bonus
 from .utils import clamp
 
 if TYPE_CHECKING:
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 
 CAREER_ACTIVITY_WEIGHTS: dict[str | None, dict[str, int]] = {
     "Treinador": {"battle": 35, "training": 30, "work": 10, "capture": 10, "care": 15},
-    "Criador": {"battle": 5, "training": 25, "work": 15, "capture": 15, "care": 40},
+    "Criador": {"battle": 5, "training": 20, "work": 10, "capture": 10, "care": 35, "criador_business": 20},
     "Coordenador": {"battle": 15, "training": 25, "work": 30, "capture": 5, "care": 25},
     "Estudante da academia": {"battle": 5, "training": 20, "work": 5, "capture": 10, "care": 60},
     "Pesquisador": {"battle": 5, "training": 20, "work": 35, "capture": 10, "care": 30},
@@ -24,6 +25,7 @@ CAREER_ACTIVITY_WEIGHTS: dict[str | None, dict[str, int]] = {
     "Cuidador de Fazenda": {"battle": 5, "training": 15, "work": 30, "capture": 5, "care": 45},
     "Construtor": {"battle": 10, "training": 20, "work": 55, "capture": 0, "care": 15},
     "Comerciante": {"battle": 5, "training": 10, "work": 60, "capture": 5, "care": 20},
+    "Criminoso": {"battle": 25, "training": 20, "work": 35, "capture": 10, "care": 10},
     None: {"battle": 10, "training": 10, "work": 5, "capture": 5, "care": 70},
 }
 
@@ -72,6 +74,13 @@ CAREER_MISSIONS = {
         ("negociacao de lote para Pokemart", 125, {"MEN": 1, "LUK": 1}, -1, {}, "negociacao longa foi estressante"),
         ("feira itinerante de itens comuns", 105, {"LUK": 1}, -2, {"Repel": 1}, "dia inteiro de feira cansou voce"),
     ],
+    "Criminoso": [
+        ("entrega suspeita para contato da Equipe Rocket", 180, {"LUK": 1}, -4, {}, "fuga apressada desgastou voce"),
+        ("intimidacao de apostadores ilegais", 160, {"PHY": 1, "LUK": 1}, -7, {}, "confronto ilegal deixou marcas"),
+        ("estelionato em leilao de Pokemon falso", 210, {"MEN": 1, "LUK": 1}, -2, {}, "esquema de fraude estressou voce"),
+        ("contrabando de itens raros pela Rota 8", 240, {"PHY": 1}, -6, {}, "transporte clandestino esgotou voce"),
+        ("operacao de lavagem de dinheiro via comercio", 280, {"MEN": 2}, -3, {}, "trabalho de fachada foi exaustivo"),
+    ],
 }
 
 BASE_XP = {
@@ -102,6 +111,7 @@ class ActivityResult:
     items_delta: dict[str, int] = field(default_factory=dict)
     mission_name: str | None = None
     mission_success: bool | None = None
+    reputation_delta: int = 0
 
 
 def _pick_activity(character: "Character", has_team: bool, has_balls: bool) -> str:
@@ -181,10 +191,10 @@ def _sim_battle(character: "Character") -> ActivityResult:
         kind="battle_loss",
         note=_battle_loss_note(pokemon, win_chance),
         xp_per_pokemon=xp,
-        char_health_delta=-random.randint(5, 14),
+        char_health_delta=-random.randint(2, 7),
         health_reason="derrotas em batalha cobraram um preco fisico",
         attr_deltas={"PHY": 1} if random.random() < 0.25 else {},
-        pokemon_stat_deltas={"healthy": -random.randint(4, 12)},
+        pokemon_stat_deltas={"healthy": -random.randint(2, 7)},
     )
 
 
@@ -207,7 +217,7 @@ def _sim_training(character: "Character", species_by_name: dict) -> ActivityResu
         0.25,
         1.40,
     )
-    xp = int(BASE_XP["training"] * quality * condition)
+    xp = int((BASE_XP["training"] + training_xp_bonus(character)) * quality * condition)
     stat_deltas: dict[str, int] = {}
     if character.career == "Criador":
         stat_deltas = {"happiness": random.randint(2, 4), "healthy": random.randint(1, 3)}
@@ -217,6 +227,13 @@ def _sim_training(character: "Character", species_by_name: dict) -> ActivityResu
         stat_deltas = {"combat": 1 if random.random() < 0.5 else 0}
     else:
         stat_deltas = {"happiness": 1}
+    focus_care = care_bonus(character)
+    if focus_care:
+        stat_deltas["happiness"] = stat_deltas.get("happiness", 0) + focus_care
+        stat_deltas["healthy"] = stat_deltas.get("healthy", 0) + focus_care
+    focus_beauty = beauty_bonus(character)
+    if focus_beauty:
+        stat_deltas["beauty"] = stat_deltas.get("beauty", 0) + focus_beauty
 
     return ActivityResult(
         kind="training",
@@ -249,13 +266,14 @@ def _sim_work(character: "Character") -> ActivityResult:
         "Cuidador de Fazenda": 75,
         "Construtor": 105,
         "Comerciante": 110,
+        "Criminoso": 140,
     }.get(career, 40)
     pokemon_factor, pokemon_notes = pokemon_work_bonus(character.career, character.team)
     from .reputation import reputation_income_factor
     rep_mult = reputation_income_factor(character.reputation)
     rank_mult = 1.0 + rank * 0.20
     health_mult = clamp(0.65 + character.health / 280, 0.65, 1.10)
-    income = int(calculate_money_gain(base, attrs) * rep_mult * rank_mult * health_mult * pokemon_factor * random.uniform(0.80, 1.30))
+    income = int(calculate_money_gain(base + work_bonus(character), attrs) * rep_mult * rank_mult * health_mult * pokemon_factor * random.uniform(0.80, 1.30))
     if attrs.LUK > 60 and random.random() < 0.18:
         bonus = int(income * random.uniform(0.30, 0.70))
         income += bonus
@@ -307,6 +325,7 @@ def _sim_career_mission(character: "Character") -> ActivityResult | None:
             items_delta=dict(items_delta),
             mission_name=mission_name,
             mission_success=True,
+            reputation_delta=-3 if career == "Criminoso" else 0,
             important=rank >= 3,
         )
     penalty = int(abs(base_reward) * random.uniform(0.05, 0.18))
@@ -320,6 +339,7 @@ def _sim_career_mission(character: "Character") -> ActivityResult | None:
         attr_deltas={"MEN": 1} if random.random() < 0.35 else {},
         mission_name=mission_name,
         mission_success=False,
+        reputation_delta=-5 if career == "Criminoso" else 0,
     )
 
 
@@ -348,6 +368,7 @@ def _sim_capture(character: "Character", species_by_name: dict) -> ActivityResul
             if character.inventory[ball] == 0:
                 del character.inventory[ball]
             break
+    ball_bonus += capture_bonus_for(character, species)
 
     health_percent = 60
     char_health_delta = 0
@@ -407,9 +428,11 @@ def _sim_care(character: "Character") -> ActivityResult:
     care_skill = (attrs.POK + attrs.MEN) / 2
     hp_gain = int(clamp(4 + care_skill / 30, 4, 14))
     stat_deltas = {
-        "happiness": random.randint(2, 5),
-        "healthy": random.randint(1, 3 + (1 if character.career == "Criador" else 0)),
+        "happiness": random.randint(2, 5) + care_bonus(character),
+        "healthy": random.randint(1, 3 + (1 if character.career == "Criador" else 0)) + care_bonus(character),
     }
+    if beauty_bonus(character):
+        stat_deltas["beauty"] = beauty_bonus(character)
     return ActivityResult(
         kind="care",
         note=_care_note(character.career, stat_deltas["happiness"]),
@@ -418,6 +441,89 @@ def _sim_care(character: "Character") -> ActivityResult:
         health_reason="descanso e cuidados recuperaram sua saude",
         attr_deltas={"MEN": 1} if character.career == "Criador" and random.random() < 0.25 else {},
         pokemon_stat_deltas=stat_deltas,
+    )
+
+
+def _sim_criador_business(character: "Character") -> ActivityResult:
+    """Atividades de renda exclusivas do Criador: bagas, pokéblocos e venda de ovos."""
+    from .economy import calculate_money_gain
+
+    attrs = character.attributes
+    rank = character.career_rank()
+    rank_mult = 1.0 + rank * 0.15
+    pok_bonus = attrs.POK / 200
+
+    # Escolhe uma das três atividades com pesos dinâmicos
+    has_eggs = bool(character.eggs)
+    egg_weight = 40 if has_eggs else 10
+    activity = random.choices(
+        ["berry_farm", "pokeblock", "egg_sell"],
+        weights=[35, 25, egg_weight],
+        k=1,
+    )[0]
+
+    if activity == "berry_farm":
+        base_income = int(60 + attrs.PHY * 0.4 + attrs.POK * 0.3)
+        income = int(calculate_money_gain(base_income, attrs) * rank_mult * random.uniform(0.80, 1.30))
+        items_gained: dict[str, int] = {}
+        if random.random() < 0.35 + pok_bonus:
+            items_gained["Potion"] = 1
+        note = random.choice([
+            f"Colheita e venda de bagas rendeu {income} Pokedollar.",
+            f"Sua plantacao de bagas produziu bem este periodo: +{income}P.",
+            f"Venda de bagas na rota local trouxe {income}P.",
+        ])
+        return ActivityResult(
+            kind="criador_business",
+            note=note,
+            money_delta=income,
+            char_health_delta=random.randint(0, 3),
+            health_reason="trabalho ao ar livre com bagas fez bem",
+            attr_deltas={"POK": 1} if random.random() < 0.25 else {},
+            pokemon_stat_deltas={"happiness": 1},
+            items_delta=items_gained,
+        )
+
+    if activity == "pokeblock":
+        base_income = int(75 + attrs.MEN * 0.5 + attrs.POK * 0.25)
+        income = int(calculate_money_gain(base_income, attrs) * rank_mult * random.uniform(0.75, 1.35))
+        note = random.choice([
+            f"Producao de Pokebloco para concursos rendeu {income} Pokedollar.",
+            f"Lote de Pokeblocos vendido a coordenadores por {income}P.",
+            f"Sua receita de Pokebloco ficou famosa: +{income}P neste periodo.",
+        ])
+        return ActivityResult(
+            kind="criador_business",
+            note=note,
+            money_delta=income,
+            char_health_delta=-random.randint(0, 2),
+            health_reason="dias na cozinha de Pokeblocos cansaram um pouco",
+            attr_deltas={"MEN": 1} if random.random() < 0.30 else {},
+            pokemon_stat_deltas={"beauty": random.randint(1, 2)},
+        )
+
+    # egg_sell
+    if has_eggs:
+        egg = character.eggs[0]  # referência, não remove (engine pode remover via sell_egg)
+        tier = getattr(egg, "rarity_tier", getattr(egg, "tier", "C"))
+        tier_prices = {"S": 800, "A": 500, "B": 300, "C": 150, "D": 80}
+        base_income = int(tier_prices.get(tier, 150) * rank_mult * random.uniform(0.85, 1.20))
+    else:
+        # Simula venda de ovo sem ter físico no inventário (ninhada informal)
+        base_income = int(calculate_money_gain(100, attrs) * rank_mult * random.uniform(0.70, 1.10))
+    note = random.choice([
+        f"Venda legal de ovo Pokemon rendeu {base_income} Pokedollar.",
+        f"Um criador local comprou um ovo da sua ninhada por {base_income}P.",
+        f"Ovo vendido por {base_income}P no mercado regulamentado.",
+    ])
+    return ActivityResult(
+        kind="criador_business",
+        note=note,
+        money_delta=base_income,
+        char_health_delta=0,
+        attr_deltas={"LUK": 1} if random.random() < 0.20 else {},
+        pokemon_stat_deltas={"happiness": random.randint(1, 2)},
+        important=base_income >= 400,
     )
 
 
@@ -460,12 +566,16 @@ def simulate_year_activities(
                 amount > 0 and name in {"Poke Ball", "Great Ball", "Ultra Ball", "Master Ball"}
                 for name, amount in character.inventory.items()
             )
+        elif kind == "criador_business":
+            result = _sim_criador_business(character)
         else:
             result = _sim_care(character)
         results.append(result)
     mission_chance = 0.32 + character.career_rank() * 0.04
     if character.career in {"Coletor de Berrys", "Construtor de Pokebolas", "Cuidador de Fazenda", "Construtor", "Comerciante"}:
         mission_chance += 0.10
+    if character.career == "Criminoso":
+        mission_chance += 0.15  # criminosos têm operações mais frequentes
     if random.random() < min(0.70, mission_chance):
         mission = _sim_career_mission(character)
         if mission:
@@ -500,6 +610,7 @@ def apply_activity_results(
         "health_reasons": [],
         "career_missions": [],
         "items": {},
+        "reputation_delta": 0,
     }
 
     for result in results:
@@ -507,6 +618,7 @@ def apply_activity_results(
         total_health_delta += result.char_health_delta
         total_xp += result.xp_per_pokemon
         report["money"] += result.money_delta
+        report["reputation_delta"] += result.reputation_delta
         report["health_delta"] += result.char_health_delta
         if result.char_health_delta and result.health_reason:
             report["health_reasons"].append({
@@ -528,6 +640,7 @@ def apply_activity_results(
                 "success": result.mission_success,
                 "money": result.money_delta,
                 "note": result.note,
+                "reputation": result.reputation_delta,
             })
         for item_name, amount in result.items_delta.items():
             if amount:
@@ -538,6 +651,19 @@ def apply_activity_results(
             stat_totals[key] = stat_totals.get(key, 0) + value
         if result.important:
             important_notes.append(result.note)
+
+    if total_health_delta < 0:
+        months = int(getattr(character, "flags", {}).get("current_period_months", 12))
+        passive_loss_cap = {3: 8, 6: 14, 12: 24}.get(months, 24)
+        if character.career in {"Treinador", "Explorador", "Construtor"}:
+            passive_loss_cap += 6
+        if total_health_delta < -passive_loss_cap:
+            total_health_delta = -passive_loss_cap
+            report["health_delta"] = total_health_delta
+            report["health_reasons"].append({
+                "delta": total_health_delta,
+                "reason": "o desgaste do periodo foi limitado por descanso e recuperacao basica",
+            })
 
     if total_money:
         character.money = max(0, character.money + total_money)
@@ -551,6 +677,11 @@ def apply_activity_results(
                 if character.inventory[item_name] <= 0:
                     del character.inventory[item_name]
     character.health = int(clamp(character.health + total_health_delta, 0, 100))
+    if report["reputation_delta"]:
+        from .reputation import clamp_reputation
+        character.reputation = clamp_reputation(character.reputation + int(report["reputation_delta"]))
+        if character.reputation <= -35:
+            character.flags["official_event_ban"] = True
     character.attributes.modify(attr_totals)
 
     for pokemon in character.team:
@@ -578,15 +709,20 @@ def apply_activity_results(
     battles = [result for result in results if result.kind in {"battle_win", "battle_loss"}]
     captures = [result for result in results if result.kind == "capture_ok"]
     failures = [result for result in results if result.kind == "capture_fail"]
+    criador_biz = [result for result in results if result.kind == "criador_business"]
 
     if work_income:
         notes.append(f"Renda total no periodo: {work_income} Pokedollar.")
+    if criador_biz:
+        biz_income = sum(r.money_delta for r in criador_biz)
+        notes.append(f"Negocios de criacao (bagas/pokeblocos/ovos): +{biz_income} Pokedollar.")
     if battles:
         wins = sum(1 for result in battles if result.kind == "battle_win")
         notes.append(f"Batalhas: {wins} vitoria(s) e {len(battles) - wins} derrota(s).")
     if captures:
+
         names = ", ".join(result.pokemon_name or "Pokemon" for result in captures)
-        notes.append(f"Capturou {len(captures)} Pokemon durante o ano: {names}.")
+        notes.append(f"Capturou {len(captures)} Pokemon no periodo: {names}.")
     if failures:
         notes.append(f"Tentativas de captura sem sucesso: {len(failures)}.")
     missions = [result for result in results if result.kind == "career_mission"]

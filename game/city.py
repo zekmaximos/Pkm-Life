@@ -12,6 +12,7 @@ class CityServices:
     gym: str | None = None
     event_focus: list[str] | None = None
     encounter_sources: list[str] | None = None
+    work: dict | None = None
 
     @classmethod
     def from_dict(cls, data: dict) -> "CityServices":
@@ -23,6 +24,7 @@ class CityServices:
             gym=data.get("gym"),
             event_focus=data.get("event_focus", []),
             encounter_sources=data.get("encounter_sources", []),
+            work=data.get("work"),
         )
 
     def has_service(self, service: str) -> bool:

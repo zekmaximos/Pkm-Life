@@ -19,6 +19,7 @@ CAREER_BALL_CRAFTER = "Construtor de Pokebolas"
 CAREER_FARM_CARETAKER = "Cuidador de Fazenda"
 CAREER_BUILDER = "Construtor"
 CAREER_MERCHANT = "Comerciante"
+CAREER_CRIMINAL = "Criminoso"
 
 CAREERS = (
     CAREER_STUDENT,
@@ -33,6 +34,7 @@ CAREERS = (
     CAREER_FARM_CARETAKER,
     CAREER_BUILDER,
     CAREER_MERCHANT,
+    CAREER_CRIMINAL,
 )
 
 COMMON_CAREERS = (
@@ -68,6 +70,8 @@ class CareerProgress:
 
 
 def available_careers(age: int, has_pokemon: bool) -> list[str]:
+    if age < 5:
+        return []
     if age < 10:
         return [CAREER_STUDENT]
     careers = [CAREER_STUDENT]
@@ -75,6 +79,7 @@ def available_careers(age: int, has_pokemon: bool) -> list[str]:
         careers.extend([CAREER_TRAINER, CAREER_BREEDER, CAREER_COORDINATOR])
     if age >= 16:
         careers.extend(COMMON_CAREERS)
+        careers.append(CAREER_CRIMINAL)
     if age >= 18:
         careers.extend([CAREER_RESEARCHER, CAREER_EXPLORER, CAREER_SCIENTIST])
     return careers
@@ -257,6 +262,19 @@ def career_progress(
             pokemon_beauty_bonus=1,
             note="Compras, vendas e contatos locais fortaleceram sua presenca no comercio.",
         )
+    if career == CAREER_CRIMINAL:
+        base = calculate_money_gain(140, attributes, specialty_factor=1 + ((attributes.LUK + attributes.PHY + attributes.MEN) / 420))
+        money = int(base * rank_mult)
+        return CareerProgress(
+            attribute_changes={"LUK": 1, "PHY": 1},
+            money_gain=money,
+            reputation_change=-(2 + career_rank // 2),
+            pokemon_xp_bonus=8 + career_rank * 2,
+            pokemon_happiness_bonus=-1,
+            pokemon_health_bonus=-1,
+            pokemon_beauty_bonus=0,
+            note="Trabalhos suspeitos renderam dinheiro rapido, mas sua reputacao sofreu.",
+        )
     return CareerProgress({}, 0, 0, 0, 0, 0, 0, "Voce passou o ano sem uma rotina definida.")
 
 
@@ -315,6 +333,11 @@ CAREER_POKEMON_BONUSES = {
         "species": {"Meowth", "Persian", "Porygon", "Abra", "Kadabra", "Eevee"},
         "types": {"Normal", "Psychic"},
         "label": "Pokemon carismaticos ou calculistas melhoraram negocios",
+    },
+    CAREER_CRIMINAL: {
+        "species": {"Meowth", "Persian", "Koffing", "Weezing", "Ekans", "Arbok", "Zubat", "Golbat", "Gengar"},
+        "types": {"Poison", "Dark", "Ghost"},
+        "label": "Pokemon furtivos e intimidadores ajudaram em atividades suspeitas",
     },
 }
 

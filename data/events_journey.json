@@ -317,7 +317,7 @@
       "care",
       "rare"
     ],
-    "base_weight": 0.08,
+    "base_weight": 0.045,
     "conditions": {
       "requires_pokemon": true,
       "min_attributes": {
@@ -327,7 +327,7 @@
     "choices": [
       {
         "text": "Observar sem perturbar e procurar um ovo abandonado",
-        "chance": 0.35,
+        "chance": 0.22,
         "effects": {
           "attributes": {
             "POK": 2
@@ -370,7 +370,7 @@
       "work",
       "rare"
     ],
-    "base_weight": 0.1,
+    "base_weight": 0.07,
     "conditions": {
       "min_attributes": {
         "POK": 30
@@ -379,7 +379,7 @@
     "choices": [
       {
         "text": "Ajudar no cuidado dos ovos",
-        "chance": 0.45,
+        "chance": 0.36,
         "effects": {
           "attributes": {
             "POK": 2,
@@ -425,7 +425,7 @@
       "wild",
       "pokemon"
     ],
-    "base_weight": 0.025,
+    "base_weight": 0.012,
     "conditions": {
       "requires_pokemon": true,
       "min_attributes": {
@@ -436,7 +436,7 @@
     "choices": [
       {
         "text": "Registrar o local e levar o ovo com cuidado",
-        "chance": 0.28,
+        "chance": 0.18,
         "effects": {
           "attributes": {
             "POK": 3,
@@ -684,7 +684,7 @@
       },
       {
         "text": "Tentar encontrar um ovo abandonado",
-        "chance": 0.22,
+        "chance": 0.18,
         "effects": {
           "attributes": {
             "POK": 2

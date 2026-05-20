@@ -32,7 +32,8 @@ def show_header(character: Character) -> None:
         f"Saude: {character.health} ({engine.health_status(character)})\n"
         f"Dinheiro: {character.money} Pokedollar\n"
         f"Reputacao: {engine.reputation_info(character)}\n"
-        f"Carreira: {character.career or 'indefinida'}",
+        f"Carreira: {character.career or 'indefinida'}\n"
+        f"{engine.academy_focus_info(character)}",
     )
     console.print(Panel(table, title="Poke Life"))
 
@@ -140,8 +141,27 @@ def career_menu(character: Character) -> None:
     career = careers[selected - 1]
     if engine.set_career(character, career):
         console.print(f"Agora voce segue: {career}.")
+        if career == "Estudante da academia" and character.age >= 10:
+            academy_focus_menu(character)
     else:
         console.print("Essa carreira ainda nao esta disponivel.")
+
+
+def academy_focus_menu(character: Character) -> None:
+    options = engine.academy_focus_options()
+    for index, option in enumerate(options, start=1):
+        console.print(f"{index}. {option['name']} - {option['description']}")
+    selected = int(Prompt.ask("Foco academico", choices=[str(i) for i in range(1, len(options) + 1)]))
+    focus_id = options[selected - 1]["id"]
+    studied_type = None
+    if focus_id == "pokemon_types":
+        studied_type = Prompt.ask(
+            "Tipo estudado",
+            choices=["Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon"],
+            default="Normal",
+        )
+    _, message = engine.set_academy_focus(character, focus_id, studied_type)
+    console.print(message)
 
 
 def active_pokemon_menu(character: Character) -> None:
@@ -195,8 +215,10 @@ def yearly_actions_menu(character: Character) -> None:
         console.print("5. Treinar Pokemon ativo")
         console.print("6. Treino intensivo")
         console.print("7. Procurar ovos no habitat")
-        console.print("8. Voltar")
-        choice = Prompt.ask("Acao anual", choices=["1", "2", "3", "4", "5", "6", "7", "8"], default="8")
+        console.print("8. Tentar roubar Pokemon")
+        console.print("9. Definir foco academico")
+        console.print("10. Voltar")
+        choice = Prompt.ask("Acao anual", choices=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"], default="10")
         if choice == "1":
             console.print(engine.heal_team_in_city(character))
         elif choice == "2":
@@ -211,6 +233,11 @@ def yearly_actions_menu(character: Character) -> None:
             console.print(engine.manual_action_intensive_training(character))
         elif choice == "7":
             console.print(engine.manual_action_search_for_egg(character))
+        elif choice == "8":
+            _, message = engine.steal_pokemon(character)
+            console.print(message)
+        elif choice == "9":
+            academy_focus_menu(character)
         else:
             return
 
@@ -268,7 +295,8 @@ def _format_gym_risk(character: Character) -> str:
     if not preview.get("available"):
         return f"Previa: {preview['summary']}"
     return (
-        f"Previa: risco {preview['risk']} | chance estimada {preview['estimated_win_chance']}%\n"
+        f"Previa: risco {preview['risk']} | chance da serie {preview['estimated_win_chance']}% | media por luta {preview.get('average_match_chance', '?')}%\n"
+        f"Formato: vencer {preview.get('wins_required', '?')}/{preview.get('opponents', '?')} batalha(s)\n"
         f"Seu time: media top 3 Lv.{preview['team_average']} | mais forte Lv.{preview['strongest_level']}\n"
         f"Nota: {preview['summary']}"
     )
@@ -504,7 +532,11 @@ def contest_menu(character: Character) -> None:
     for index, level in enumerate(levels, start=1):
         console.print(f"{index}. {level}")
     level_choice = int(Prompt.ask("Dificuldade", choices=["1", "2", "3"], default="1"))
-    ok, result, msg = engine.enter_contest(character, pokemon_choice - 1, levels[level_choice - 1])
+    categories = ["beauty", "cute", "cool", "smart", "mysterious"]
+    for index, category in enumerate(categories, start=1):
+        console.print(f"{index}. {category}")
+    category_choice = int(Prompt.ask("Categoria", choices=[str(i) for i in range(1, len(categories) + 1)], default="1"))
+    ok, result, msg = engine.enter_contest(character, pokemon_choice - 1, levels[level_choice - 1], categories[category_choice - 1])
     if not ok:
         console.print(f"[red]{msg}[/red]")
         return

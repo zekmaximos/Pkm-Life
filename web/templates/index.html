@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poke Life</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <section id="startScreen" class="start-screen">
+    <div class="start-art"></div>
+    <div class="start-panel">
+      <p class="eyebrow">Kanto Life Simulator</p>
+      <h1>Poke Life</h1>
+      <p class="subtitle">Uma vida inteira em Kanto, com eventos, profissao, Pokemon, riscos e escolhas.</p>
+      <label>Nome</label>
+      <input id="newName" maxlength="24" placeholder="Red">
+      <label>Cidade natal</label>
+      <select id="newHometown">
+        <option>Pallet Town</option>
+        <option>Viridian City</option>
+        <option>Pewter City</option>
+        <option>Cerulean City</option>
+        <option>Vermilion City</option>
+        <option>Lavender Town</option>
+        <option>Celadon City</option>
+        <option>Fuchsia City</option>
+        <option>Saffron City</option>
+        <option>Cinnabar Island</option>
+      </select>
+      <button class="primary" id="newGameBtn">Comecar vida</button>
+      <div class="save-row">
+        <select id="saveSelect"></select>
+        <button id="loadBtn">Carregar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="game-screen hidden">
+    <header class="topbar">
+      <div class="identity">
+        <div class="avatar" id="avatar">PL</div>
+        <div>
+          <div class="char-name" id="charName">-</div>
+          <div class="char-sub" id="charSub">Carregando...</div>
+        </div>
+      </div>
+      <div class="top-stats">
+        <span id="topAge">0 anos</span>
+        <span id="topCity">Pallet Town</span>
+        <span id="topMoney">0 P</span>
+        <span id="topBadges">0 badges</span>
+        <span id="topRep">0 rep</span>
+      </div>
+      <div class="top-actions">
+        <input id="saveSlot" placeholder="autosave">
+        <button id="saveBtn">Salvar</button>
+        <button id="homeBtn">Inicio</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="left-rail">
+        <section class="panel">
+          <h3>Personagem</h3>
+          <div class="metric-grid">
+            <div><b id="healthValue">100</b><small>Saude</small></div>
+            <div><b id="repValue">0</b><small>Rep</small></div>
+            <div><b id="badgeValue">0</b><small>Insignias</small></div>
+            <div><b id="boxValue">0</b><small>Box</small></div>
+          </div>
+          <p id="careerLine" class="soft"></p>
+          <p id="academyLine" class="soft"></p>
+        </section>
+
+        <section class="panel">
+          <h3>Atributos</h3>
+          <div id="attributes"></div>
+        </section>
+
+        <section class="panel">
+          <h3>Equipe</h3>
+          <div id="team"></div>
+        </section>
+      </aside>
+
+      <main class="life-column">
+        <section class="feed-head">
+          <div>
+            <p class="eyebrow">registro continuo</p>
+            <h2>Vida em Kanto</h2>
+          </div>
+          <div class="time-buttons">
+            <button data-months="3">3 meses</button>
+            <button data-months="6">6 meses</button>
+            <button data-months="12" class="primary small">1 ano</button>
+          </div>
+        </section>
+        <div id="feed" class="feed"></div>
+        <section id="eventChoice" class="choice-bar hidden"></section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="menu-group">
+          <div class="section-label">acoes</div>
+          <button class="menu-btn active" data-action="train">Pokemon <span class="tag">treino</span></button>
+          <button class="menu-btn" data-action="focus_career">Carreira</button>
+          <button class="menu-btn" data-action="read">Academia</button>
+          <button class="menu-btn" data-action="work">Trabalhar</button>
+          <button class="menu-btn" data-action="egg">Breeding</button>
+          <button class="menu-btn" data-action="heal">Pokemon Center</button>
+          <button class="menu-btn" data-action="gym">Ginasio</button>
+          <button class="menu-btn danger" data-action="steal">Roubar Pokemon</button>
+        </section>
+
+        <section class="panel">
+          <h3>Carreira</h3>
+          <select id="careerSelect"></select>
+          <button id="setCareerBtn">Mudar carreira</button>
+          <select id="academySelect"></select>
+          <select id="typeSelect">
+            <option>Normal</option><option>Fire</option><option>Water</option><option>Electric</option>
+            <option>Grass</option><option>Ice</option><option>Fighting</option><option>Poison</option>
+            <option>Ground</option><option>Flying</option><option>Psychic</option><option>Bug</option>
+            <option>Rock</option><option>Ghost</option><option>Dragon</option>
+          </select>
+          <button id="setAcademyBtn">Definir foco</button>
+        </section>
+
+        <section class="panel">
+          <h3>Loja</h3>
+          <select id="shopSelect"></select>
+          <button id="buyBtn">Comprar</button>
+          <h3>Inventario</h3>
+          <select id="itemSelect"></select>
+          <button id="useItemBtn">Usar item</button>
+        </section>
+
+        <section class="panel">
+          <h3>Viagem</h3>
+          <select id="citySelect"></select>
+          <button id="travelBtn">Viajar</button>
+        </section>
+
+        <section class="panel">
+          <h3>Extras</h3>
+          <button id="contestBtn">Contest local</button>
+          <button id="breedBtn">Tentar breed</button>
+          <button id="tournamentBtn">Torneio local</button>
+          <div id="gymPreview" class="preview"></div>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>

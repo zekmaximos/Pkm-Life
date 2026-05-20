@@ -15,11 +15,13 @@ from game.careers import (
     CAREER_BERRY_COLLECTOR,
     CAREER_BREEDER,
     CAREER_COORDINATOR,
+    CAREER_CRIMINAL,
     CAREER_EXPLORER,
     CAREER_FARM_CARETAKER,
     CAREER_MERCHANT,
     CAREER_RESEARCHER,
     CAREER_SCIENTIST,
+    CAREER_STUDENT,
     CAREER_TRAINER,
     CAREERS,
     available_careers,
@@ -32,6 +34,10 @@ from game.events import LifeEvent, event_occurrence_chance, event_weight, valid_
 from game.eggs import create_random_egg, progress_eggs
 from game.year_simulation import apply_activity_results, simulate_year_activities
 from game.tournaments import can_enter_tournament, generate_tournament
+from game.series_battle import SeriesOpponent, estimate_series_chance
+from game.mortality import mortality_chance
+from game.prison import sentence_for_crime
+from game.academy import apply_focus_progress, capture_bonus_for, focus_label
 
 
 class CoreSystemsTest(unittest.TestCase):
@@ -111,6 +117,7 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertTrue(notes)
 
     def test_available_careers_are_age_and_team_aware(self) -> None:
+        self.assertEqual(available_careers(0, False), [])
         self.assertEqual(available_careers(7, False), ["Estudante da academia"])
         self.assertIn(CAREER_TRAINER, available_careers(10, True))
         teen_careers = available_careers(16, False)
@@ -205,6 +212,10 @@ class CoreSystemsTest(unittest.TestCase):
                 self.assertIn(career, CAREERS)
             if "gym" in city:
                 self.assertIn(city["gym"], gyms)
+            self.assertIn("work", city)
+            self.assertIsInstance(city["work"].get("name"), str)
+            self.assertGreater(city["work"].get("base_income", 0), 0)
+            self.assertTrue(city["work"].get("primary_attributes"))
 
     def test_journey_events_have_40_unique_varied_entries(self) -> None:
         events = json.loads(Path("data/events_journey.json").read_text(encoding="utf-8"))
@@ -233,6 +244,7 @@ class CoreSystemsTest(unittest.TestCase):
     def test_city_shop_and_healing_actions_work(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Green")
+        character.age = 5
         character.money = 500
         success, message = engine.buy_item(character, "Poke Ball", 1)
         self.assertTrue(success, message)
@@ -445,6 +457,7 @@ class CoreSystemsTest(unittest.TestCase):
     def test_buy_common_egg_adds_egg_not_inventory_stack(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Case")
+        character.age = 5
         character.money = 2000
         success, message = engine.buy_item(character, "Common Egg", 1)
         self.assertTrue(success, message)
@@ -469,20 +482,121 @@ class CoreSystemsTest(unittest.TestCase):
         pok_before = character.attributes.POK
         self.assertIn("POK", engine.manual_action_read_about_pokemon(character))
         self.assertGreater(character.attributes.POK, pok_before)
+        self.assertIn("ja estudou", engine.manual_action_read_about_pokemon(character))
         money_before = character.money
-        engine.manual_action_work_city(character)
+        work_message = engine.manual_action_work_city(character)
+        self.assertIn("Guia de rota", work_message)
         self.assertGreaterEqual(character.money, money_before)
+        self.assertIn("ja trabalhou", engine.manual_action_work_city(character))
         character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=5))
         xp_before = character.active_pokemon().experience
         engine.manual_action_train_team(character)
         self.assertGreaterEqual(character.active_pokemon().experience + character.active_pokemon().level * 100, xp_before + 500)
+        self.assertIn("ja treinou", engine.manual_action_intensive_training(character))
+        engine.advance_time(character, 3)
         intensive_before = character.active_pokemon().experience + character.active_pokemon().level * 100
         self.assertIn("Treino intensivo", engine.manual_action_intensive_training(character))
         self.assertGreater(character.active_pokemon().experience + character.active_pokemon().level * 100, intensive_before)
 
+    def test_city_specific_work_scales_with_economy_and_attributes(self) -> None:
+        engine = GameEngine()
+        pallet = engine.create_character("PalletWorker")
+        pallet.age = 5
+        pallet.attributes = PlayerAttributes(PHY=25, MEN=25, POK=25, LUK=25)
+        pallet_money_before = pallet.money
+        pallet_message = engine.manual_action_work_city(pallet)
+        pallet_income = pallet.money - pallet_money_before
+        self.assertIn("Laboratorio Oak", pallet_message)
+
+        saffron = engine.create_character("SaffronWorker")
+        saffron.age = 10
+        saffron.attributes = PlayerAttributes(PHY=80, MEN=85, POK=85, LUK=75)
+        engine.move_to_city(saffron, "Saffron City")
+        saffron_money_before = saffron.money
+        saffron_message = engine.manual_action_work_city(saffron)
+        saffron_income = saffron.money - saffron_money_before
+        self.assertIn("Silph", saffron_message)
+        self.assertGreater(saffron_income, pallet_income)
+
+    def test_period_actions_reset_only_after_time_advance(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Period")
+        character.age = 10
+        engine.move_to_city(character, "Viridian City")
+        self.assertIn("POK", engine.manual_action_read_about_pokemon(character))
+        self.assertIn("ja estudou", engine.manual_action_read_about_pokemon(character))
+        self.assertIn("Pokedollar", engine.manual_action_work_city(character))
+        self.assertIn("ja trabalhou", engine.manual_action_work_city(character))
+        character.career = CAREER_TRAINER
+        self.assertIn("Dedicacao", engine.manual_action_focus_career(character))
+        self.assertIn("ja focou", engine.manual_action_focus_career(character))
+
+        engine.advance_time(character, 3)
+
+        self.assertIn("POK", engine.manual_action_read_about_pokemon(character))
+        self.assertIn("Pokedollar", engine.manual_action_work_city(character))
+        self.assertIn("Dedicacao", engine.manual_action_focus_career(character))
+
+    def test_early_childhood_blocks_manual_city_and_journey_actions(self) -> None:
+        engine = GameEngine()
+        baby = engine.create_character("Baby")
+        baby.money = 5000
+        baby.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=3))
+        self.assertEqual(engine.available_careers_for_character(baby), [])
+        self.assertIn("muito novo", engine.manual_action_read_about_pokemon(baby))
+        self.assertIn("muito novo", engine.manual_action_work_city(baby))
+        self.assertIn("muito novo", engine.manual_action_train_team(baby))
+        self.assertIn("muito novo", engine.manual_action_focus_career(baby))
+        self.assertIn("muito novo", engine.buy_item(baby, "Poke Ball", 1)[1])
+        self.assertIn("muito novo", engine.use_item(baby, "Potion")[1])
+        self.assertIn("depende de adultos", engine.heal_team_in_city(baby))
+        self.assertIn("10 anos", engine.manual_action_intensive_training(baby))
+        self.assertIn("10 anos", engine.manual_action_search_for_egg(baby))
+        self.assertFalse(engine.black_market_available(baby))
+
+        child = engine.create_character("Child")
+        child.age = 5
+        child.career = CAREER_STUDENT
+        self.assertIn("POK", engine.manual_action_read_about_pokemon(child))
+        self.assertIn("Pokedollar", engine.manual_action_work_city(child))
+        child.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=3))
+        self.assertIn("ganhou", engine.manual_action_train_team(child))
+        self.assertIn("10 anos", engine.manual_action_intensive_training(child))
+
+    def test_manual_egg_search_is_rare_but_breeder_has_edge(self) -> None:
+        engine = GameEngine()
+        regular = engine.create_character("Regular")
+        regular.age = 10
+        regular.current_city = "route_1"
+        regular.attributes = PlayerAttributes(PHY=50, MEN=50, POK=100, LUK=100)
+        with patch("game.engine.random.random", return_value=0.18):
+            self.assertIn("nao encontrou ovos", engine.manual_action_search_for_egg(regular))
+        self.assertFalse(regular.eggs)
+
+        breeder = engine.create_character("Breeder")
+        breeder.age = 10
+        breeder.current_city = "route_1"
+        breeder.career = CAREER_BREEDER
+        breeder.attributes = PlayerAttributes(PHY=50, MEN=50, POK=100, LUK=100)
+        with patch("game.engine.random.random", return_value=0.18):
+            self.assertIn("encontrou um ovo", engine.manual_action_search_for_egg(breeder))
+        self.assertEqual(len(breeder.eggs), 1)
+
+    def test_egg_event_probabilities_stay_rare(self) -> None:
+        childhood = json.loads(Path("data/events_childhood.json").read_text(encoding="utf-8"))
+        journey = json.loads(Path("data/events_journey.json").read_text(encoding="utf-8"))
+        by_id = {event["id"]: event for event in childhood + journey}
+        self.assertLessEqual(by_id["warm_common_egg"]["base_weight"], 0.12)
+        self.assertLessEqual(by_id["warm_common_egg"]["choices"][0]["chance"], 0.45)
+        self.assertLessEqual(by_id["academy_colored_egg"]["base_weight"], 0.06)
+        self.assertLessEqual(by_id["shimmering_super_rare_egg"]["base_weight"], 0.018)
+        self.assertLessEqual(by_id["habitat_nest_discovery"]["choices"][0]["chance"], 0.22)
+        self.assertLessEqual(by_id["rare_moonlit_egg"]["choices"][0]["chance"], 0.18)
+
     def test_use_items_apply_simple_effects(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Case")
+        character.age = 5
         pokemon = create_owned_pokemon(engine.pokemon["Pidgey"], level=5)
         pokemon.current_health = 1
         character.add_pokemon(pokemon)
@@ -694,6 +808,48 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertNotIn(path_event, valid_events(character, engine.journey_events))
         character.career = "Estudante da academia"
         self.assertIn(path_event, valid_events(character, engine.journey_events))
+
+    def test_student_after_ten_can_choose_academic_focus(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.career = CAREER_STUDENT
+        ok, message = engine.set_academy_focus(character, "pokemon_types", "Electric")
+        self.assertTrue(ok, message)
+        self.assertIn("Electric", focus_label(character))
+        pikachu_bonus = capture_bonus_for(character, engine.pokemon["Pikachu"])
+        rattata_bonus = capture_bonus_for(character, engine.pokemon["Rattata"])
+        self.assertGreater(pikachu_bonus, rattata_bonus)
+
+    def test_student_focus_progress_affects_attributes_and_training(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.career = CAREER_STUDENT
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=5))
+        ok, _ = engine.set_academy_focus(character, "battle_theory")
+        self.assertTrue(ok)
+        pok_before = character.attributes.POK
+        xp_before = character.team[0].experience + character.team[0].level * 100
+        notes = progress_year(character, engine.pokemon)
+        self.assertGreater(character.attributes.POK, pok_before)
+        self.assertGreater(character.team[0].experience + character.team[0].level * 100, xp_before)
+        self.assertTrue(any("Teoria de Batalha" in note or "estudos" in note for note in notes))
+
+    def test_student_focus_progress_accumulates_before_attribute_bonus(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.career = CAREER_STUDENT
+        ok, _ = engine.set_academy_focus(character, "capture_techniques")
+        self.assertTrue(ok)
+        luk_before = character.attributes.LUK
+        apply_focus_progress(character, 3)
+        self.assertEqual(character.attributes.LUK, luk_before)
+        apply_focus_progress(character, 3)
+        apply_focus_progress(character, 3)
+        apply_focus_progress(character, 3)
+        self.assertEqual(character.attributes.LUK, min(100, luk_before + 1))
 
     def test_automatic_gym_invite_can_trigger_for_ready_team(self) -> None:
         engine = GameEngine()
@@ -909,6 +1065,190 @@ class CoreSystemsTest(unittest.TestCase):
             success, message = engine.breed_pokemon(character, 0, 1)
         self.assertTrue(success, message)
         self.assertEqual(len(character.eggs), 1)
+
+    def test_gym_preview_uses_series_details(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.career = CAREER_TRAINER
+        for name in ("Pidgey", "Mankey", "Geodude"):
+            character.add_pokemon(create_owned_pokemon(engine.pokemon[name], level=18))
+        engine.move_to_city(character, "Pewter City")
+        preview = engine.gym_risk_preview(character)
+        self.assertIsNotNone(preview)
+        self.assertGreaterEqual(preview["opponents"], 3)
+        self.assertIn("average_match_chance", preview)
+        self.assertIn("match_chances", preview)
+
+    def test_gym_defeat_allows_rematch_and_grants_team_xp(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 14
+        character.career = CAREER_TRAINER
+        for name in ("Pidgey", "Rattata", "Caterpie"):
+            character.add_pokemon(create_owned_pokemon(engine.pokemon[name], level=8))
+        engine.move_to_city(character, "Pewter City")
+        before_xp = sum(pokemon.experience for pokemon in character.team)
+        with patch("game.battle.random.random", return_value=1.0):
+            won, log = engine.challenge_city_gym(character)
+        self.assertFalse(won)
+        self.assertFalse(character.badges)
+        self.assertGreater(sum(pokemon.experience for pokemon in character.team), before_xp)
+        for pokemon in character.team:
+            pokemon.heal_full(engine.pokemon[pokemon.species])
+            pokemon.status = "healthy"
+        won_again, log_again = engine.challenge_city_gym(character)
+        self.assertIsInstance(won_again, bool)
+
+    def test_tournament_rounds_are_best_of_three(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.money = 5000
+        character.reputation = 20
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Charizard"], level=55))
+        opponents = generate_tournament(character, engine.pokemon, "city")
+        self.assertTrue(all(len(opponent.team) == 3 for opponent in opponents))
+        ok, result, message = engine.enter_tournament(character, "city")
+        self.assertTrue(ok, message)
+        self.assertTrue(any("melhor de 3" in line for line in result.log))
+        opponents = generate_tournament(character, engine.pokemon, "city", engine.name_database)
+        self.assertTrue(all(" " in opponent.name for opponent in opponents))
+
+    def test_contest_categories_and_items_affect_result_shape(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.money = 3000
+        character.career = CAREER_COORDINATOR
+        character.inventory["Mystic Veil"] = 1
+        pokemon = create_owned_pokemon(engine.pokemon["Gastly"], level=20)
+        pokemon.occult = 95
+        character.add_pokemon(pokemon)
+        success, result, message = engine.enter_contest(character, 0, "local", "mysterious")
+        self.assertTrue(success, message)
+        self.assertEqual(result.category, "mysterious")
+        self.assertTrue(any("Mysterious" in line for line in result.log))
+
+    def test_criminal_reputation_can_ban_official_events(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.money = 5000
+        character.career = CAREER_CRIMINAL
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Ekans"], level=20))
+        with patch("game.engine.random.random", return_value=1.0):
+            success, message = engine.steal_pokemon(character, "Pidgey")
+        self.assertFalse(success)
+        self.assertLess(character.reputation, 0)
+        character.flags["official_event_ban"] = True
+        ok, reason = can_enter_tournament(character, "city")
+        self.assertFalse(ok)
+        self.assertIn("banido", reason)
+
+    def test_prison_sentence_blocks_actions_and_progresses_time(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.money = 2000
+        character.career = CAREER_CRIMINAL
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Ekans"], level=20))
+        with patch("game.engine.random.random", return_value=0.0):
+            success, message = engine.steal_pokemon(character, "Pidgey")
+        self.assertTrue(character.flags.get("in_prison"))
+        self.assertGreater(character.flags.get("prison_months_remaining", 0), 0)
+        ok, log = engine.challenge_city_gym(character)
+        self.assertFalse(ok)
+        before = character.flags["prison_months_remaining"]
+        engine.advance_time(character, 3)
+        self.assertLess(character.flags["prison_months_remaining"], before)
+
+    def test_mortality_risk_scales_with_age_health_and_prison(self) -> None:
+        young = Character("Young")
+        young.age = 18
+        young.health = 95
+        old = Character("Old")
+        old.age = 82
+        old.health = 24
+        young_chance, _ = mortality_chance(young, 12)
+        old_chance, _ = mortality_chance(old, 12)
+        prison_chance, cause = mortality_chance(old, 12, "prison", -20)
+        self.assertGreater(old_chance, young_chance)
+        self.assertGreater(prison_chance, old_chance)
+        self.assertIn("prisao", cause)
+
+    def test_death_sets_game_over_and_blocks_official_actions(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 90
+        character.health = 5
+        character.career = CAREER_TRAINER
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=20))
+        with patch("game.mortality.random.random", return_value=0.0):
+            engine.advance_time(character, 3)
+        self.assertTrue(character.flags.get("dead"))
+        self.assertEqual(character.health, 0)
+        self.assertIn("Game over", character.flags["last_year_report"])
+        ok, reason = can_enter_tournament(character, "city")
+        self.assertFalse(ok)
+        self.assertIn("morreu", reason)
+        ok, message = engine.challenge_city_gym(character)
+        self.assertFalse(ok)
+        self.assertIn("Game over", message[0])
+
+    def test_prison_sentences_are_stricter_and_prison_fights_can_kill(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 55
+        character.health = 20
+        character.career = CAREER_CRIMINAL
+        sentence = sentence_for_crime("pokemon_theft", character.reputation, character.career)
+        self.assertGreaterEqual(sentence.months, 36)
+        character.flags["in_prison"] = True
+        character.flags["prison_months_remaining"] = sentence.months
+        with patch("game.prison.random.random", return_value=0.0), patch("game.prison.random.randint", return_value=18), patch("game.mortality.random.random", return_value=0.0):
+            engine.advance_time(character, 12)
+        self.assertTrue(character.flags.get("last_prison_fight"))
+        self.assertTrue(character.flags.get("dead"))
+        self.assertIn("prisao", character.flags.get("death_cause", ""))
+
+    def test_web_app_can_create_advance_and_run_action(self) -> None:
+        from web.app import app
+
+        client = app.test_client()
+        created = client.post("/api/new", json={"name": "WebCase", "hometown": "Pallet Town"})
+        self.assertEqual(created.status_code, 200)
+        self.assertEqual(created.get_json()["state"]["name"], "WebCase")
+
+        advanced = client.post("/api/advance", json={"months": 12})
+        self.assertEqual(advanced.status_code, 200)
+        self.assertIn("feed", advanced.get_json())
+
+        studied = client.post("/api/action/read", json={})
+        self.assertEqual(studied.status_code, 200)
+        self.assertGreaterEqual(studied.get_json()["state"]["attributes"]["POK"], 0)
+
+    def test_web_oak_event_can_be_accepted(self) -> None:
+        import web.app as web_app
+
+        client = web_app.app.test_client()
+        created = client.post("/api/new", json={"name": "OakWeb", "hometown": "Pallet Town"})
+        self.assertEqual(created.status_code, 200)
+        web_app.character.age = 9
+        web_app.character.team = []
+        web_app.character.box = []
+        web_app.character.flags.pop("oak_event_done", None)
+        advanced = client.post("/api/advance", json={"months": 12})
+        self.assertEqual(advanced.status_code, 200)
+        payload = advanced.get_json()
+        self.assertIsNotNone(payload.get("pending_event"))
+        self.assertIn("Professor Oak", payload["pending_event"]["title"])
+        accepted = client.post("/api/event_choice", json={"index": 0})
+        self.assertEqual(accepted.status_code, 200)
+        state = accepted.get_json()["state"]
+        self.assertTrue(state["team"])
+        self.assertEqual(state["team"][0]["species"], "Bulbasaur")
+        self.assertEqual(state["career"], "Treinador")
 
 
 if __name__ == "__main__":

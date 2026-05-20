@@ -3,10 +3,11 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass, field
 
-from .battle import simulate_simple_battle
 from .character import Character
+from .names import NameDatabase
 from .pokemon import PokemonSpecies
-from .reputation import reputation_gate_bonus
+from .reputation import is_banned_from_official_events, reputation_gate_bonus
+from .series_battle import SeriesOpponent, run_team_series
 from .utils import clamp
 
 
@@ -62,6 +63,7 @@ class TournamentOpponent:
     name: str
     pokemon_species: str
     pokemon_level: int
+    team: list[dict] = field(default_factory=list)
 
 
 @dataclass
@@ -96,6 +98,7 @@ def generate_tournament(
     character: Character,
     pokemon_db: dict[str, PokemonSpecies],
     kind: str = "city",
+    names: NameDatabase | None = None,
 ) -> list[TournamentOpponent]:
     cfg = TOURNAMENT_KINDS.get(kind, TOURNAMENT_KINDS["city"])
     total_rounds = int(cfg["rounds"])
@@ -116,27 +119,24 @@ def generate_tournament(
             level_offset = round_num - (total_rounds // 2)
             npc_level = int(clamp(player_peak + level_offset + random.randint(-spread, spread), 5, 100))
 
-        name = random.choice(NPC_TRAINER_NAMES)
-        while name in used_names and len(used_names) < len(NPC_TRAINER_NAMES):
+        if names:
+            name = names.random_full_name(used_names)
+        else:
             name = random.choice(NPC_TRAINER_NAMES)
+            while name in used_names and len(used_names) < len(NPC_TRAINER_NAMES):
+                name = random.choice(NPC_TRAINER_NAMES)
         used_names.add(name)
 
-        opponents.append(TournamentOpponent(
-            name=name,
-            pokemon_species=random.choice(species_pool),
-            pokemon_level=npc_level,
-        ))
+        team = []
+        for _ in range(3):
+            level = npc_level + random.randint(-2, 2)
+            if fixed_range:
+                level = int(clamp(level, int(fixed_range[0]), int(fixed_range[1])))
+            else:
+                level = int(clamp(level, 5, 100))
+            team.append({"species": random.choice(species_pool), "level": level})
+        opponents.append(TournamentOpponent(name=name, pokemon_species=team[0]["species"], pokemon_level=team[0]["level"], team=team))
     return opponents
-
-
-def _best_team_member(character: Character, pokemon_db: dict[str, PokemonSpecies]):
-    candidates = [
-        pokemon for pokemon in character.team
-        if pokemon.current_health > 0 and pokemon.status != "badly_injured" and pokemon.species in pokemon_db
-    ]
-    if not candidates:
-        return character.active_pokemon()
-    return max(candidates, key=lambda pokemon: pokemon.level * 2 + pokemon.combat + pokemon.healthy * 0.4)
 
 
 def run_tournament(
@@ -156,42 +156,28 @@ def run_tournament(
         return TournamentResult(kind, 0, total_rounds, 0, 0, False, ["Voce nao tem Pokemon para competir."])
 
     for round_num, opponent in enumerate(opponents, start=1):
-        active = _best_team_member(character, pokemon_db)
-        if active is None or active.species not in pokemon_db:
-            log.append("Sua equipe nao conseguiu continuar.")
-            break
-        active_species = pokemon_db[active.species]
-        opponent_species = pokemon_db.get(opponent.pokemon_species)
-        if opponent_species is None:
-            log.append(f"Rodada {round_num}: oponente invalido, vitoria administrativa.")
-            rounds_won += 1
-            continue
-
-        log.append(
-            f"Rodada {round_num}/{total_rounds}: {active.display_name()} Lv.{active.level} "
-            f"vs {opponent.name} com {opponent.pokemon_species} Lv.{opponent.pokemon_level}"
-        )
-        won, battle_log = simulate_simple_battle(
+        opponent_team = opponent.team or [{"species": opponent.pokemon_species, "level": opponent.pokemon_level}]
+        series = [
+            SeriesOpponent(opponent.name, member["species"], int(member["level"]))
+            for member in opponent_team[:3]
+        ]
+        log.append(f"Rodada {round_num}/{total_rounds}: melhor de 3 contra {opponent.name}.")
+        result = run_team_series(
             character,
-            active,
-            active_species,
-            f"{opponent.name} - {opponent.pokemon_species}",
-            opponent_species,
-            opponent.pokemon_level,
+            series,
+            pokemon_db,
+            wins_required=2,
             important=True,
-            species_by_name=pokemon_db,
+            title=f"Melhor de 3 - {opponent.name}",
         )
-        result_line = next((line for line in battle_log if "venceu" in line or "perdeu" in line), battle_log[-1])
-        log.append(f"  {result_line}")
-        if won:
+        log.extend("  " + line for line in result.log[1:])
+        if result.won:
             rounds_won += 1
             round_prize = int(cfg["prize_per_round"])
             total_prize += round_prize
             total_rep += 1
-            log.append(f"  Vitoria! +{round_prize}P, +1 reputacao.")
+            log.append(f"  Vitoria na rodada! +{round_prize}P, +1 reputacao.")
         else:
-            active.current_health = 0
-            active.status = "badly_injured"
             log.append("  Derrota. Eliminado da eliminatoria.")
             break
 
@@ -211,8 +197,14 @@ def can_enter_tournament(character: Character, kind: str = "city") -> tuple[bool
     cfg = TOURNAMENT_KINDS.get(kind)
     if not cfg:
         return False, "Torneio desconhecido."
+    if character.flags.get("dead"):
+        return False, "Game over: o personagem morreu."
     if not character.team:
         return False, "Voce precisa de pelo menos um Pokemon para competir."
+    if character.flags.get("in_prison"):
+        return False, "Voce nao pode competir enquanto esta preso."
+    if is_banned_from_official_events(character):
+        return False, "Voce esta banido de eventos oficiais por reputacao negativa ou investigacao."
     if character.age < 10:
         return False, "Voce ainda e jovem demais para torneios."
     min_badges = int(cfg.get("min_badges", 0))

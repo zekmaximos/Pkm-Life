@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import random
 
+from .academy import apply_focus_progress, beauty_bonus, care_bonus, training_xp_bonus
 from .careers import career_progress, default_career_for_age, pokemon_work_bonus
 from .character import Character
 from .eggs import progress_eggs
@@ -22,6 +23,9 @@ def progress_year(character: Character, species_by_name: dict[str, PokemonSpecie
 
     career = career_progress(character.career, character.attributes, character.age, character.career_rank())
     character.attributes.modify(career.attribute_changes)
+    focus_note = apply_focus_progress(character, 12)
+    if focus_note:
+        notes.append(focus_note)
     if career.money_gain:
         character.money = max(0, character.money + career.money_gain)
         notes.append(f"Voce ganhou {career.money_gain} Pokedollar.")
@@ -38,11 +42,12 @@ def progress_year(character: Character, species_by_name: dict[str, PokemonSpecie
         notes.append(career.note)
 
     for pokemon in character.team:
-        notes.extend(_progress_pokemon(pokemon, character, career.pokemon_xp_bonus))
+        focus_care = care_bonus(character)
+        notes.extend(_progress_pokemon(pokemon, character, career.pokemon_xp_bonus + training_xp_bonus(character)))
         notes.extend(check_evolution(pokemon, species_by_name or {}))
-        pokemon.happiness = int(clamp(pokemon.happiness + career.pokemon_happiness_bonus + random.choice([0, 1]), 0, 100))
-        pokemon.healthy = int(clamp(pokemon.healthy + career.pokemon_health_bonus + random.choice([-1, 0, 1]), 1, 100))
-        pokemon.beauty = int(clamp(pokemon.beauty + career.pokemon_beauty_bonus, 1, 100))
+        pokemon.happiness = int(clamp(pokemon.happiness + career.pokemon_happiness_bonus + focus_care + random.choice([0, 1]), 0, 100))
+        pokemon.healthy = int(clamp(pokemon.healthy + career.pokemon_health_bonus + focus_care + random.choice([-1, 0, 1]), 1, 100))
+        pokemon.beauty = int(clamp(pokemon.beauty + career.pokemon_beauty_bonus + beauty_bonus(character), 1, 100))
         max_hp = pokemon.max_health(species_by_name.get(pokemon.species) if species_by_name else None)
         pokemon.current_health = int(clamp(pokemon.current_health + career.pokemon_health_bonus + 2, 0, max_hp))
         _update_condition(pokemon)

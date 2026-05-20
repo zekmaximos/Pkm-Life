@@ -55,3 +55,20 @@ def reputation_gate_bonus(character) -> int:
 
 def reputation_income_factor(value: int) -> float:
     return reputation_tier(value).income_factor
+
+
+def is_banned_from_official_events(character) -> bool:
+    flags = getattr(character, "flags", {})
+    return bool(flags.get("official_event_ban")) or clamp_reputation(getattr(character, "reputation", 0)) <= -35
+
+
+def apply_negative_reputation(character, amount: int, reason: str | None = None) -> int:
+    character.reputation = clamp_reputation(getattr(character, "reputation", 0) - abs(amount))
+    flags = getattr(character, "flags", {})
+    suspicion = int(flags.get("suspicion", 0)) + max(1, abs(amount) // 2)
+    flags["suspicion"] = suspicion
+    if suspicion >= 25 or character.reputation <= -35:
+        flags["official_event_ban"] = True
+    if reason and hasattr(character, "add_history"):
+        character.add_history(f"Sua reputacao caiu por {reason}.", ["reputation", "crime"])
+    return character.reputation
