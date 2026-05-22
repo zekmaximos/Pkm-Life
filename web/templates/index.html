@@ -8,17 +8,37 @@
 </head>
 <body>
   <section id="startScreen" class="start-screen">
-    <div class="start-art"></div>
+    <div class="start-art">
+      <div class="start-art-card">
+        <span class="start-region">Kanto</span>
+        <strong>Uma vida, muitos caminhos.</strong>
+        <small>Infancia, escola, Pokemon, carreira, riscos e legado.</small>
+      </div>
+    </div>
     <div class="start-panel">
-      <p class="eyebrow">Kanto Life Simulator</p>
-      <h1>Poke Life</h1>
-      <p class="subtitle">Uma vida inteira em Kanto, com eventos, profissao, Pokemon, riscos e escolhas.</p>
-      <label>Nome</label>
-      <input id="newName" maxlength="24" placeholder="Red">
-      <button class="primary" id="newGameBtn">Comecar vida</button>
-      <div class="save-row">
-        <select id="saveSelect"></select>
-        <button id="loadBtn">Carregar</button>
+      <div class="start-copy">
+        <p class="eyebrow">Kanto Life Simulator</p>
+        <h1>Poke Life</h1>
+        <p class="subtitle">Nasca em Kanto, cresca, escolha uma profissao e descubra que tipo de historia seus Pokemon vao lembrar.</p>
+        <div class="start-pills">
+          <span>151 Pokemon</span>
+          <span>Vida sandbox</span>
+          <span>Eventos por idade</span>
+        </div>
+      </div>
+
+      <div class="start-form-card">
+        <label for="newName">Primeiro nome</label>
+        <input id="newName" maxlength="24" placeholder="Red" autocomplete="given-name">
+        <p class="field-hint">O sobrenome sera sorteado automaticamente pela base de nomes do jogo.</p>
+        <button class="primary start-main-btn" id="newGameBtn">Comecar vida</button>
+        <div class="save-load-block">
+          <div>
+            <span class="mini-label">Continuar</span>
+            <select id="saveSelect"></select>
+          </div>
+          <button id="loadBtn">Carregar</button>
+        </div>
       </div>
     </div>
   </section>

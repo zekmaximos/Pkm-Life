@@ -10,5 +10,6 @@ env/
 .env
 .DS_Store
 Thumbs.db
+*.lnk
 saves/*.json
 !saves/.gitkeep

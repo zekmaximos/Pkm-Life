@@ -67,11 +67,30 @@ python web/app.py
 Depois acesse `http://127.0.0.1:5000`.
 No Windows, tambem da para abrir com duplo clique em `abrir_poke_life_web.bat`.
 
+### Abrir como app no Windows
+
+Os arquivos `.bat` abrem uma janela de console porque o Windows executa scripts batch pelo CMD. Para abrir como um app, sem janela preta:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\criar_atalho_poke_life.ps1
+```
+
+Isso cria um atalho `Poke Life` dentro da propria pasta do projeto e outro na Area de Trabalho. Eles usam `Poke Life.pyw`, abrem `http://127.0.0.1:5000` no navegador e mantem o servidor Flask rodando sem console visivel.
+
+Se preferir, tambem da para abrir direto pelo arquivo `Poke Life.pyw` na pasta do jogo. Se as dependencias ainda nao estiverem instaladas, rode antes:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Estrutura
 
 ```text
 poke-life/
 +-- main.py
++-- Poke Life.pyw
++-- launch_poke_life.pyw
++-- criar_atalho_poke_life.ps1
 +-- abrir_poke_life_web.bat
 +-- game/
 |   +-- engine.py
