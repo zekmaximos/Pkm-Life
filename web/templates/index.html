@@ -33,13 +33,29 @@
         </div>
       </div>
       <div class="top-stats">
-        <span id="topAge">0 anos</span>
-        <span id="topCity">Pallet Town</span>
-        <span id="topMoney">0 P</span>
-        <span id="topBadges">0 badges</span>
-        <span id="topRep">0 rep</span>
+        <div class="top-chip">
+          <small>Idade</small>
+          <b id="topAge">0 anos</b>
+        </div>
+        <div class="top-chip">
+          <small>Cidade</small>
+          <b id="topCity">Pallet Town</b>
+        </div>
+        <div class="top-chip money">
+          <small>Dinheiro</small>
+          <b id="topMoney">0 P</b>
+        </div>
+        <div class="top-chip">
+          <small>Insignias</small>
+          <b id="topBadges">0</b>
+        </div>
+        <div class="top-chip">
+          <small>Rep</small>
+          <b id="topRep">0</b>
+        </div>
       </div>
       <div class="top-actions">
+        <span class="save-label">Save</span>
         <input id="saveSlot" placeholder="autosave">
         <button id="saveBtn">Salvar</button>
         <button id="homeBtn">Inicio</button>
@@ -95,8 +111,9 @@
           <!-- Pokémon ativo resumido -->
           <div id="activePokeSummary" class="active-poke-summary hidden"></div>
 
-          <p id="careerLine" class="soft" style="margin-top:6px"></p>
-          <p id="academyLine" class="soft"></p>
+          <div id="careerSummary" class="career-summary"></div>
+          <p id="careerLine" class="soft hidden"></p>
+          <p id="academyLine" class="soft hidden"></p>
           <div id="badgeRibbonShelf" class="symbol-shelf"></div>
         </section>
 
@@ -122,10 +139,11 @@
             <p class="eyebrow">registro continuo</p>
             <h2>Vida em Kanto</h2>
           </div>
+          <div class="time-control-label">Avancar tempo</div>
           <div class="time-buttons">
-            <button data-months="3">3 meses</button>
-            <button data-months="6">6 meses</button>
-            <button data-months="12" class="primary small">1 ano</button>
+            <button data-months="3"><span>3</span><small>meses</small></button>
+            <button data-months="6"><span>6</span><small>meses</small></button>
+            <button data-months="12" class="primary small"><span>1</span><small>ano</small></button>
           </div>
         </section>
         <div id="cityBanner" class="city-banner hidden"></div>
@@ -136,17 +154,17 @@
       <aside class="right-rail">
         <section class="menu-group">
           <div class="section-label">acoes</div>
-          <button class="menu-btn active" data-action="train">Pokemon <span class="tag">treino</span></button>
-          <button class="menu-btn" data-action="focus_career">Carreira</button>
-          <button class="menu-btn" data-action="read">Academia</button>
-          <button class="menu-btn" data-action="work">Trabalhar</button>
-          <button class="menu-btn" data-action="egg">Breeding</button>
-          <button class="menu-btn" data-action="heal">Pokemon Center</button>
-          <button class="menu-btn" data-action="gym">Ginasio</button>
-          <button class="menu-btn" id="huntBtn">Cacar Pokemon <span class="tag" id="huntTag">3</span></button>
-          <button class="menu-btn" id="battleSearchBtn">Procurar Batalha <span class="tag" id="battleSearchTag">3</span></button>
-          <button class="menu-btn danger" data-action="steal">Roubar Pokemon</button>
-          <button class="menu-btn" id="hospitalBtn">🏥 Hospital</button>
+          <button class="menu-btn active" data-action="train"><span class="action-icon">XP</span><span class="action-label">Pokemon</span><span class="tag">treino</span></button>
+          <button class="menu-btn" data-action="focus_career"><span class="action-icon">CR</span><span class="action-label">Carreira</span></button>
+          <button class="menu-btn" data-action="read"><span class="action-icon">AC</span><span class="action-label">Academia</span></button>
+          <button class="menu-btn" data-action="work"><span class="action-icon">P$</span><span class="action-label">Trabalhar</span></button>
+          <button class="menu-btn" data-action="egg"><span class="action-icon">OV</span><span class="action-label">Breeding</span></button>
+          <button class="menu-btn" data-action="heal"><span class="action-icon">PC</span><span class="action-label">Pokemon Center</span></button>
+          <button class="menu-btn" data-action="gym"><span class="action-icon">GY</span><span class="action-label">Ginasio</span></button>
+          <button class="menu-btn" id="huntBtn"><span class="action-icon">HT</span><span class="action-label">Cacar Pokemon</span><span class="tag" id="huntTag">3</span></button>
+          <button class="menu-btn" id="battleSearchBtn"><span class="action-icon">BT</span><span class="action-label">Procurar Batalha</span><span class="tag" id="battleSearchTag">3</span></button>
+          <button class="menu-btn danger" data-action="steal"><span class="action-icon">RK</span><span class="action-label">Roubar Pokemon</span></button>
+          <button class="menu-btn" id="hospitalBtn"><span class="action-icon">HP</span><span class="action-label">Hospital</span></button>
         </section>
 
         <!-- Painel Hospital (expandível) -->

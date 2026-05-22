@@ -69,8 +69,8 @@ function render() {
   $("avatar").textContent = initials(s.name);
   $("charSub").textContent = s.in_prison
     ? `Preso · ${s.prison_months} meses restantes`
-    : `${s.career} · ${s.age} anos · ${s.city}`;
-  $("topAge").textContent = `${s.age} anos · ${s.phase}`;
+    : `${s.career} · ${s.phase}`;
+  $("topAge").textContent = `${s.age} anos`;
   $("topCity").textContent = s.city;
 
   // City description banner
@@ -84,8 +84,8 @@ function render() {
     }
   }
   $("topMoney").textContent = `${(s.money || 0).toLocaleString("pt-BR")} P`;
-  $("topBadges").textContent = `${(s.badges || []).length} badges`;
-  $("topRep").textContent = `${s.reputation} rep`;
+  $("topBadges").textContent = `${(s.badges || []).length}`;
+  $("topRep").textContent = `${s.reputation}`;
 
   // Left panel — stats
   $("healthValue").textContent = s.health;
@@ -120,14 +120,17 @@ function render() {
     if (active) {
       aps.classList.remove("hidden");
       aps.innerHTML = `
-        <span style="font-size:18px">${typeIcon(active.types?.[0])}</span>
-        <div style="flex:1;min-width:0">
-          <div class="aps-name">${escHtml(active.name)}</div>
-          <div class="aps-detail">Lv.${active.level} · ${escHtml(active.status)}</div>
-          <div class="aps-hp-bar"><div class="aps-hp-fill" style="width:${active.hp_percent}%"></div></div>
-        </div>
-        <div style="font-size:10px;color:var(--color-text-tertiary);text-align:right">
-          ${active.hp}/${active.max_hp}<br>HP
+        <div class="aps-label">Pokemon ativo</div>
+        <div class="aps-body">
+          ${pokemonIconHtml(active)}
+          <div class="aps-main">
+            <div class="aps-name">${escHtml(active.name)}</div>
+            <div class="aps-detail">Lv.${active.level} · ${escHtml(active.status)}</div>
+            <div class="aps-hp-bar"><div class="aps-hp-fill" style="width:${active.hp_percent}%"></div></div>
+          </div>
+          <div class="aps-hp">
+            ${active.hp}/${active.max_hp}<br>HP
+          </div>
         </div>
       `;
     } else {
@@ -135,10 +138,7 @@ function render() {
     }
   }
 
-  // Career lines
-  const careerParts = [s.career_info, s.career_goal].filter(Boolean);
-  $("careerLine").textContent = careerParts.join("  ·  ") || "Sem carreira definida.";
-  $("academyLine").textContent = s.academy_focus || "";
+  renderCareerSummary();
 
   renderAttributes();
   renderTeam();
@@ -150,6 +150,45 @@ function render() {
   renderGymPreview();
   renderActionAvailability();
   renderFeed();
+}
+
+function renderCareerSummary() {
+  const el = $("careerSummary");
+  if (!el) return;
+  const summary = appState.career_summary || {};
+  const career = summary.career || appState.career || "Indefinida";
+  if (!career || career === "Indefinida") {
+    el.innerHTML = `<div class="career-empty">Sem profissão definida.</div>`;
+    return;
+  }
+  const rank = Number(summary.rank || 0);
+  const xp = Number(summary.xp || 0);
+  const needed = Number(summary.xp_needed || 0);
+  const xpLabel = rank >= 5 ? "rank máximo" : `${xp}/${needed} XP`;
+  const pct = rank >= 5 ? 100 : Math.max(0, Math.min(100, needed ? Math.round((xp / needed) * 100) : 0));
+  const years = Number(summary.years || 0);
+  const focus = appState.academy_focus || "";
+  const extras = [];
+  if (summary.has_business) extras.push("negócio próprio");
+  if (summary.has_retirement) extras.push("aposentadoria ativa");
+  el.innerHTML = `
+    <div class="career-card">
+      <div class="career-card-head">
+        <span class="career-title">${escHtml(career)}</span>
+        <span class="career-rank">${escHtml(summary.rank_label || "Iniciante")}</span>
+      </div>
+      <div class="career-progress-line">
+        <span>Rank ${rank}/5</span>
+        <span>${escHtml(xpLabel)}</span>
+      </div>
+      <div class="career-progress-track"><div class="career-progress-fill" style="width:${pct}%"></div></div>
+      <div class="career-meta">
+        <span>${years} ano(s) de carreira</span>
+        ${extras.length ? `<span>${escHtml(extras.join(" · "))}</span>` : ""}
+      </div>
+      ${focus ? `<div class="career-focus"><b>Foco</b><span>${escHtml(focus.replace(/^Foco academico:\\s*/i, ""))}</span></div>` : ""}
+    </div>
+  `;
 }
 
 function renderAttributes() {
