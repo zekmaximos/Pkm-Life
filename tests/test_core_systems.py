@@ -1337,12 +1337,15 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIn("prisao", character.flags.get("death_cause", ""))
 
     def test_web_app_can_create_advance_and_run_action(self) -> None:
-        from web.app import app
+        import web.app as web_app
 
-        client = app.test_client()
+        client = web_app.app.test_client()
         created = client.post("/api/new", json={"name": "WebCase", "hometown": "Pallet Town"})
         self.assertEqual(created.status_code, 200)
-        self.assertEqual(created.get_json()["state"]["name"], "WebCase")
+        created_state = created.get_json()["state"]
+        self.assertTrue(created_state["name"].startswith("WebCase "))
+        self.assertEqual(web_app.character.flags.get("given_name"), "WebCase")
+        self.assertTrue(web_app.character.flags.get("family_name"))
 
         advanced = client.post("/api/advance", json={"months": 12})
         self.assertEqual(advanced.status_code, 200)

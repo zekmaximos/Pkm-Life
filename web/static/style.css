@@ -640,6 +640,89 @@ small, .soft {
 .right-rail select, .right-rail .panel button {
   margin-top: 6px;
 }
+.right-rail .panel {
+  background: rgba(255, 253, 248, .64);
+  border: .5px solid rgba(207, 198, 183, .72);
+  border-radius: 10px;
+  padding: 10px;
+}
+.right-rail .menu-group {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.panel-title {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.panel-title.compact {
+  margin-top: 2px;
+}
+.panel-title h3 {
+  margin: 0;
+}
+.panel-icon {
+  align-items: center;
+  background: var(--color-background-secondary);
+  border: .5px solid rgba(207, 198, 183, .72);
+  border-radius: 8px;
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 800;
+  height: 26px;
+  justify-content: center;
+  letter-spacing: .02em;
+  width: 26px;
+}
+.control-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.control-label {
+  color: var(--color-text-tertiary);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  margin: 0;
+  text-transform: uppercase;
+}
+.right-rail .control-stack select,
+.right-rail .control-stack input {
+  margin: 0;
+}
+.right-rail .control-stack button,
+.right-rail .quick-grid button {
+  margin: 0;
+}
+.inline-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+}
+.inline-control button {
+  white-space: nowrap;
+}
+.qty-row {
+  grid-template-columns: 58px 1fr;
+}
+.panel-divider {
+  border-top: .5px solid var(--color-border-tertiary);
+  margin: 10px 0;
+}
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+.quick-grid button {
+  background: var(--color-background-secondary);
+  text-align: left;
+}
 .preview {
   margin-top: 8px;
   line-height: 1.45;

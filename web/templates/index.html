@@ -176,40 +176,61 @@
         </section>
 
         <section class="panel">
-          <h3>Carreira</h3>
-          <select id="careerSelect"></select>
-          <button id="setCareerBtn">Mudar carreira</button>
-          <select id="academySelect"></select>
-          <select id="typeSelect">
-            <option>Normal</option><option>Fire</option><option>Water</option><option>Electric</option>
-            <option>Grass</option><option>Ice</option><option>Fighting</option><option>Poison</option>
-            <option>Ground</option><option>Flying</option><option>Psychic</option><option>Bug</option>
-            <option>Rock</option><option>Ghost</option><option>Dragon</option>
-          </select>
-          <button id="setAcademyBtn">Definir foco</button>
+          <div class="panel-title"><span class="panel-icon">CR</span><h3>Carreira</h3></div>
+          <div class="control-stack">
+            <label class="control-label" for="careerSelect">Profissao</label>
+            <div class="inline-control">
+              <select id="careerSelect"></select>
+              <button id="setCareerBtn">Mudar</button>
+            </div>
+            <label class="control-label" for="academySelect">Foco academico</label>
+            <select id="academySelect"></select>
+            <select id="typeSelect">
+              <option>Normal</option><option>Fire</option><option>Water</option><option>Electric</option>
+              <option>Grass</option><option>Ice</option><option>Fighting</option><option>Poison</option>
+              <option>Ground</option><option>Flying</option><option>Psychic</option><option>Bug</option>
+              <option>Rock</option><option>Ghost</option><option>Dragon</option>
+            </select>
+            <button id="setAcademyBtn">Definir foco</button>
+          </div>
         </section>
 
         <section class="panel">
-          <h3>Loja</h3>
-          <select id="shopSelect"></select>
-          <input id="shopQty" type="number" min="1" max="99" value="1" style="width:50px">
-          <button id="buyBtn">Comprar</button>
-          <h3>Inventario</h3>
-          <select id="itemSelect"></select>
-          <button id="useItemBtn">Usar item</button>
+          <div class="panel-title"><span class="panel-icon">LO</span><h3>Loja</h3></div>
+          <div class="control-stack">
+            <label class="control-label" for="shopSelect">Item disponivel</label>
+            <select id="shopSelect"></select>
+            <div class="inline-control qty-row">
+              <input id="shopQty" type="number" min="1" max="99" value="1">
+              <button id="buyBtn">Comprar</button>
+            </div>
+          </div>
+          <div class="panel-divider"></div>
+          <div class="panel-title compact"><span class="panel-icon">MO</span><h3>Inventario</h3></div>
+          <div class="control-stack">
+            <select id="itemSelect"></select>
+            <button id="useItemBtn">Usar item</button>
+          </div>
         </section>
 
         <section class="panel">
-          <h3>Viagem</h3>
-          <select id="citySelect"></select>
-          <button id="travelBtn">Viajar</button>
+          <div class="panel-title"><span class="panel-icon">VI</span><h3>Viagem</h3></div>
+          <div class="control-stack">
+            <label class="control-label" for="citySelect">Destino</label>
+            <div class="inline-control">
+              <select id="citySelect"></select>
+              <button id="travelBtn">Viajar</button>
+            </div>
+          </div>
         </section>
 
         <section class="panel">
-          <h3>Extras</h3>
-          <button id="contestBtn">Contest local</button>
-          <button id="breedBtn">Tentar breed</button>
-          <button id="tournamentBtn">Torneio local</button>
+          <div class="panel-title"><span class="panel-icon">EX</span><h3>Extras</h3></div>
+          <div class="quick-grid">
+            <button id="contestBtn">Contest</button>
+            <button id="breedBtn">Breed</button>
+            <button id="tournamentBtn">Torneio</button>
+          </div>
           <div id="gymPreview" class="preview"></div>
         </section>
       </aside>

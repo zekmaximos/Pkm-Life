@@ -326,10 +326,15 @@ def api_saves():
 def api_new():
     global character, feed, pending_event
     data = request.get_json(silent=True) or {}
-    name = str(data.get("name") or "Red").strip() or "Red"
+    first_name = str(data.get("name") or "Red").strip() or "Red"
+    first_name = first_name.split()[0]
+    last_name = engine.name_database.random_last_name() if engine.name_database else ""
+    name = f"{first_name} {last_name}".strip()
     cities = [loc.name for loc in engine.locations.values() if loc.kind == "city"]
     hometown = random.choice(cities) if cities else "Pallet Town"
     character = engine.create_character(name, hometown)
+    character.flags["given_name"] = first_name
+    character.flags["family_name"] = last_name
     feed = []
     pending_event = None
     desc = CITY_DESCRIPTIONS.get(hometown, "")
