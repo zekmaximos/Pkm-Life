@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 import sys
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,21 @@ from game.save_system import list_saves, load_game, save_game
 
 app = Flask(__name__)
 engine = GameEngine()
+
+CITY_DESCRIPTIONS: dict[str, str] = {
+    "Pallet Town": "Vilarejo tranquilo entre campos abertos — o cheiro de grama fresca e o canto de Pokémon selvagens marcam cada manhã. Tudo começa aqui.",
+    "Viridian City": "Cidade envolta em mistério, com uma floresta densa ao norte e um ginásio cujo líder raramente aparece. As ruas são largas e silenciosas demais.",
+    "Pewter City": "Encostada nas montanhas cinzentas ricas em fósseis, Pewter cheira a pedra úmida e história antiga. O Museu guarda segredos de eras extintas.",
+    "Cerulean City": "Banhada por rios cristalinos e cercada de flores azuis, o ar aqui é fresco e levemente úmido — ideal para quem gosta de Pokémon aquáticos.",
+    "Vermilion City": "Porto fervilhante com cheiro de maresia e óleo de motor. Navios partem todo dia para destinos desconhecidos, levando consigo histórias e riscos.",
+    "Lavender Town": "Pequena e sombria, dominada pela Torre Pokémon no horizonte. Diz-se que à meia-noite os espíritos dos que partiram ainda caminham pelas ruas.",
+    "Celadon City": "Metrópole vibrante com grandes lojas e cassinos reluzentes. O aroma de perfume e poeira urbana se misturam no ar quente da cidade.",
+    "Fuchsia City": "Cidade selvagem ao sul de Kanto, lar do Safari Zone e de treinadores de veneno. O cheiro de folhas úmidas e o som de animais ao longe nunca somem.",
+    "Saffron City": "O coração pulsante de Kanto. Arranha-céus, a Silph Co. dominando o horizonte e uma energia psíquica inexplicável que faz os cabelos arrepiarem.",
+    "Cinnabar Island": "Ilha vulcânica com um laboratório secreto e ruínas milenares. À noite, a lava brilha nas fendas das pedras e o cheiro de enxofre paira no ar.",
+    "Indigo Plateau": "O topo do mundo para os treinadores de Kanto. Ventos frios cortam a névoa densa que envolve a Liga Pokémon — apenas os melhores chegam aqui.",
+    "Seafoam Harbor": "Porto gelado entre cavernas de gelo, onde ventos cortantes chegam do mar. Os pescadores daqui conhecem os segredos mais frios de Kanto.",
+}
 
 character: Character | None = None
 feed: list[dict[str, Any]] = []
@@ -33,6 +49,7 @@ def push(kind: str, text: str, title: str | None = None) -> None:
 
 def pokemon_state(pokemon) -> dict[str, Any]:
     species = engine.pokemon.get(pokemon.species)
+    can_see_battle_level = character is not None and character.career in {"Pesquisador", "Criador"}
     return {
         "name": pokemon.display_name(),
         "species": pokemon.species,
@@ -49,6 +66,7 @@ def pokemon_state(pokemon) -> dict[str, Any]:
         "occult": pokemon.occult,
         "happiness": pokemon.happiness,
         "types": list(pokemon.types or (species.types if species else [])),
+        "battle_level": pokemon.battle_level if can_see_battle_level else None,
     }
 
 
@@ -58,24 +76,27 @@ def state() -> dict[str, Any]:
     gym_preview = engine.gym_risk_preview(character)
     has_team = bool(character.team)
     age = character.age
+    dead = bool(character.flags.get("dead"))
     action_availability = {
-        "read": age >= 5,
-        "work": age >= 5,
-        "focus_career": age >= 5 and bool(character.career),
-        "train": age >= 5 and has_team,
-        "intensive_train": age >= 10 and has_team,
-        "egg": age >= 10,
-        "heal": age >= 5,
-        "gym": age >= 10 and has_team,
-        "steal": age >= 10,
-        "set_career": age >= 5,
-        "academy_focus": age >= 10 and character.career == "Estudante da academia",
-        "buy_item": age >= 5,
-        "use_item": age >= 5,
-        "travel": age >= 10,
-        "contest": age >= 10 and has_team,
-        "breed": age >= 10 and len(character.team) >= 2,
-        "tournament": age >= 10 and has_team,
+        "advance": not dead,
+        "read": not dead and age >= 5,
+        "work": not dead and age >= 5,
+        "focus_career": not dead and age >= 5 and bool(character.career),
+        "train": not dead and age >= 5 and has_team,
+        "intensive_train": not dead and age >= 10 and has_team,
+        "egg": not dead and age >= 10,
+        "heal": not dead and age >= 5,
+        "gym": not dead and age >= 10 and has_team,
+        "steal": not dead and age >= 10,
+        "set_career": not dead and age >= 5,
+        "academy_focus": not dead and age >= 10 and character.career == "Estudante da academia",
+        "buy_item": not dead and age >= 5,
+        "use_item": not dead and age >= 5,
+        "travel": not dead and age >= 10,
+        "contest": not dead and age >= 10 and has_team and engine._period_action_available(character, "contest"),
+        "breed": not dead and age >= 10 and len(character.team) >= 2 and engine._period_action_available(character, "breed"),
+        "tournament": not dead and age >= 10 and has_team and engine._period_action_available(character, "tournament"),
+        "hunt": not dead and age >= 10,
     }
     return {
         "ready": True,
@@ -84,6 +105,7 @@ def state() -> dict[str, Any]:
         "phase": character.phase,
         "region": character.region,
         "city": engine.display_location_name(character.current_city),
+        "city_description": CITY_DESCRIPTIONS.get(engine.display_location_name(character.current_city), ""),
         "health": character.health,
         "health_status": engine.health_status(character),
         "money": character.money,
@@ -95,7 +117,13 @@ def state() -> dict[str, Any]:
         "academy_focus": engine.academy_focus_info(character),
         "attributes": character.attributes.to_dict(),
         "team": [pokemon_state(pokemon) for pokemon in character.team],
+        "box": [pokemon_state(p) for p in character.box],
         "box_count": len(character.box),
+        "period_used": {
+            "tournament": not engine._period_action_available(character, "tournament"),
+            "contest": not engine._period_action_available(character, "contest"),
+            "breed": not engine._period_action_available(character, "breed"),
+        },
         "eggs": [
             {
                 "color": egg.color,
@@ -112,7 +140,7 @@ def state() -> dict[str, Any]:
         "pokedex_caught": len(character.pokedex_caught),
         "in_prison": bool(character.flags.get("in_prison")),
         "prison_months": int(character.flags.get("prison_months_remaining", 0)),
-        "dead": bool(character.flags.get("dead")),
+        "dead": dead,
         "death_cause": character.flags.get("death_cause"),
         "gym_preview": gym_preview,
         "action_availability": action_availability,
@@ -155,24 +183,22 @@ def pending_event_choices() -> list[dict[str, Any]]:
 def report_to_feed(report: str) -> None:
     if not report:
         return
-    for line in reversed([part.strip() for part in report.splitlines() if part.strip()]):
-        lower = line.lower()
-        if lower.startswith("resumo"):
-            push("time", line, "Tempo")
-        elif "game over" in lower or "morreu" in lower or "saude" in lower:
-            push("health", line, "Saude")
-        elif "captur" in lower or "pokemon:" in lower:
-            push("pokemon", line, "Pokemon")
-        elif "batalha" in lower or "ginasio" in lower or "insignia" in lower:
-            push("battle", line, "Batalhas")
-        elif "dinheiro" in lower or "pokedollar" in lower or "renda" in lower:
-            push("money", line, "Dinheiro")
-        elif "ovo" in lower:
-            push("egg", line, "Ovos")
-        elif "profissao" in lower or "carreira" in lower or "academ" in lower:
-            push("career", line, "Carreira")
-        else:
-            push("event", line, "Vida")
+    lines = [part.strip() for part in report.splitlines() if part.strip()]
+    if not lines:
+        return
+    # First line is the header (e.g. "Resumo anual aos 7 anos")
+    title = lines[0] if lines else "Resumo"
+    body = "\n".join(lines[1:]) if len(lines) > 1 else ""
+    text = body if body else title
+    # Pick card kind based on content
+    low = report.lower()
+    if "game over" in low or "morreu" in low or "voce morreu" in low:
+        kind = "health"
+    elif "capturou" in low or "evolui" in low:
+        kind = "pokemon"
+    else:
+        kind = "time"
+    push(kind, text, title)
 
 
 @app.get("/")
@@ -195,11 +221,16 @@ def api_new():
     global character, feed, pending_event
     data = request.get_json(silent=True) or {}
     name = str(data.get("name") or "Red").strip() or "Red"
-    hometown = str(data.get("hometown") or "Pallet Town")
+    cities = [loc.name for loc in engine.locations.values() if loc.kind == "city"]
+    hometown = random.choice(cities) if cities else "Pallet Town"
     character = engine.create_character(name, hometown)
     feed = []
     pending_event = None
-    push("event", f"{character.name} nasceu em {hometown}, na regiao de Kanto.", "Nascimento")
+    desc = CITY_DESCRIPTIONS.get(hometown, "")
+    birth_text = f"{character.name} nasceu em {hometown}, na regiao de Kanto."
+    if desc:
+        birth_text += f" {desc}"
+    push("event", birth_text, "Nascimento")
     return response()
 
 
@@ -231,6 +262,9 @@ def api_advance():
     global pending_event
     if character is None:
         return jsonify({"error": "Nenhum jogo ativo."}), 400
+    if character.flags.get("dead"):
+        push("health", "Game over: o tempo nao avanca apos a morte.", "Game Over")
+        return response()
     data = request.get_json(silent=True) or {}
     months = int(data.get("months") or 12)
     pending_event = engine.advance_time(character, months)
@@ -315,8 +349,7 @@ def api_action(name: str):
         ok, message = engine.buy_item(character, str(data.get("item") or ""), int(data.get("quantity") or 1))
         kind = "money" if ok else "event"
     elif name == "travel":
-        ok = engine.move_to_city(character, str(data.get("city") or ""))
-        message = f"Voce viajou para {engine.display_location_name(character.current_city)}." if ok else "Viagem indisponivel."
+        ok, message = engine.move_to_city(character, str(data.get("city") or ""))
         kind = "travel"
     elif name == "contest":
         ok, result, message = engine.enter_contest(
@@ -331,6 +364,9 @@ def api_action(name: str):
     elif name == "breed":
         ok, message = engine.breed_pokemon(character, int(data.get("first") or 0), int(data.get("second") or 1))
         kind = "egg" if ok else "event"
+    elif name == "hunt":
+        ok, message = engine.manual_action_hunt_wild_pokemon(character)
+        kind = "pokemon" if ok else "event"
     else:
         return jsonify({"error": "Acao desconhecida."}), 404
     push(kind, message, "Acao")
@@ -342,7 +378,8 @@ def api_shop():
     if character is None:
         return jsonify({"error": "Nenhum jogo ativo."}), 400
     return jsonify([
-        {"name": item.name, "price": price, "type": item.item_type, "description": item.description}
+        {"name": item.name, "price": price, "type": item.item_type,
+         "effect": item.effect or "", "healing": item.healing}
         for item, price in engine.city_shop_items(character)
     ])
 
@@ -369,6 +406,26 @@ def api_tournament():
         message = message + "\n" + "\n".join(result.log[:12])
     push("tournament" if ok else "event", message, "Torneio")
     return response()
+
+
+@app.post("/api/box/swap")
+def api_box_swap():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    data = request.get_json(silent=True) or {}
+    ok, message = engine.swap_box_pokemon(character, int(data.get("team_index", 0)), int(data.get("box_index", 0)))
+    if ok:
+        push("pokemon", message, "Box")
+    return response() if ok else (jsonify({"error": message}), 400)
+
+
+@app.post("/api/team/reorder")
+def api_team_reorder():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    data = request.get_json(silent=True) or {}
+    ok, message = engine.reorder_team(character, int(data.get("from_index", 0)), int(data.get("to_index", 0)))
+    return response() if ok else (jsonify({"error": message}), 400)
 
 
 if __name__ == "__main__":

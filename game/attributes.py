@@ -56,11 +56,44 @@ class PlayerAttributes:
     def get(self, key: str, default: int = 0) -> int:
         return getattr(self, key, default)
 
-    def modify(self, changes: dict[str, int]) -> None:
+    def modify(self, changes: dict[str, int], soft_caps: dict[str, int] | None = None) -> None:
+        """Aplica mudancas com soft cap por atributo.
+
+        Acima do soft cap cada ponto tem chance decrescente de aplicar:
+          <= cap       -> 100 %
+          cap+1..+10   -> 65 %
+          cap+11..+20  -> 35 %
+          cap+21..+30  -> 15 %
+          > cap+30     -> 5 % (hard squeeze, nunca bloqueia totalmente)
+        Cap maximo absoluto: 95.
+        """
         for key, amount in changes.items():
             if key not in ATTRIBUTE_KEYS:
                 continue
-            setattr(self, key, int(clamp(getattr(self, key) + amount, 0, 100)))
+            current = getattr(self, key)
+            cap = (soft_caps or {}).get(key, 95)
+            cap = min(cap, 95)
+            if amount <= 0:
+                # Negative changes always apply fully (no soft cap resistance)
+                setattr(self, key, int(clamp(current + amount, 0, 95)))
+                continue
+            # Apply each point with decreasing probability above cap
+            new_val = current
+            for _ in range(amount):
+                over = new_val - cap
+                if over <= 0:
+                    prob = 1.0
+                elif over <= 10:
+                    prob = 0.65
+                elif over <= 20:
+                    prob = 0.35
+                elif over <= 30:
+                    prob = 0.15
+                else:
+                    prob = 0.05
+                if random.random() < prob:
+                    new_val += 1
+            setattr(self, key, int(clamp(new_val, 0, 95)))
 
 
 def _generate_initial_attribute() -> int:
@@ -76,4 +109,3 @@ def generate_initial_attributes() -> PlayerAttributes:
 def modify_attributes(attributes: PlayerAttributes, changes: dict[str, int]) -> PlayerAttributes:
     attributes.modify(changes)
     return attributes
-

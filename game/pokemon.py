@@ -81,6 +81,7 @@ class OwnedPokemon:
     origin: str = "desconhecida"
     status: str = "healthy"
     active: bool = True
+    battle_level: int = 0
 
     def display_name(self) -> str:
         return self.nickname or self.species
@@ -118,6 +119,7 @@ class OwnedPokemon:
             "origin": self.origin,
             "status": self.status,
             "active": self.active,
+            "battle_level": self.battle_level,
         }
 
     @classmethod
@@ -127,6 +129,7 @@ class OwnedPokemon:
         data.setdefault("beauty", 50)
         data.setdefault("healthy", max(1, min(100, data.get("current_health", 50))))
         data.setdefault("occult", 1)
+        data.setdefault("battle_level", 0)
         data.setdefault("types", [])
         data.setdefault("ability", "None")
         data.setdefault("evolution_stage", 1)
@@ -231,8 +234,6 @@ def _derive_occult(types: list[str], legendary: bool) -> int:
     if any(t in {"Electric", "Ice", "Fire"} for t in types):
         return 35
     return 15
-
-
 def _normalize_condition(status: str) -> str:
     if status == "saudavel":
         return "healthy"

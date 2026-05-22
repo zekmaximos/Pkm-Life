@@ -255,6 +255,7 @@ class CoreSystemsTest(unittest.TestCase):
         pokemon.status = "injured"
         character.add_pokemon(pokemon)
         character.age = 10
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Viridian City")
         self.assertEqual(engine.heal_team_in_city(character), "Sua equipe foi curada.")
         self.assertEqual(character.team[0].current_health, character.team[0].max_health(engine.pokemon[character.team[0].species]))
@@ -264,6 +265,7 @@ class CoreSystemsTest(unittest.TestCase):
         engine = GameEngine()
         character = engine.create_character("Green")
         character.age = 10
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Pewter City")
         gym = engine.get_city_gym(character)
         self.assertIsNotNone(gym)
@@ -304,6 +306,7 @@ class CoreSystemsTest(unittest.TestCase):
         character = engine.create_character("Leaf")
         character.age = 10
         character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=26))
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Pewter City")
         gym = engine.get_city_gym(character)
         self.assertEqual(gym["recommended_level"], 25)
@@ -319,6 +322,7 @@ class CoreSystemsTest(unittest.TestCase):
         character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=50))
         character.add_pokemon(create_owned_pokemon(engine.pokemon["Rattata"], level=12))
         character.add_pokemon(create_owned_pokemon(engine.pokemon["Caterpie"], level=12))
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Pewter City")
         gym = engine.get_city_gym(character)
         self.assertLess(gym["recommended_level"], 41)
@@ -452,6 +456,7 @@ class CoreSystemsTest(unittest.TestCase):
         character = engine.create_character("Case")
         self.assertFalse(engine.move_to_city(character, "Viridian City"))
         character.age = 10
+        character.inventory["Mapa de Kanto"] = 1
         self.assertTrue(engine.move_to_city(character, "Viridian City"))
 
     def test_buy_common_egg_adds_egg_not_inventory_stack(self) -> None:
@@ -478,6 +483,7 @@ class CoreSystemsTest(unittest.TestCase):
         engine = GameEngine()
         character = engine.create_character("Case")
         character.age = 10
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Viridian City")
         pok_before = character.attributes.POK
         self.assertIn("POK", engine.manual_action_read_about_pokemon(character))
@@ -511,6 +517,7 @@ class CoreSystemsTest(unittest.TestCase):
         saffron = engine.create_character("SaffronWorker")
         saffron.age = 10
         saffron.attributes = PlayerAttributes(PHY=80, MEN=85, POK=85, LUK=75)
+        saffron.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(saffron, "Saffron City")
         saffron_money_before = saffron.money
         saffron_message = engine.manual_action_work_city(saffron)
@@ -522,6 +529,7 @@ class CoreSystemsTest(unittest.TestCase):
         engine = GameEngine()
         character = engine.create_character("Period")
         character.age = 10
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Viridian City")
         self.assertIn("POK", engine.manual_action_read_about_pokemon(character))
         self.assertIn("ja estudou", engine.manual_action_read_about_pokemon(character))
@@ -560,7 +568,7 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIn("POK", engine.manual_action_read_about_pokemon(child))
         self.assertIn("Pokedollar", engine.manual_action_work_city(child))
         child.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=3))
-        self.assertIn("ganhou", engine.manual_action_train_team(child))
+        self.assertIn("Treino concluido", engine.manual_action_train_team(child))
         self.assertIn("10 anos", engine.manual_action_intensive_training(child))
 
     def test_manual_egg_search_is_rare_but_breeder_has_edge(self) -> None:
@@ -857,6 +865,7 @@ class CoreSystemsTest(unittest.TestCase):
         character.age = 12
         character.career = CAREER_TRAINER
         character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=16))
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Pewter City")
         with patch("game.engine.random.random", return_value=0.0):
             invite = engine.resolve_automatic_gym_invite(character)
@@ -869,6 +878,7 @@ class CoreSystemsTest(unittest.TestCase):
         character.age = 16
         character.career = CAREER_TRAINER
         character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=16))
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Pewter City")
         preview = engine.gym_risk_preview(character)
         self.assertIsNotNone(preview)
@@ -939,6 +949,7 @@ class CoreSystemsTest(unittest.TestCase):
         character = engine.create_character("Case")
         character.age = 20
         character.money = 200000
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Saffron City")
         self.assertEqual(engine.current_city_economy_tier(character), 6)
         success, message = engine.buy_lifestyle_asset(character, "saffron_penthouse")
@@ -968,6 +979,7 @@ class CoreSystemsTest(unittest.TestCase):
         success, message = engine.sell_egg(character, 0)
         self.assertTrue(success, message)
         self.assertFalse(character.eggs)
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Saffron City")
         offers = engine.black_market_pokemon_offers(character)
         self.assertTrue(offers)
@@ -1073,12 +1085,34 @@ class CoreSystemsTest(unittest.TestCase):
         character.career = CAREER_TRAINER
         for name in ("Pidgey", "Mankey", "Geodude"):
             character.add_pokemon(create_owned_pokemon(engine.pokemon[name], level=18))
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Pewter City")
         preview = engine.gym_risk_preview(character)
         self.assertIsNotNone(preview)
         self.assertGreaterEqual(preview["opponents"], 3)
         self.assertIn("average_match_chance", preview)
         self.assertIn("match_chances", preview)
+
+    def test_gym_preview_handles_team_with_no_healthy_pokemon(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.inventory["Mapa de Kanto"] = 1
+        pokemon = create_owned_pokemon(engine.pokemon["Pidgey"], level=18)
+        pokemon.current_health = 0
+        pokemon.status = "badly_injured"
+        character.add_pokemon(pokemon)
+        engine.move_to_city(character, "Pewter City")
+        preview = engine.gym_risk_preview(character)
+        self.assertFalse(preview["available"])
+        self.assertIn("recuperar", preview["summary"])
+        estimate = estimate_series_chance(
+            character,
+            [SeriesOpponent("Teste", "Geodude", 12)],
+            engine.pokemon,
+            wins_required=1,
+        )
+        self.assertEqual(estimate["series_chance"], 0)
 
     def test_gym_defeat_allows_rematch_and_grants_team_xp(self) -> None:
         engine = GameEngine()
@@ -1087,6 +1121,7 @@ class CoreSystemsTest(unittest.TestCase):
         character.career = CAREER_TRAINER
         for name in ("Pidgey", "Rattata", "Caterpie"):
             character.add_pokemon(create_owned_pokemon(engine.pokemon[name], level=8))
+        character.inventory["Mapa de Kanto"] = 1
         engine.move_to_city(character, "Pewter City")
         before_xp = sum(pokemon.experience for pokemon in character.team)
         with patch("game.battle.random.random", return_value=1.0):
@@ -1249,6 +1284,25 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertTrue(state["team"])
         self.assertEqual(state["team"][0]["species"], "Bulbasaur")
         self.assertEqual(state["career"], "Treinador")
+
+    def test_web_does_not_advance_after_death(self) -> None:
+        import web.app as web_app
+
+        client = web_app.app.test_client()
+        created = client.post("/api/new", json={"name": "DeadWeb", "hometown": "Pallet Town"})
+        self.assertEqual(created.status_code, 200)
+        web_app.character.age = 15
+        web_app.character.flags["dead"] = True
+        web_app.character.flags["death_cause"] = "teste"
+        web_app.character.flags["last_year_report"] = "Game over\nDeadWeb morreu aos 15 anos por teste."
+
+        advanced = client.post("/api/advance", json={"months": 12})
+
+        self.assertEqual(advanced.status_code, 200)
+        state = advanced.get_json()["state"]
+        self.assertEqual(state["age"], 15)
+        self.assertTrue(state["dead"])
+        self.assertFalse(state["action_availability"]["advance"])
 
 
 if __name__ == "__main__":

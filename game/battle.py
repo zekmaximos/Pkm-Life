@@ -64,12 +64,16 @@ def calculate_trainer_bonus(attributes: PlayerAttributes) -> float:
 
 
 def calculate_base_power(pokemon: OwnedPokemon, trainer_bonus: float) -> float:
+    # battle_level: experiência acumulada em combate — influente mas não dominante.
+    # +0.10 por ponto (cap +7). Dois Pokémon idênticos: o maior battle_level vence.
+    battle_exp = min(getattr(pokemon, "battle_level", 0) * 0.10, 7.0)
     return (
         pokemon.combat * 0.50
         + pokemon.healthy * 0.25
         + pokemon.occult * 0.15
         + pokemon.beauty * 0.05
         + trainer_bonus * 0.05
+        + battle_exp
     )
 
 
@@ -186,12 +190,7 @@ def simulate_simple_battle(
             character.add_history(f"Voce perdeu uma batalha importante contra {opponent_name}.")
 
     log = [
-        f"{player_pokemon.display_name()} enfrenta {opponent_name}.",
-        f"Score do jogador: {result.player_score:.2f}",
-        f"Score inimigo: {result.enemy_score:.2f}",
-        f"Chance de vitoria: {result.win_chance * 100:.1f}%",
-        result.result_text,
-        f"XP sugerido: {result.xp_gain} | Perda de saude sugerida: {result.health_loss}",
+        f"BATALHA|{player_pokemon.display_name()}|{opponent_name}|{result.win_chance * 100:.0f}|{'win' if player_won else 'loss'}|{result.player_score:.1f}|{result.enemy_score:.1f}|{result.xp_gain}|{result.health_loss}",
     ]
     log.extend(level_notes)
     return player_won, log

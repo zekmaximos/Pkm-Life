@@ -15,19 +15,6 @@
       <p class="subtitle">Uma vida inteira em Kanto, com eventos, profissao, Pokemon, riscos e escolhas.</p>
       <label>Nome</label>
       <input id="newName" maxlength="24" placeholder="Red">
-      <label>Cidade natal</label>
-      <select id="newHometown">
-        <option>Pallet Town</option>
-        <option>Viridian City</option>
-        <option>Pewter City</option>
-        <option>Cerulean City</option>
-        <option>Vermilion City</option>
-        <option>Lavender Town</option>
-        <option>Celadon City</option>
-        <option>Fuchsia City</option>
-        <option>Saffron City</option>
-        <option>Cinnabar Island</option>
-      </select>
       <button class="primary" id="newGameBtn">Comecar vida</button>
       <div class="save-row">
         <select id="saveSelect"></select>
@@ -64,7 +51,11 @@
         <section class="panel">
           <h3>Personagem</h3>
           <div class="metric-grid">
-            <div><b id="healthValue">100</b><small>Saude</small></div>
+            <div>
+              <b id="healthValue">100</b>
+              <span id="healthStatusBadge" class="health-badge"></span>
+              <small>Saude</small>
+            </div>
             <div><b id="repValue">0</b><small>Rep</small></div>
             <div><b id="badgeValue">0</b><small>Insignias</small></div>
             <div><b id="boxValue">0</b><small>Box</small></div>
@@ -82,6 +73,11 @@
           <h3>Equipe</h3>
           <div id="team"></div>
         </section>
+
+        <section class="panel" id="boxSection">
+          <h3>Box <span id="boxCount" class="soft"></span></h3>
+          <div id="boxList"></div>
+        </section>
       </aside>
 
       <main class="life-column">
@@ -96,6 +92,7 @@
             <button data-months="12" class="primary small">1 ano</button>
           </div>
         </section>
+        <div id="cityBanner" class="city-banner hidden"></div>
         <div id="feed" class="feed"></div>
         <section id="eventChoice" class="choice-bar hidden"></section>
       </main>
@@ -110,6 +107,7 @@
           <button class="menu-btn" data-action="egg">Breeding</button>
           <button class="menu-btn" data-action="heal">Pokemon Center</button>
           <button class="menu-btn" data-action="gym">Ginasio</button>
+          <button class="menu-btn" id="huntBtn">Cacar Pokemon <span class="tag" id="huntTag">3</span></button>
           <button class="menu-btn danger" data-action="steal">Roubar Pokemon</button>
         </section>
 
@@ -130,6 +128,7 @@
         <section class="panel">
           <h3>Loja</h3>
           <select id="shopSelect"></select>
+          <input id="shopQty" type="number" min="1" max="99" value="1" style="width:50px">
           <button id="buyBtn">Comprar</button>
           <h3>Inventario</h3>
           <select id="itemSelect"></select>

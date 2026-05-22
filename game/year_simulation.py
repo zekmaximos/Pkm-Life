@@ -84,11 +84,11 @@ CAREER_MISSIONS = {
 }
 
 BASE_XP = {
-    "battle_win": 28,
-    "battle_loss": 8,
-    "training": 18,
-    "capture": 5,
-    "care": 4,
+    "battle_win": 100,
+    "battle_loss": 40,
+    "training": 75,
+    "capture": 30,
+    "care": 25,
 }
 
 
@@ -116,14 +116,41 @@ class ActivityResult:
 
 def _pick_activity(character: "Character", has_team: bool, has_balls: bool) -> str:
     weights = dict(CAREER_ACTIVITY_WEIGHTS.get(character.career, CAREER_ACTIVITY_WEIGHTS[None]))
+
+    age = character.age
+
+    # ── Age gates: restrições de coerência por fase de vida ──────────────────
+    if age <= 2:
+        # Bebê: somente cuidados. Nada mais faz sentido.
+        return "care"
+    if age <= 5:
+        # Criança pequena: cuidados quase exclusivos, sem batalhas nem trabalho.
+        weights["battle"] = 0
+        weights["work"] = 0
+        weights.pop("criador_business", None)
+        weights["capture"] = 0          # nenhuma captura ativa — só eventos família
+        weights["training"] = min(weights.get("training", 0), 5)
+        weights["care"] = max(weights.get("care", 0), 90)
+    elif age <= 9:
+        # Criança: sem batalhas formais e sem trabalho, capturas muito raras perto de casa.
+        weights["battle"] = 0
+        weights["work"] = 0
+        weights.pop("criador_business", None)
+        weights["capture"] = min(weights.get("capture", 0), 5)
+        weights["training"] = min(weights.get("training", 0), 10)
+        weights["care"] = max(weights.get("care", 0), 50)
+
     if not has_team:
         weights["battle"] = 0
-        weights["training"] = max(0, weights["training"] // 3)
+        weights["training"] = max(0, weights.get("training", 0) // 3)
     if not has_balls:
         weights["capture"] = 0
     if character.health < 35:
         weights = {key: (value // 3 if key not in {"care", "rest"} else value * 2) for key, value in weights.items()}
+
     activities = [key for key, value in weights.items() if value > 0]
+    if not activities:
+        return "care"
     return random.choices(activities, weights=[weights[key] for key in activities], k=1)[0]
 
 
@@ -182,7 +209,7 @@ def _sim_battle(character: "Character") -> ActivityResult:
             char_health_delta=-random.randint(1, 5),
             health_reason="batalhas vencidas cansaram voce",
             attr_deltas={"PHY": 1} if random.random() < 0.4 else {},
-            pokemon_stat_deltas={"combat": random.randint(1, 2), "healthy": -random.randint(1, 4)},
+            pokemon_stat_deltas={"combat": random.randint(1, 2), "healthy": -random.randint(1, 4), "battle_level": random.randint(2, 4)},
             important=win_chance < 0.40,
         )
 
@@ -194,7 +221,7 @@ def _sim_battle(character: "Character") -> ActivityResult:
         char_health_delta=-random.randint(2, 7),
         health_reason="derrotas em batalha cobraram um preco fisico",
         attr_deltas={"PHY": 1} if random.random() < 0.25 else {},
-        pokemon_stat_deltas={"healthy": -random.randint(2, 7)},
+        pokemon_stat_deltas={"healthy": -random.randint(2, 7), "battle_level": random.randint(0, 2)},
     )
 
 
@@ -388,12 +415,19 @@ def _sim_capture(character: "Character", species_by_name: dict) -> ActivityResul
     )
 
     if result.success:
-        pokemon = create_owned_pokemon(species, level=level, origin=f"capturado durante o ano em {character.current_city}")
+        age = character.age
+        if age <= 4:
+            origin = f"acolhido pela familia aos {age} anos em {character.current_city}"
+        elif age <= 9:
+            origin = f"encontrado aos {age} anos perto de {character.current_city}"
+        else:
+            origin = f"capturado durante o ano em {character.current_city}"
+        pokemon = create_owned_pokemon(species, level=level, origin=origin)
         destination = character.add_pokemon(pokemon)
         character.register_caught(species.name)
         return ActivityResult(
             kind="capture_ok",
-            note=_capture_note(species.name, level, True, attrs.LUK),
+            note=_capture_note(species.name, level, True, attrs.LUK, age),
             xp_per_pokemon=BASE_XP["capture"],
             char_health_delta=char_health_delta,
             health_reason="captura sem parceiro foi perigosa" if char_health_delta < 0 else None,
@@ -407,7 +441,7 @@ def _sim_capture(character: "Character", species_by_name: dict) -> ActivityResul
         )
 
     character.register_seen(species.name)
-    note = _capture_note(species.name, level, False, attrs.LUK)
+    note = _capture_note(species.name, level, False, attrs.LUK, character.age)
     if not character.team:
         note += " Sem um Pokemon parceiro, a tentativa foi perigosa."
     return ActivityResult(
@@ -682,7 +716,7 @@ def apply_activity_results(
         character.reputation = clamp_reputation(character.reputation + int(report["reputation_delta"]))
         if character.reputation <= -35:
             character.flags["official_event_ban"] = True
-    character.attributes.modify(attr_totals)
+    character.modify_attributes(attr_totals)
 
     for pokemon in character.team:
         if total_xp > 0 and pokemon.status != "badly_injured":
@@ -700,6 +734,8 @@ def apply_activity_results(
                 setattr(pokemon, stat, int(clamp(current + delta, 1, 100)))
             elif stat in {"healthy", "happiness"}:
                 setattr(pokemon, stat, int(clamp(current + delta, 0, 100)))
+            elif stat == "battle_level":
+                setattr(pokemon, stat, max(0, current + delta))
 
         for evolution_note in check_evolution(pokemon, species_by_name):
             report["evolutions"].append(evolution_note)
@@ -710,25 +746,60 @@ def apply_activity_results(
     captures = [result for result in results if result.kind == "capture_ok"]
     failures = [result for result in results if result.kind == "capture_fail"]
     criador_biz = [result for result in results if result.kind == "criador_business"]
+    age = character.age
 
+    # ── Dinheiro ──────────────────────────────────────────────────────────────
     if work_income:
-        notes.append(f"Renda total no periodo: {work_income} Pokedollar.")
+        if age <= 5:
+            notes.append(random.choice([
+                f"Sua familia deixou {work_income} Pokedollar para pequenas necessidades.",
+                f"Voce ganhou {work_income} Pokedollar de mesada dos seus pais.",
+                f"Um familiar generoso deu {work_income} Pokedollar de presente.",
+            ]))
+        elif age <= 9:
+            notes.append(random.choice([
+                f"Pequenas tarefas em casa renderam {work_income} Pokedollar.",
+                f"Voce ganhou {work_income} Pokedollar ajudando na vizinhanca.",
+                f"Sua mesada e um servico rapido somaram {work_income} Pokedollar.",
+            ]))
+        else:
+            notes.append(f"Renda total no periodo: {work_income} Pokedollar.")
+
+    # ── Criador business ──────────────────────────────────────────────────────
     if criador_biz:
         biz_income = sum(r.money_delta for r in criador_biz)
         notes.append(f"Negocios de criacao (bagas/pokeblocos/ovos): +{biz_income} Pokedollar.")
+
+    # ── Batalhas ──────────────────────────────────────────────────────────────
     if battles:
         wins = sum(1 for result in battles if result.kind == "battle_win")
         notes.append(f"Batalhas: {wins} vitoria(s) e {len(battles) - wins} derrota(s).")
-    if captures:
 
-        names = ", ".join(result.pokemon_name or "Pokemon" for result in captures)
-        notes.append(f"Capturou {len(captures)} Pokemon no periodo: {names}.")
+    # ── Capturas: usar a narrativa individual de cada resultado ───────────────
+    if captures:
+        for result in captures[:2]:
+            if result.note:
+                notes.append(result.note)
+        if len(captures) > 2:
+            extra_names = ", ".join(
+                r.pokemon_name or "Pokemon" for r in captures[2:]
+            )
+            notes.append(f"Mais Pokemon capturado(s) no periodo: {extra_names}.")
+
+    # ── Falhas de captura: narrativa individual ───────────────────────────────
     if failures:
-        notes.append(f"Tentativas de captura sem sucesso: {len(failures)}.")
+        for result in failures[:1]:
+            if result.note:
+                notes.append(result.note)
+        if len(failures) > 1:
+            notes.append(f"Mais {len(failures) - 1} tentativa(s) de captura sem sucesso.")
+
+    # ── Missões de carreira ───────────────────────────────────────────────────
     missions = [result for result in results if result.kind == "career_mission"]
     if missions:
         successes = sum(1 for result in missions if result.mission_success)
         notes.append(f"Missoes de profissao: {successes}/{len(missions)} concluida(s).")
+
     notes.extend(important_notes)
     return notes, report
 
@@ -814,24 +885,55 @@ def _work_note(career: str, income: int, rank: int) -> str:
     return random.choice(options)
 
 
-def _capture_note(name: str, level: int, caught: bool, luck: int) -> str:
+def _capture_note(name: str, level: int, caught: bool, luck: int, age: int = 15) -> str:
     if caught:
+        if age <= 4:
+            return random.choice([
+                f"Um {name} perdido apareceu perto de casa e sua familia o acolheu. Ele escolheu ficar com voce.",
+                f"Seus pais trouxeram um {name} filhote de presente. Desde o primeiro dia, ele so tem olhos para voce.",
+                f"Um {name} ferido apareceu na sua varanda durante a chuva. Voce cuidou dele e ele nunca mais foi embora.",
+                f"Uma vizinha criadora deixou um {name} aos seus cuidados por uns dias — e ele simplesmente nunca quis voltar.",
+                f"Voce encontrou um {name} perdido no jardim de casa. Ele te seguiu ate o quarto e dormiu na sua cama.",
+            ])
+        if age <= 9:
+            return random.choice([
+                f"Voce encontrou um {name} ferido perto de casa e cuidou dele ate se recuperar. Ele decidiu ficar.",
+                f"Um {name} te seguiu da escola durante dias ate voce convencer seus pais a deixa-lo ficar.",
+                f"Um treinador mais velho viu seu potencial e te presenteou com um {name} jovem.",
+                f"Voce salvou um {name} de uma armadilha esquecida na beira do rio. Ele nao quis mais ir embora.",
+                f"Durante uma excursao escolar, um {name} se separou do grupo selvagem e veio direto ate voce.",
+            ])
         if luck > 65:
             return f"Com sorte e habilidade, voce capturou um {name} de nivel {level}!"
         return f"Voce capturou um {name} de nivel {level}."
+    if age <= 4:
+        return random.choice([
+            f"Um {name} apareceu perto de casa, mas fugiu rapido demais.",
+            f"Voce tentou se aproximar de um {name}, mas ele desapareceu no mato.",
+        ])
+    if age <= 9:
+        return random.choice([
+            f"Voce tentou capturar um {name}, mas ele escapou antes que voce chegasse perto.",
+            f"Um {name} apareceu no seu caminho, mas foi rapido demais para uma crianca.",
+        ])
     return random.choice([
         f"Voce tentou capturar um {name} de nivel {level}, mas ele escapou.",
         f"Um {name} Lv.{level} fugiu antes de ser capturado.",
     ])
 
 
-def _care_note(career: str | None, happiness_gain: int) -> str:
-    if career == "Criador":
+def _care_note(pokemon_name: str, kind: str) -> str:
+    if kind == "heal":
         return random.choice([
-            "Voce cuidou dos seus Pokemon com dedicacao. Eles amam voce.",
-            "Sessao de grooming e cuidados deixou o time em otima forma.",
+            f"Voce levou {pokemon_name} ao Pokemon Center a tempo.",
+            f"{pokemon_name} se recuperou apos um periodo de cuidados intensos.",
+        ])
+    if kind == "rest":
+        return random.choice([
+            f"{pokemon_name} descansou e voltou mais disposto.",
+            f"Um dia tranquilo fez bem para {pokemon_name}.",
         ])
     return random.choice([
-        f"Voce passou um tempo de qualidade com seus Pokemon. Felicidade +{happiness_gain}.",
-        "Um periodo de descanso fez bem para voce e para o time.",
+        f"Voce cuidou de {pokemon_name} com dedicacao.",
+        f"{pokemon_name} parece mais feliz apos seus cuidados.",
     ])

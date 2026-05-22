@@ -61,7 +61,18 @@ def estimate_series_chance(
     if not character.team or not opponents:
         return {"series_chance": 0, "average_match_chance": 0, "match_chances": [], "wins_required": wins_required or len(opponents)}
     wins_required = wins_required or len(opponents)
-    available = [pokemon for pokemon in character.team if pokemon.current_health > 0]
+    available = [
+        pokemon
+        for pokemon in character.team
+        if pokemon.current_health > 0 and pokemon.status != "badly_injured"
+    ]
+    if not available:
+        return {
+            "series_chance": 0,
+            "average_match_chance": 0,
+            "match_chances": [],
+            "wins_required": wins_required,
+        }
     match_chances: list[float] = []
     for opponent in opponents:
         opponent_species = species_by_name.get(opponent.species)

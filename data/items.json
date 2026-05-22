@@ -153,7 +153,7 @@
     "id": "kanto_map",
     "name": "Mapa de Kanto",
     "type": "utility",
-    "price": 500,
+    "price": 150,
     "effect": "reveal_map"
   },
   {

@@ -87,6 +87,25 @@ class Character:
         for index, pokemon in enumerate(self.team):
             pokemon.active = index == self.active_pokemon_index
 
+    def attr_soft_caps(self) -> dict[str, int]:
+        """Retorna os soft caps por atributo (initial + 35, max 90).
+        Compatível com saves antigos: se não existir, deriva dos atributos atuais como fallback."""
+        caps = self.flags.get("attr_soft_caps")
+        if isinstance(caps, dict):
+            return caps
+        # Fallback para saves sem caps registrados: usa atributo atual como base
+        return {k: min(90, v + 35) for k, v in self.attributes.to_dict().items()}
+
+    def set_attr_soft_caps(self) -> None:
+        """Registra os soft caps a partir dos atributos atuais do nascimento.
+        Deve ser chamado apenas uma vez na criação do personagem."""
+        if "attr_soft_caps" not in self.flags:
+            self.flags["attr_soft_caps"] = {k: min(90, v + 35) for k, v in self.attributes.to_dict().items()}
+
+    def modify_attributes(self, changes: dict[str, int]) -> None:
+        """Wrapper de modify que passa os soft caps automaticamente."""
+        self.attributes.modify(changes, self.attr_soft_caps())
+
     def career_rank(self, career: str | None = None) -> int:
         key = career or self.career or ""
         return int(self.career_ranks.get(key, 0))

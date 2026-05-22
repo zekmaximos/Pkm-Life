@@ -426,7 +426,7 @@ def travel_menu(character: Character) -> None:
         console.print("Voce ainda e jovem demais para viajar sozinho.")
         return
 
-    has_map = bool(character.flags.get("has_kanto_map"))
+    has_map = bool(character.flags.get("has_kanto_map")) or character.inventory.get("Mapa de Kanto", 0) > 0
 
     if not has_map:
         # Sem mapa: viagem aleatoria para setor adjacente — sem escolha do jogador
