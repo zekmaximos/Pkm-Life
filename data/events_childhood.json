@@ -649,11 +649,11 @@
       "care",
       "rare"
     ],
-    "base_weight": 0.22,
+    "base_weight": 0.12,
     "choices": [
       {
         "text": "Levar o ovo para a academia",
-        "chance": 0.7,
+        "chance": 0.45,
         "effects": {
           "attributes": {
             "POK": 2,
@@ -695,7 +695,7 @@
       "research",
       "rare"
     ],
-    "base_weight": 0.12,
+    "base_weight": 0.06,
     "conditions": {
       "min_attributes": {
         "POK": 35
@@ -704,7 +704,7 @@
     "choices": [
       {
         "text": "Assumir a responsabilidade pelo ovo",
-        "chance": 0.55,
+        "chance": 0.38,
         "effects": {
           "attributes": {
             "POK": 3,
@@ -748,7 +748,7 @@
       "research",
       "pokemon"
     ],
-    "base_weight": 0.035,
+    "base_weight": 0.018,
     "conditions": {
       "min_attributes": {
         "LUK": 45,
@@ -758,7 +758,7 @@
     "choices": [
       {
         "text": "Avisar Oak e pedir para ajudar no cuidado",
-        "chance": 0.35,
+        "chance": 0.22,
         "effects": {
           "attributes": {
             "POK": 4,

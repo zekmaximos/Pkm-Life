@@ -317,7 +317,7 @@
       "care",
       "rare"
     ],
-    "base_weight": 0.08,
+    "base_weight": 0.045,
     "conditions": {
       "requires_pokemon": true,
       "min_attributes": {
@@ -327,7 +327,7 @@
     "choices": [
       {
         "text": "Observar sem perturbar e procurar um ovo abandonado",
-        "chance": 0.35,
+        "chance": 0.22,
         "effects": {
           "attributes": {
             "POK": 2
@@ -370,7 +370,7 @@
       "work",
       "rare"
     ],
-    "base_weight": 0.1,
+    "base_weight": 0.07,
     "conditions": {
       "min_attributes": {
         "POK": 30
@@ -379,7 +379,7 @@
     "choices": [
       {
         "text": "Ajudar no cuidado dos ovos",
-        "chance": 0.45,
+        "chance": 0.36,
         "effects": {
           "attributes": {
             "POK": 2,
@@ -425,7 +425,7 @@
       "wild",
       "pokemon"
     ],
-    "base_weight": 0.025,
+    "base_weight": 0.012,
     "conditions": {
       "requires_pokemon": true,
       "min_attributes": {
@@ -436,7 +436,7 @@
     "choices": [
       {
         "text": "Registrar o local e levar o ovo com cuidado",
-        "chance": 0.28,
+        "chance": 0.18,
         "effects": {
           "attributes": {
             "POK": 3,
@@ -684,7 +684,7 @@
       },
       {
         "text": "Tentar encontrar um ovo abandonado",
-        "chance": 0.22,
+        "chance": 0.18,
         "effects": {
           "attributes": {
             "POK": 2
@@ -3132,5 +3132,387 @@
       "route"
     ],
     "base_weight": 0.7
+  },
+  {
+    "id": "adult_student_research_offer",
+    "title": "Convite do laboratorio",
+    "text": "Depois de anos como estudante da academia, um professor nota sua disciplina e oferece uma vaga de pesquisa aplicada.",
+    "min_age": 18,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "conditions": {
+      "career": "Estudante da academia"
+    },
+    "choices": [
+      {
+        "text": "Virar Pesquisador",
+        "effects": {
+          "career": "Pesquisador",
+          "attributes": {
+            "MEN": 3,
+            "POK": 2
+          }
+        },
+        "history_entry": "Voce transformou anos de estudo em carreira como Pesquisador."
+      },
+      {
+        "text": "Continuar estudando",
+        "effects": {
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce recusou o laboratorio por enquanto e continuou na academia."
+      }
+    ],
+    "tags": [
+      "academy",
+      "research",
+      "career_transition"
+    ],
+    "base_weight": 1.25
+  },
+  {
+    "id": "adult_student_explorer_offer",
+    "title": "Mapas antigos de Kanto",
+    "text": "Um explorador veterano procura alguem com paciencia academica para registrar rotas, cavernas e habitats esquecidos.",
+    "min_age": 18,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "conditions": {
+      "career": "Estudante da academia"
+    },
+    "choices": [
+      {
+        "text": "Virar Explorador",
+        "effects": {
+          "career": "Explorador",
+          "attributes": {
+            "PHY": 2,
+            "POK": 2,
+            "LUK": 1
+          }
+        },
+        "history_entry": "Voce deixou a rotina da academia para se tornar Explorador."
+      },
+      {
+        "text": "Ajudar so como estudo de campo",
+        "effects": {
+          "attributes": {
+            "POK": 2,
+            "PHY": 1
+          },
+          "health": -4
+        },
+        "history_entry": "Voce fez trabalho de campo, mas decidiu nao mudar de carreira."
+      }
+    ],
+    "tags": [
+      "academy",
+      "route",
+      "risk",
+      "career_transition"
+    ],
+    "base_weight": 1.0
+  },
+  {
+    "id": "adult_student_scientist_offer",
+    "title": "Bolsa de pesquisa cientifica",
+    "text": "Uma instituicao de Saffron oferece bolsa para quem quer trocar teoria por metodo, dados e laboratorio.",
+    "min_age": 18,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": true,
+    "conditions": {
+      "career": "Estudante da academia"
+    },
+    "choices": [
+      {
+        "text": "Virar Cientista",
+        "effects": {
+          "career": "Cientista",
+          "attributes": {
+            "MEN": 4,
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce iniciou carreira como Cientista, levando sua formacao academica para o laboratorio."
+      },
+      {
+        "text": "Seguir vida civil por enquanto",
+        "effects": {
+          "career": null,
+          "attributes": {
+            "MEN": 1,
+            "LUK": 1
+          }
+        },
+        "history_entry": "Voce decidiu deixar a academia e seguir uma vida civil sem carreira Pokemon definida."
+      }
+    ],
+    "tags": [
+      "academy",
+      "research",
+      "career_transition"
+    ],
+    "base_weight": 1.1
+  },
+  {
+    "id": "berry_collector_hidden_patch",
+    "title": "Mancha de berries raras",
+    "text": "Durante uma rota de coleta, voce encontra uma pequena area com berries melhores do que o normal.",
+    "min_age": 16,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "career": "Coletor de Berrys"
+    },
+    "choices": [
+      {
+        "text": "Coletar com cuidado",
+        "effects": {
+          "money": 90,
+          "attributes": {
+            "POK": 1,
+            "MEN": 1
+          },
+          "items": {
+            "Potion": 1
+          }
+        },
+        "history_entry": "Voce coletou berries de boa qualidade sem danificar o habitat."
+      },
+      {
+        "text": "Coletar rapido antes que alguem veja",
+        "chance": 0.55,
+        "effects": {
+          "money": 180,
+          "attributes": {
+            "LUK": 1
+          }
+        },
+        "failure_effects": {
+          "health": -8,
+          "attributes": {
+            "POK": 1
+          }
+        },
+        "history_entry": "Voce fez uma coleta rapida e vendeu berries por um bom preco.",
+        "failure_history_entry": "A coleta apressada irritou Pokemon do mato e voce se machucou."
+      }
+    ],
+    "tags": [
+      "career",
+      "route",
+      "care"
+    ],
+    "base_weight": 1.15
+  },
+  {
+    "id": "ball_crafter_defective_lot",
+    "title": "Lote de Pokebolas instavel",
+    "text": "A oficina recebe um lote com molas e travas irregulares. Alguem precisa decidir se repara ou descarta.",
+    "min_age": 16,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "career": "Construtor de Pokebolas"
+    },
+    "choices": [
+      {
+        "text": "Reparar uma por uma",
+        "effects": {
+          "money": 130,
+          "attributes": {
+            "MEN": 2,
+            "POK": 1
+          },
+          "items": {
+            "Poke Ball": 2
+          }
+        },
+        "history_entry": "Voce salvou um lote defeituoso de Pokebolas com trabalho preciso."
+      },
+      {
+        "text": "Descartar e preservar reputacao",
+        "effects": {
+          "reputation": 1,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce descartou o lote ruim e ganhou confianca da oficina."
+      }
+    ],
+    "tags": [
+      "career",
+      "city",
+      "craft"
+    ],
+    "base_weight": 1.1
+  },
+  {
+    "id": "farm_caretaker_sick_pokemon",
+    "title": "Pokemon da fazenda adoecido",
+    "text": "Um Pokemon da fazenda para de comer. O dono pede ajuda antes de chamar um centro maior.",
+    "min_age": 16,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "career": "Cuidador de Fazenda"
+    },
+    "choices": [
+      {
+        "text": "Observar sintomas e ajustar comida",
+        "chance": 0.75,
+        "effects": {
+          "money": 100,
+          "reputation": 1,
+          "attributes": {
+            "POK": 2,
+            "MEN": 1
+          }
+        },
+        "failure_effects": {
+          "attributes": {
+            "POK": 1
+          },
+          "health": -4
+        },
+        "history_entry": "Voce ajudou um Pokemon de fazenda a se recuperar.",
+        "failure_history_entry": "Voce nao resolveu o problema, mas aprendeu com os sintomas."
+      },
+      {
+        "text": "Levar direto ao Pokemon Center",
+        "effects": {
+          "money": -40,
+          "reputation": 1,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce priorizou seguranca e levou o Pokemon ao centro."
+      }
+    ],
+    "tags": [
+      "career",
+      "care",
+      "farm"
+    ],
+    "base_weight": 1.2
+  },
+  {
+    "id": "builder_route_repair",
+    "title": "Reparo emergencial na rota",
+    "text": "Uma pequena ponte de rota cedeu depois de chuva forte. A cidade precisa de alguem resistente para ajudar.",
+    "min_age": 16,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "career": "Construtor"
+    },
+    "choices": [
+      {
+        "text": "Trabalhar no reparo pesado",
+        "effects": {
+          "money": 160,
+          "reputation": 1,
+          "health": -8,
+          "attributes": {
+            "PHY": 2
+          }
+        },
+        "history_entry": "Voce ajudou a reconstruir uma passagem importante de Kanto."
+      },
+      {
+        "text": "Coordenar materiais e seguranca",
+        "effects": {
+          "money": 100,
+          "attributes": {
+            "MEN": 1,
+            "PHY": 1
+          }
+        },
+        "history_entry": "Voce organizou a obra e evitou acidentes."
+      }
+    ],
+    "tags": [
+      "career",
+      "city",
+      "risk"
+    ],
+    "base_weight": 1.05
+  },
+  {
+    "id": "merchant_price_swing",
+    "title": "Preco instavel no mercado",
+    "text": "O preco de itens comuns muda de repente. Comerciantes atentos podem lucrar ou perder dinheiro rapido.",
+    "min_age": 16,
+    "max_age": 99,
+    "phase": null,
+    "region": "Kanto",
+    "city": null,
+    "once": false,
+    "conditions": {
+      "career": "Comerciante"
+    },
+    "choices": [
+      {
+        "text": "Comprar lote e revender",
+        "chance": 0.65,
+        "effects": {
+          "money": 220,
+          "attributes": {
+            "MEN": 1,
+            "LUK": 1
+          }
+        },
+        "failure_effects": {
+          "money": -120,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce acertou uma virada de preco e lucrou no comercio.",
+        "failure_history_entry": "Voce comprou na hora errada e perdeu dinheiro com estoque parado."
+      },
+      {
+        "text": "Manter estoque seguro",
+        "effects": {
+          "money": 80,
+          "attributes": {
+            "MEN": 1
+          }
+        },
+        "history_entry": "Voce preferiu margem menor e manteve o negocio estavel."
+      }
+    ],
+    "tags": [
+      "career",
+      "money",
+      "city"
+    ],
+    "base_weight": 1.15
   }
 ]

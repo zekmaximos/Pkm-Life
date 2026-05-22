@@ -8,7 +8,7 @@
       "gym"
     ],
     "shop_inventory": [
-      "Kanto Map",
+      "Mapa de Kanto",
       "Poke Ball",
       "Potion",
       "Antidote",
@@ -19,6 +19,10 @@
     ],
     "careers": [
       "Estudante da academia",
+      "Coletor de Berrys",
+      "Cuidador de Fazenda",
+      "Pesquisador",
+      "Cientista",
       "Criador"
     ],
     "gym": "pallet_normal",
@@ -30,7 +34,13 @@
     ],
     "encounter_sources": [
       "route_1"
-    ]
+    ],
+    "work": {
+      "name": "Ajudante do Laboratorio Oak",
+      "base_income": 45,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.03
+    }
   },
   {
     "city": "Viridian City",
@@ -40,7 +50,7 @@
       "gym"
     ],
     "shop_inventory": [
-      "Kanto Map",
+      "Mapa de Kanto",
       "Poke Ball",
       "Potion",
       "Antidote",
@@ -50,6 +60,9 @@
     ],
     "careers": [
       "Treinador",
+      "Explorador",
+      "Coletor de Berrys",
+      "Comerciante",
       "Criador"
     ],
     "gym": "viridian_ground",
@@ -62,7 +75,13 @@
       "route_1",
       "route_2",
       "viridian_forest"
-    ]
+    ],
+    "work": {
+      "name": "Guia de rota",
+      "base_income": 62,
+      "primary_attributes": ["PHY", "POK"],
+      "health_risk": 0.08
+    }
   },
   {
     "city": "Pewter City",
@@ -73,19 +92,26 @@
       "museum"
     ],
     "shop_inventory": [
-      "Kanto Map",
+      "Mapa de Kanto",
       "Poke Ball",
       "Potion",
       "Great Ball",
       "Antidote",
       "Repel",
       "Grooming Kit",
+      "Silk Ribbon",
+      "Stage Cologne",
       "Escape Rope",
+      "Field Boots",
+      "Study Notebook",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
+      "Pesquisador",
+      "Explorador",
+      "Construtor",
       "Estudante da academia"
     ],
     "gym": "pewter_rock",
@@ -97,7 +123,13 @@
     "encounter_sources": [
       "route_3",
       "mt_moon"
-    ]
+    ],
+    "work": {
+      "name": "Assistente do museu",
+      "base_income": 72,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.04
+    }
   },
   {
     "city": "Cerulean City",
@@ -119,6 +151,7 @@
     ],
     "careers": [
       "Treinador",
+      "Coletor de Berrys",
       "Coordenador"
     ],
     "gym": "cerulean_water",
@@ -131,7 +164,13 @@
       "route_4",
       "route_24",
       "route_25"
-    ]
+    ],
+    "work": {
+      "name": "Monitor da ponte",
+      "base_income": 78,
+      "primary_attributes": ["POK", "LUK"],
+      "health_risk": 0.06
+    }
   },
   {
     "city": "Vermilion City",
@@ -149,14 +188,23 @@
       "Super Potion",
       "Repel",
       "Grooming Kit",
+      "Contest Outfit",
+      "Silk Ribbon",
+      "Stage Cologne",
+      "Mystic Veil",
+      "Cool Jacket",
       "Escape Rope",
+      "Tool Kit",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
       "Coordenador",
-      "Criador"
+      "Construtor de Pokebolas",
+      "Comerciante",
+      "Criador",
+      "Criminoso"
     ],
     "gym": "vermilion_electric",
     "event_focus": [
@@ -167,7 +215,13 @@
     "encounter_sources": [
       "route_6",
       "route_11"
-    ]
+    ],
+    "work": {
+      "name": "Auxiliar do porto",
+      "base_income": 105,
+      "primary_attributes": ["PHY", "MEN"],
+      "health_risk": 0.12
+    }
   },
   {
     "city": "Lavender Town",
@@ -190,6 +244,8 @@
     ],
     "careers": [
       "Estudante da academia",
+      "Pesquisador",
+      "Cuidador de Fazenda",
       "Criador"
     ],
     "gym": "lavender_ghost",
@@ -202,7 +258,13 @@
       "pokemon_tower",
       "route_8",
       "route_10"
-    ]
+    ],
+    "work": {
+      "name": "Cuidador do memorial",
+      "base_income": 58,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.05
+    }
   },
   {
     "city": "Celadon City",
@@ -224,7 +286,11 @@
       "Repel",
       "Common Egg",
       "Grooming Kit",
+      "Contest Outfit",
+      "Silk Ribbon",
+      "Mystic Veil",
       "Escape Rope",
+      "Business Ledger",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -233,7 +299,10 @@
     "careers": [
       "Treinador",
       "Coordenador",
-      "Criador"
+      "Comerciante",
+      "Construtor de Pokebolas",
+      "Criador",
+      "Criminoso"
     ],
     "gym": "celadon_grass",
     "event_focus": [
@@ -245,7 +314,13 @@
     "encounter_sources": [
       "route_7",
       "route_16"
-    ]
+    ],
+    "work": {
+      "name": "Atendente da loja de departamento",
+      "base_income": 132,
+      "primary_attributes": ["MEN", "LUK"],
+      "health_risk": 0.06
+    }
   },
   {
     "city": "Fuchsia City",
@@ -267,11 +342,14 @@
       "Common Egg",
       "Grooming Kit",
       "Escape Rope",
+      "Field Boots",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
+      "Coletor de Berrys",
+      "Cuidador de Fazenda",
       "Criador"
     ],
     "gym": "fuchsia_poison",
@@ -283,7 +361,13 @@
     "encounter_sources": [
       "safari_zone",
       "route_18"
-    ]
+    ],
+    "work": {
+      "name": "Auxiliar da Safari Zone",
+      "base_income": 92,
+      "primary_attributes": ["POK", "PHY"],
+      "health_risk": 0.10
+    }
   },
   {
     "city": "Saffron City",
@@ -304,6 +388,8 @@
       "Repel",
       "Grooming Kit",
       "Escape Rope",
+      "Business Ledger",
+      "Lab Pass",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -312,7 +398,12 @@
     "careers": [
       "Treinador",
       "Coordenador",
-      "Estudante da academia"
+      "Cientista",
+      "Pesquisador",
+      "Comerciante",
+      "Construtor",
+      "Estudante da academia",
+      "Criminoso"
     ],
     "gym": "saffron_psychic",
     "event_focus": [
@@ -325,7 +416,13 @@
       "route_6",
       "route_7",
       "route_8"
-    ]
+    ],
+    "work": {
+      "name": "Estagio corporativo na Silph",
+      "base_income": 160,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.05
+    }
   },
   {
     "city": "Cinnabar Island",
@@ -346,6 +443,7 @@
       "Common Egg",
       "Grooming Kit",
       "Escape Rope",
+      "Lab Pass",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -354,6 +452,9 @@
     "careers": [
       "Treinador",
       "Estudante da academia",
+      "Pesquisador",
+      "Cientista",
+      "Construtor de Pokebolas",
       "Criador"
     ],
     "gym": "cinnabar_fire",
@@ -365,7 +466,13 @@
     "encounter_sources": [
       "pokemon_mansion",
       "route_20"
-    ]
+    ],
+    "work": {
+      "name": "Assistente de laboratorio",
+      "base_income": 122,
+      "primary_attributes": ["MEN", "POK"],
+      "health_risk": 0.07
+    }
   },
   {
     "city": "Indigo Plateau",
@@ -382,6 +489,7 @@
       "Repel",
       "Grooming Kit",
       "Escape Rope",
+      "Travel Voucher",
       "Rare Candy",
       "Protein",
       "Calcium",
@@ -389,6 +497,8 @@
     ],
     "careers": [
       "Treinador",
+      "Explorador",
+      "Comerciante",
       "Coordenador"
     ],
     "gym": "indigo_dragon",
@@ -400,7 +510,13 @@
     "encounter_sources": [
       "route_23",
       "victory_road"
-    ]
+    ],
+    "work": {
+      "name": "Apoio da Liga Pokemon",
+      "base_income": 150,
+      "primary_attributes": ["POK", "MEN"],
+      "health_risk": 0.08
+    }
   },
   {
     "city": "Seafoam Harbor",
@@ -421,11 +537,14 @@
       "Common Egg",
       "Grooming Kit",
       "Escape Rope",
+      "Field Boots",
       "Protein",
       "Calcium"
     ],
     "careers": [
       "Treinador",
+      "Explorador",
+      "Coletor de Berrys",
       "Criador"
     ],
     "gym": "seafoam_ice",
@@ -438,6 +557,12 @@
       "seafoam_islands",
       "route_19",
       "route_20"
-    ]
+    ],
+    "work": {
+      "name": "Operador do cais",
+      "base_income": 96,
+      "primary_attributes": ["PHY", "LUK"],
+      "health_risk": 0.11
+    }
   }
 ]

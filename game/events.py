@@ -199,7 +199,9 @@ def apply_choice_result(character: Character, event: LifeEvent, choice: EventCho
     character.reputation += int(effects.get("reputation", 0))
     if "career" in effects and _can_apply_career_change(event):
         character.career = effects["career"]
-    for item, amount in effects.get("inventory", {}).items():
+    item_effects = dict(effects.get("inventory", {}))
+    item_effects.update(effects.get("items", {}))
+    for item, amount in item_effects.items():
         character.inventory[item] = max(0, character.inventory.get(item, 0) + int(amount))
         if character.inventory[item] == 0:
             del character.inventory[item]
@@ -252,6 +254,9 @@ def _career_tag(career: str) -> str:
         "Treinador": "battle",
         "Criador": "care",
         "Coordenador": "contest",
+        "Pesquisador": "research",
+        "Explorador": "route",
+        "Cientista": "research",
     }.get(career, career.lower())
 
 

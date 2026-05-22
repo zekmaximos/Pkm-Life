@@ -7,7 +7,7 @@ from .attributes import PlayerAttributes
 from .character import Character
 from .inventory import consume_item
 from .inventory import Item
-from .pokemon import OwnedPokemon, PokemonSpecies, create_owned_pokemon
+from .pokemon import OwnedPokemon, PokemonSpecies, create_owned_pokemon, coherent_pokemon_level
 from .utils import clamp
 
 
@@ -94,23 +94,25 @@ def try_capture(
     ball: str = "Poke Ball",
     current_health_ratio: float = 0.5,
     item: Item | None = None,
+    species_by_name: dict[str, PokemonSpecies] | None = None,
 ) -> tuple[bool, str, OwnedPokemon | None]:
     if not consume_item(character.inventory, ball):
         return False, f"Voce nao tem {ball}.", None
 
     health_percent = clamp(current_health_ratio * 100, 1, 100)
     ball_bonus = item.capture_bonus_for(species.rarity, species.types, species.evolution_stage) if item else LEGACY_BALL_BONUS.get(ball, 0)
+    coherent_level = coherent_pokemon_level(species, wild_level, species_by_name)
     result = attempt_capture(
         rarity=species.rarity,
         pokemon_name=species.name,
         pokemon_health_percent=health_percent,
         player_attributes=character.attributes,
         ball_bonus=ball_bonus,
-        pokemon_level=wild_level,
+        pokemon_level=coherent_level,
         evolution_stage=species.evolution_stage,
     )
     if result.success:
-        pokemon = create_owned_pokemon(species, level=wild_level, origin=f"capturado em {character.current_city}")
+        pokemon = create_owned_pokemon(species, level=coherent_level, origin=f"capturado em {character.current_city}", species_by_name=species_by_name)
         destination = character.add_pokemon(pokemon)
         location = "equipe ativa" if destination == "team" else "Box"
         character.add_history(f"Voce capturou um {species.name} em {character.current_city}.")

@@ -81,6 +81,7 @@ class OwnedPokemon:
     origin: str = "desconhecida"
     status: str = "healthy"
     active: bool = True
+    battle_level: int = 0
 
     def display_name(self) -> str:
         return self.nickname or self.species
@@ -118,6 +119,7 @@ class OwnedPokemon:
             "origin": self.origin,
             "status": self.status,
             "active": self.active,
+            "battle_level": self.battle_level,
         }
 
     @classmethod
@@ -127,6 +129,7 @@ class OwnedPokemon:
         data.setdefault("beauty", 50)
         data.setdefault("healthy", max(1, min(100, data.get("current_health", 50))))
         data.setdefault("occult", 1)
+        data.setdefault("battle_level", 0)
         data.setdefault("types", [])
         data.setdefault("ability", "None")
         data.setdefault("evolution_stage", 1)
@@ -134,11 +137,44 @@ class OwnedPokemon:
         return cls(**data)
 
 
-def create_owned_pokemon(species: PokemonSpecies, level: int = 5, origin: str = "Kanto") -> OwnedPokemon:
+def minimum_level_for_species(
+    species: PokemonSpecies,
+    species_by_name: dict[str, PokemonSpecies] | None = None,
+) -> int:
+    if not species_by_name:
+        return {1: 1, 2: 16, 3: 32}.get(species.evolution_stage, 1)
+    incoming_levels: list[int] = []
+    for candidate in species_by_name.values():
+        if candidate.evolution == species.name and candidate.evolution_level:
+            incoming_levels.append(int(candidate.evolution_level))
+        for evolution in candidate.evolutions:
+            if evolution.get("species") == species.name and evolution.get("method") == "level-up" and evolution.get("level"):
+                incoming_levels.append(int(evolution["level"]))
+    if incoming_levels:
+        return max(1, min(incoming_levels))
+    return {1: 1, 2: 16, 3: 32}.get(species.evolution_stage, 1)
+
+
+def coherent_pokemon_level(
+    species: PokemonSpecies,
+    level: int,
+    species_by_name: dict[str, PokemonSpecies] | None = None,
+) -> int:
+    minimum = minimum_level_for_species(species, species_by_name)
+    return int(clamp(max(level, minimum), 1, 100))
+
+
+def create_owned_pokemon(
+    species: PokemonSpecies,
+    level: int = 5,
+    origin: str = "Kanto",
+    species_by_name: dict[str, PokemonSpecies] | None = None,
+) -> OwnedPokemon:
     personalities = ["corajoso", "calmo", "brincalhao", "teimoso", "gentil", "alerta"]
+    coherent_level = coherent_pokemon_level(species, level, species_by_name)
     pokemon = OwnedPokemon(
         species=species.name,
-        level=max(1, min(100, level)),
+        level=coherent_level,
         current_health=species.base_healthy,
         combat=_individual_stat(species.base_combat),
         beauty=_individual_stat(species.base_beauty),
@@ -231,8 +267,6 @@ def _derive_occult(types: list[str], legendary: bool) -> int:
     if any(t in {"Electric", "Ice", "Fire"} for t in types):
         return 35
     return 15
-
-
 def _normalize_condition(status: str) -> str:
     if status == "saudavel":
         return "healthy"

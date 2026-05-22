@@ -57,11 +57,22 @@ pip install -r requirements.txt
 python main.py
 ```
 
+Interface web local:
+
+```bash
+pip install -r requirements.txt
+python web/app.py
+```
+
+Depois acesse `http://127.0.0.1:5000`.
+No Windows, tambem da para abrir com duplo clique em `abrir_poke_life_web.bat`.
+
 ## Estrutura
 
 ```text
 poke-life/
 +-- main.py
++-- abrir_poke_life_web.bat
 +-- game/
 |   +-- engine.py
 |   +-- attributes.py
@@ -92,6 +103,15 @@ poke-life/
 |   +-- items.json
 |   +-- starters.json
 +-- saves/
++-- web/
+|   +-- app.py
+|   +-- templates/
+|   |   +-- index.html
+|   +-- static/
+|       +-- style.css
+|       +-- game.js
+|       +-- sprites/
+|           +-- pokemon/
 ```
 
 ## Banco de dados local
@@ -115,6 +135,14 @@ Eventos tambem podem conceder `random_area_pokemon` ou `eggs`. Ovos usam tiers C
 O script `tools/build_kanto_database.py` pode regenerar esses arquivos a partir da PokeAPI e das tabelas locais de disponibilidade de Kanto.
 
 O script `tools/build_kanto_locations.py` sincroniza `locations_kanto.json` e adiciona `location_id` nas tabelas de encontro.
+
+## Creditos de assets
+
+Os icones de Pokemon usados na interface sao derivados da colecao HOMENatDexIcons:
+https://chicoeevee.github.io/HOMENatDexIcons/
+
+Pokemon e seus nomes sao marcas registradas de seus respectivos proprietarios.
+Este projeto e um fan project sem fins comerciais.
 
 ## Proximos passos naturais
 

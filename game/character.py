@@ -40,13 +40,14 @@ class Character:
     eggs: list[PokeEgg] = field(default_factory=list)
     badges: list[str] = field(default_factory=list)
     inventory: dict[str, int] = field(default_factory=lambda: {"Poke Ball": 5, "Potion": 1})
-    flags: dict[str, bool | str | int | list[str]] = field(default_factory=dict)
+    flags: dict[str, bool | str | int | list[str] | dict] = field(default_factory=dict)
     career: str | None = None
     generated_gyms: dict[str, dict] = field(default_factory=dict)
     career_ranks: dict[str, int] = field(default_factory=dict)
     career_xp: dict[str, int] = field(default_factory=dict)
     pokedex_seen: list[str] = field(default_factory=list)
     pokedex_caught: list[str] = field(default_factory=list)
+    assets: dict[str, int] = field(default_factory=dict)
 
     @property
     def phase(self) -> str:
@@ -85,6 +86,25 @@ class Character:
         self.active_pokemon_index = max(0, min(self.active_pokemon_index, len(self.team) - 1))
         for index, pokemon in enumerate(self.team):
             pokemon.active = index == self.active_pokemon_index
+
+    def attr_soft_caps(self) -> dict[str, int]:
+        """Retorna os soft caps por atributo (initial + 35, max 90).
+        Compatível com saves antigos: se não existir, deriva dos atributos atuais como fallback."""
+        caps = self.flags.get("attr_soft_caps")
+        if isinstance(caps, dict):
+            return caps
+        # Fallback para saves sem caps registrados: usa atributo atual como base
+        return {k: min(90, v + 35) for k, v in self.attributes.to_dict().items()}
+
+    def set_attr_soft_caps(self) -> None:
+        """Registra os soft caps a partir dos atributos atuais do nascimento.
+        Deve ser chamado apenas uma vez na criação do personagem."""
+        if "attr_soft_caps" not in self.flags:
+            self.flags["attr_soft_caps"] = {k: min(90, v + 35) for k, v in self.attributes.to_dict().items()}
+
+    def modify_attributes(self, changes: dict[str, int]) -> None:
+        """Wrapper de modify que passa os soft caps automaticamente."""
+        self.attributes.modify(changes, self.attr_soft_caps())
 
     def career_rank(self, career: str | None = None) -> int:
         key = career or self.career or ""
@@ -125,6 +145,7 @@ class Character:
             "career_xp": self.career_xp,
             "pokedex_seen": self.pokedex_seen,
             "pokedex_caught": self.pokedex_caught,
+            "assets": self.assets,
         }
 
     @classmethod
@@ -154,4 +175,5 @@ class Character:
         character.career_xp = data.get("career_xp", {})
         character.pokedex_seen = data.get("pokedex_seen", [])
         character.pokedex_caught = data.get("pokedex_caught", [])
+        character.assets = data.get("assets", {})
         return character

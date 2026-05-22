@@ -122,17 +122,30 @@ def choose_egg_tier(weights: dict[str, int] | None = None) -> str:
 def progress_eggs(character, pokemon_by_name: dict[str, PokemonSpecies]) -> list[str]:
     notes: list[str] = []
     remaining: list[PokeEgg] = []
+    hatch_report = list(getattr(character, "flags", {}).get("last_hatched_eggs", []))
     for egg in character.eggs:
         egg.progress += 1
         if egg.progress >= egg.years_to_hatch:
             species = pokemon_by_name.get(egg.species)
             if species:
                 pokemon = create_owned_pokemon(species, level=1, origin=f"chocado de ovo: {egg.origin}")
-                character.add_pokemon(pokemon)
+                destination = character.add_pokemon(pokemon)
+                location = "equipe" if destination == "team" else "Box"
+                if hasattr(character, "register_caught"):
+                    character.register_caught(species.name)
                 notes.append(f"Um ovo {egg.color} chocou e revelou {pokemon.species}.")
+                hatch_report.append({
+                    "action": "hatched",
+                    "species": pokemon.species,
+                    "destination": location,
+                    "source": egg.origin,
+                    "tier": egg.rarity_tier,
+                })
         else:
             remaining.append(egg)
     character.eggs = remaining
+    if hatch_report and hasattr(character, "flags"):
+        character.flags["last_hatched_eggs"] = hatch_report
     return notes
 
 

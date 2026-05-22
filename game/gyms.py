@@ -67,7 +67,7 @@ def generate_gym_team(template: GymTemplate, pokemon_by_name: dict[str, PokemonS
     if len(candidates) < 3:
         raise ValueError(f"Not enough Pokemon for {template.main_type} gym.")
 
-    team_size = random.randint(3, min(6, max(3, len(candidates))))
+    team_size = min(_team_size_for_difficulty(template.difficulty), len(candidates))
     team_species = _pick_varied_team(candidates, team_size)
     team_species.sort(key=lambda species: (species.evolution_stage, species.rarity, species.pokedex_id))
 
@@ -122,6 +122,16 @@ def _max_stage_for(template: GymTemplate) -> int:
     if template.difficulty <= 5:
         return 2
     return 3
+
+
+def _team_size_for_difficulty(difficulty: int) -> int:
+    if difficulty <= 3:
+        return 3
+    if difficulty <= 6:
+        return 4
+    if difficulty <= 8:
+        return 5
+    return 6
 
 
 def _rarity_rank(rarity: str) -> int:
