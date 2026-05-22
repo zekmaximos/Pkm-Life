@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -32,14 +33,43 @@ CITY_DESCRIPTIONS: dict[str, str] = {
     "Seafoam Harbor": "Porto gelado entre cavernas de gelo, onde ventos cortantes chegam do mar. Os pescadores daqui conhecem os segredos mais frios de Kanto.",
 }
 
+BADGE_SYMBOLS: dict[str, str] = {
+    "Rocha": "◆",
+    "Cascata": "≋",
+    "Trovão": "⚡",
+    "Trovao": "⚡",
+    "Arco": "☘",
+    "Alma": "☠",
+    "Pântano": "◈",
+    "Pantano": "◈",
+    "Vulcão": "▲",
+    "Vulcao": "▲",
+    "Terra": "⬟",
+}
+
+RIBBON_SYMBOLS: dict[str, str] = {
+    "Beauty": "✦",
+    "Cute": "♡",
+    "Cool": "◆",
+    "Smart": "◇",
+    "Mysterious": "☾",
+}
+
 character: Character | None = None
 feed: list[dict[str, Any]] = []
 pending_event = None
 
 
-def card(kind: str, text: str, title: str | None = None) -> dict[str, str]:
+def card(kind: str, text: str, title: str | None = None) -> dict[str, Any]:
     year = character.age if character is not None else 0
-    return {"kind": kind, "title": title or kind.title(), "text": str(text), "time": f"Ano {year}"}
+    text_value = str(text)
+    return {
+        "kind": kind,
+        "title": title or kind.title(),
+        "text": text_value,
+        "time": f"Ano {year}",
+        "pokemon_sprites": pokemon_mentions_for_text(text_value),
+    }
 
 
 def push(kind: str, text: str, title: str | None = None) -> None:
@@ -50,9 +80,11 @@ def push(kind: str, text: str, title: str | None = None) -> None:
 def pokemon_state(pokemon) -> dict[str, Any]:
     species = engine.pokemon.get(pokemon.species)
     can_see_battle_level = character is not None and character.career in {"Pesquisador", "Criador"}
+    sprite = pokemon_sprite_path(species) if species else None
     return {
         "name": pokemon.display_name(),
         "species": pokemon.species,
+        "sprite": sprite,
         "level": pokemon.level,
         "xp": pokemon.experience,
         "status": pokemon.status,
@@ -68,6 +100,45 @@ def pokemon_state(pokemon) -> dict[str, Any]:
         "types": list(pokemon.types or (species.types if species else [])),
         "battle_level": pokemon.battle_level if can_see_battle_level else None,
     }
+
+
+def pokemon_sprite_path(species) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", species.name.lower()).strip("-") or "pokemon"
+    return f"/static/sprites/pokemon/{species.pokedex_id:03d}-{slug}.png"
+
+
+def pokemon_mentions_for_text(text: str) -> list[dict[str, Any]]:
+    matches: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for species in sorted(engine.pokemon.values(), key=lambda item: len(item.name), reverse=True):
+        pattern = rf"(?<![A-Za-z0-9]){re.escape(species.name)}(?![A-Za-z0-9])"
+        if not re.search(pattern, text, flags=re.IGNORECASE):
+            continue
+        if species.name in seen:
+            continue
+        seen.add(species.name)
+        matches.append({
+            "name": species.name,
+            "sprite": pokemon_sprite_path(species),
+            "types": list(species.types),
+        })
+        if len(matches) >= 3:
+            break
+    return matches
+
+
+def badge_symbol(name: str) -> str:
+    for key, symbol in BADGE_SYMBOLS.items():
+        if key.lower() in name.lower():
+            return symbol
+    return "●"
+
+
+def ribbon_symbol(name: str) -> str:
+    for key, symbol in RIBBON_SYMBOLS.items():
+        if key.lower() in name.lower():
+            return symbol
+    return "✦"
 
 
 def state() -> dict[str, Any]:
@@ -134,6 +205,11 @@ def state() -> dict[str, Any]:
             for egg in character.eggs
         ],
         "badges": character.badges,
+        "badge_display": [{"name": badge, "symbol": badge_symbol(badge)} for badge in character.badges],
+        "contest_ribbons": [
+            {"name": ribbon, "symbol": ribbon_symbol(ribbon)}
+            for ribbon in character.flags.get("contest_ribbons", [])
+        ],
         "inventory": dict(sorted(character.inventory.items())),
         "history": [entry.to_dict() for entry in character.history[-12:]],
         "pokedex_seen": len(character.pokedex_seen),
@@ -169,13 +245,24 @@ def pending_event_choices() -> list[dict[str, Any]]:
     if pending_event is None:
         return []
     if pending_event.event_id == "oak_starter":
+        step = character.flags.get("oak_choice_step") if character is not None else None
+        if step == "pokemon":
+            options = list(character.flags.get("oak_pokemon_options", [])) if character is not None else []
+            career = character.flags.get("oak_pending_career", "Jornada") if character is not None else "Jornada"
+            return [
+                {"index": index, "text": f"{name} - {career}"}
+                for index, name in enumerate(options)
+            ]
+        if step == "academy_focus":
+            return [
+                {"index": index, "text": f"{option['name']} - Estudante"}
+                for index, option in enumerate(engine.academy_focus_options())
+            ]
         return [
-            {"index": 0, "text": "Bulbasaur - Treinador"},
-            {"index": 1, "text": "Charmander - Treinador"},
-            {"index": 2, "text": "Squirtle - Treinador"},
-            {"index": 3, "text": "Bulbasaur - Criador"},
-            {"index": 4, "text": "Charmander - Coordenador"},
-            {"index": 5, "text": "Recusar por enquanto"},
+            {"index": 0, "text": "Seguir como Treinador"},
+            {"index": 1, "text": "Seguir como Criador"},
+            {"index": 2, "text": "Seguir como Coordenador"},
+            {"index": 3, "text": "Continuar como Estudante"},
         ]
     return [{"index": index, "text": choice.text} for index, choice in enumerate(pending_event.choices)]
 
@@ -282,19 +369,42 @@ def api_event_choice():
     data = request.get_json(silent=True) or {}
     index = int(data.get("index") or 0)
     if pending_event.event_id == "oak_starter":
-        oak_choices = [
-            ("Bulbasaur", "Treinador"),
-            ("Charmander", "Treinador"),
-            ("Squirtle", "Treinador"),
-            ("Bulbasaur", "Criador"),
-            ("Charmander", "Coordenador"),
-            (None, None),
-        ]
-        starter, career = oak_choices[max(0, min(index, len(oak_choices) - 1))]
-        text = engine.choose_starter(character, starter, career)
+        step = character.flags.get("oak_choice_step")
+        if step == "pokemon":
+            options = list(character.flags.get("oak_pokemon_options", []))
+            if not options:
+                return jsonify({"error": "Nenhum Pokemon disponivel para esta escolha."}), 400
+            selected = options[max(0, min(index, len(options) - 1))]
+            career = str(character.flags.get("oak_pending_career") or "Treinador")
+            text = engine.choose_starter(character, selected, career)
+            for key in ("oak_choice_step", "oak_pending_career", "oak_pokemon_options"):
+                character.flags.pop(key, None)
+            pending_event = None
+        elif step == "academy_focus":
+            options = engine.academy_focus_options()
+            if not options:
+                return jsonify({"error": "Nenhum foco academico disponivel."}), 400
+            option = options[max(0, min(index, len(options) - 1))]
+            focus_type = "Normal" if option["id"] == "pokemon_types" else None
+            ok, text = engine.set_academy_focus(character, option["id"], focus_type)
+            if ok:
+                character.flags.pop("oak_choice_step", None)
+                pending_event = None
+        else:
+            careers = ["Treinador", "Criador", "Coordenador", "Estudante da academia"]
+            career = careers[max(0, min(index, len(careers) - 1))]
+            if career == "Estudante da academia":
+                text = engine.choose_starter(character, None, career)
+                character.flags["oak_choice_step"] = "academy_focus"
+            else:
+                options = engine.oak_pokemon_options_for_career(career)
+                character.flags["oak_pending_career"] = career
+                character.flags["oak_pokemon_options"] = options
+                character.flags["oak_choice_step"] = "pokemon"
+                text = f"Professor Oak aprovou sua escolha: {career}. Agora escolha seu primeiro Pokemon."
     else:
         text = engine.apply_event_choice(character, pending_event, index)
-    pending_event = None
+        pending_event = None
     if text:
         push("event", text, "Escolha")
     return response()

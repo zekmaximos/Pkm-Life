@@ -8,7 +8,7 @@ from game.battle import resolve_auto_battle
 from game.capture import attempt_capture, calculate_capture_chance
 from game.economy import calculate_money_gain
 from game.inventory import Item
-from game.pokemon import PokemonSpecies, assign_evolution_stages, create_owned_pokemon
+from game.pokemon import PokemonSpecies, assign_evolution_stages, create_owned_pokemon, coherent_pokemon_level, minimum_level_for_species
 from game.character import Character
 from game.careers import (
     CAREER_BALL_CRAFTER,
@@ -156,6 +156,16 @@ class CoreSystemsTest(unittest.TestCase):
         notes = grant_pokemon_xp(pokemon, 100, species)
         self.assertEqual(pokemon.species, "Ivysaur")
         self.assertTrue(any("evoluiu" in note for note in notes))
+
+    def test_evolved_pokemon_level_is_coherent_with_evolution(self) -> None:
+        engine = GameEngine()
+        pidgeotto = engine.pokemon["Pidgeotto"]
+        pidgeot = engine.pokemon["Pidgeot"]
+
+        self.assertEqual(minimum_level_for_species(pidgeotto, engine.pokemon), 18)
+        self.assertEqual(minimum_level_for_species(pidgeot, engine.pokemon), 36)
+        self.assertEqual(coherent_pokemon_level(pidgeotto, 9, engine.pokemon), 18)
+        self.assertEqual(create_owned_pokemon(pidgeotto, level=9, species_by_name=engine.pokemon).level, 18)
 
     def test_kanto_database_has_151_pokemon_with_game_stats(self) -> None:
         data = json.loads(Path("data/pokemon_kanto.json").read_text(encoding="utf-8"))
@@ -419,6 +429,18 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertEqual(character.career, "Criador")
         self.assertIn("Bulbasaur", message)
 
+    def test_oak_pokemon_options_match_selected_profession(self) -> None:
+        engine = GameEngine()
+        self.assertEqual(engine.oak_pokemon_options_for_career("Treinador"), ["Bulbasaur", "Charmander", "Squirtle"])
+        coordinator_options = engine.oak_pokemon_options_for_career("Coordenador")
+        breeder_options = engine.oak_pokemon_options_for_career("Criador")
+        self.assertEqual(len(coordinator_options), 2)
+        self.assertEqual(len(breeder_options), 3)
+        for name in coordinator_options + breeder_options:
+            species = engine.pokemon[name]
+            self.assertEqual(species.rarity, "common")
+            self.assertFalse(species.is_starter)
+
     def test_random_area_pokemon_event_effect_adds_valid_pokemon(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Case")
@@ -664,11 +686,25 @@ class CoreSystemsTest(unittest.TestCase):
         character.inventory["Poke Ball"] = 5
         character.attributes.POK = 90
         character.attributes.LUK = 90
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=5))
         with patch("game.engine.random.random", return_value=0.0):
             notes = engine.resolve_automatic_year_encounter(character)
         self.assertTrue(notes)
         self.assertIn("Durante o ano", notes[0])
         self.assertTrue(any(word in " ".join(notes) for word in ("Captura automatica", "Batalha automatica", "observou")))
+
+    def test_encounter_without_pokemon_reduces_health_without_game_over(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        character.health = 4
+        character.current_city = "route_1"
+        character.team = []
+        with patch("game.engine.random.randint", return_value=7):
+            success, message = engine.manual_action_hunt_wild_pokemon(character)
+        self.assertFalse(success)
+        self.assertEqual(character.health, 1)
+        self.assertIn("Sem Pokemon", message)
 
     def test_annual_capture_adds_owned_pokemon_to_team_or_box(self) -> None:
         engine = GameEngine()
@@ -683,6 +719,18 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertGreater(len(character.team) + len(character.box), before_owned)
         self.assertTrue(character.pokedex_caught)
         self.assertGreaterEqual(len(report["captures"]), 1)
+
+    def test_annual_capture_does_not_create_underleveled_evolved_pokemon(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 10
+        character.career = CAREER_TRAINER
+        character.inventory = {"Master Ball": 1}
+        with patch("game.year_simulation._pick_activity", return_value="capture"), patch("game.year_simulation.random.choice", return_value=engine.pokemon["Pidgeotto"]), patch("game.year_simulation.random.randint", return_value=9), patch("game.year_simulation._capture_note", return_value="captura"), patch("game.year_simulation._sim_career_mission", return_value=None), patch("game.capture.random.random", return_value=0.0):
+            result = simulate_year_activities(character, engine.pokemon, months=3)[0]
+        self.assertEqual(result.pokemon_name, "Pidgeotto")
+        self.assertEqual(result.pokemon_level, 18)
+        self.assertEqual(character.team[0].level, 18)
 
     def test_grid_travel_stores_canonical_location_id(self) -> None:
         engine = GameEngine()
@@ -1059,6 +1107,24 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertGreaterEqual(result.participants, result.rank)
 
+    def test_contest_win_adds_visual_ribbon_flag(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.money = 1000
+        character.career = CAREER_COORDINATOR
+        pokemon = create_owned_pokemon(engine.pokemon["Vulpix"], level=30)
+        pokemon.beauty = 100
+        pokemon.occult = 100
+        character.add_pokemon(pokemon)
+        with patch("game.contests.random.uniform", return_value=0.9):
+            success, result, message = engine.enter_contest(character, 0, "local", "beauty")
+        self.assertTrue(success, message)
+        self.assertEqual(result.rank, 1)
+        self.assertTrue(character.flags.get("contest_ribbons"))
+        self.assertIn("Ribbon Beauty", character.flags["contest_ribbons"][0])
+
+
     def test_breeder_has_better_breed_egg_path(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Case")
@@ -1270,6 +1336,8 @@ class CoreSystemsTest(unittest.TestCase):
         created = client.post("/api/new", json={"name": "OakWeb", "hometown": "Pallet Town"})
         self.assertEqual(created.status_code, 200)
         web_app.character.age = 9
+        web_app.character.current_city = "Pallet Town"
+        web_app.character.hometown = "Pallet Town"
         web_app.character.team = []
         web_app.character.box = []
         web_app.character.flags.pop("oak_event_done", None)
@@ -1278,12 +1346,43 @@ class CoreSystemsTest(unittest.TestCase):
         payload = advanced.get_json()
         self.assertIsNotNone(payload.get("pending_event"))
         self.assertIn("Professor Oak", payload["pending_event"]["title"])
+        career_step = client.post("/api/event_choice", json={"index": 0})
+        self.assertEqual(career_step.status_code, 200)
+        self.assertIsNotNone(career_step.get_json().get("pending_event"))
+        self.assertIn("Bulbasaur", career_step.get_json()["pending_event"]["choices"][0]["text"])
         accepted = client.post("/api/event_choice", json={"index": 0})
         self.assertEqual(accepted.status_code, 200)
         state = accepted.get_json()["state"]
         self.assertTrue(state["team"])
         self.assertEqual(state["team"][0]["species"], "Bulbasaur")
+        self.assertTrue(state["team"][0]["sprite"].endswith("001-bulbasaur.png"))
+        self.assertTrue(Path("web/static/sprites/pokemon/001-bulbasaur.png").exists())
         self.assertEqual(state["career"], "Treinador")
+
+    def test_web_oak_student_path_chooses_academy_focus(self) -> None:
+        import web.app as web_app
+
+        client = web_app.app.test_client()
+        created = client.post("/api/new", json={"name": "StudentOak", "hometown": "Pallet Town"})
+        self.assertEqual(created.status_code, 200)
+        web_app.character.age = 9
+        web_app.character.current_city = "Pallet Town"
+        web_app.character.hometown = "Pallet Town"
+        web_app.character.team = []
+        web_app.character.box = []
+        web_app.character.flags.pop("oak_event_done", None)
+        advanced = client.post("/api/advance", json={"months": 12})
+        self.assertEqual(advanced.status_code, 200)
+        student_step = client.post("/api/event_choice", json={"index": 3})
+        self.assertEqual(student_step.status_code, 200)
+        self.assertIsNotNone(student_step.get_json().get("pending_event"))
+        focus_step = client.post("/api/event_choice", json={"index": 0})
+        self.assertEqual(focus_step.status_code, 200)
+        state = focus_step.get_json()["state"]
+        self.assertEqual(state["career"], "Estudante da academia")
+        self.assertFalse(state["team"])
+        self.assertIsNone(focus_step.get_json().get("pending_event"))
+        self.assertTrue(web_app.character.flags.get("academy_focus"))
 
     def test_web_does_not_advance_after_death(self) -> None:
         import web.app as web_app
@@ -1303,6 +1402,14 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertEqual(state["age"], 15)
         self.assertTrue(state["dead"])
         self.assertFalse(state["action_availability"]["advance"])
+
+    def test_web_feed_cards_include_pokemon_sprite_mentions(self) -> None:
+        import web.app as web_app
+
+        mentions = web_app.pokemon_mentions_for_text("Um Pidgey selvagem apareceu perto de Pallet Town.")
+
+        self.assertEqual(mentions[0]["name"], "Pidgey")
+        self.assertTrue(mentions[0]["sprite"].endswith("016-pidgey.png"))
 
 
 if __name__ == "__main__":

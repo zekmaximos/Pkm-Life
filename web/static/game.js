@@ -105,6 +105,7 @@ function render() {
   renderAttributes();
   renderTeam();
   renderBox();
+  renderBadgeRibbonShelf();
   renderInventory();
   renderCareers();
   renderAcademy();
@@ -137,7 +138,7 @@ function renderTeam() {
           ${i > 0 ? `<button class="reorder-btn" onclick="reorderTeam(${i}, ${i-1})">&#8593;</button>` : ""}
           ${i < list.length-1 ? `<button class="reorder-btn" onclick="reorderTeam(${i}, ${i+1})">&#8595;</button>` : ""}
         </div>
-        <div class="poke-icon">${typeIcon(p.types?.[0])}</div>
+        ${pokemonIconHtml(p)}
         <div style="flex:1;min-width:0">
           <div class="poke-name">${p.name}</div>
           <div class="poke-level">Lv.${p.level} · ${p.status}</div>
@@ -173,7 +174,7 @@ function renderBox() {
   }
   boxEl.innerHTML = box.map((p, bi) => `
     <div class="box-card">
-      <span class="poke-icon">${typeIcon(p.types?.[0])}</span>
+      ${pokemonIconHtml(p)}
       <span class="poke-name">${escHtml(p.name)}</span>
       <span class="poke-level">Lv.${p.level}</span>
       <select class="box-swap-select" data-box="${bi}">
@@ -213,6 +214,28 @@ function renderAcademy() {
   $("academySelect").innerHTML = (appState.academy_options || [])
     .map((f) => `<option value="${f.id}">${f.name}</option>`)
     .join("");
+}
+
+function renderBadgeRibbonShelf() {
+  const shelf = $("badgeRibbonShelf");
+  if (!shelf) return;
+  const badges = appState.badge_display || [];
+  const ribbons = appState.contest_ribbons || [];
+  if (!badges.length && !ribbons.length) {
+    shelf.innerHTML = `<span class="symbol-empty">Sem insignias ou ribbons ainda.</span>`;
+    return;
+  }
+  const badgeHtml = badges.map((b) => `
+    <span class="symbol-chip badge" title="${escHtml(b.name)}">
+      <span>${escHtml(b.symbol)}</span>${escHtml(b.name)}
+    </span>
+  `).join("");
+  const ribbonHtml = ribbons.map((r) => `
+    <span class="symbol-chip ribbon" title="${escHtml(r.name)}">
+      <span>${escHtml(r.symbol)}</span>${escHtml(r.name)}
+    </span>
+  `).join("");
+  shelf.innerHTML = badgeHtml + ribbonHtml;
 }
 
 function renderGymPreview() {
@@ -288,15 +311,16 @@ function renderFeed() {
     ? currentFeed.map((item) => {
       const summary = isSummaryCard(item);
       const battle = isBattleCard(item);
-      const textHtml = summary ? formatSummaryText(item.text)
+      const mentionedPokemon = (item.pokemon_sprites || []).map((p) => p.name);
+      const textHtml = summary ? formatSummaryText(item.text, mentionedPokemon)
                      : battle ? formatBattleText(item.text)
-                     : escHtml(item.text);
+                     : formatRichText(item.text, mentionedPokemon);
       const textClass = summary ? "event-text summary-text" : "event-text";
       return `
         <article class="feed-card ${item.kind || "event"}${summary ? " summary-card" : ""}">
-          <div class="event-icon">${feedIcon(item.kind)}</div>
+          ${feedPokemonIconHtml(item)}
           <div style="min-width:0;flex:1">
-            <div class="event-title">${item.title || ""}</div>
+            <div class="event-title">${formatRichText(item.title || "", mentionedPokemon)}</div>
             <div class="${textClass}">${textHtml}</div>
             <div class="event-time">${item.time || `Ano ${appState?.age ?? 0}`}</div>
           </div>
@@ -320,10 +344,10 @@ function renderEvent(event) {
   }
   box.classList.remove("hidden");
   box.innerHTML = `
-    <div class="choice-label">${escHtml(event.title)}</div>
-    <div class="event-text" style="margin-bottom:8px">${escHtml(event.text)}</div>
+    <div class="choice-label">${formatRichText(event.title)}</div>
+    <div class="event-text event-choice-text">${formatRichText(event.text)}</div>
     <div class="choice-list">
-      ${event.choices.map((c) => `<button onclick="chooseEvent(${c.index})">${escHtml(c.text)}</button>`).join("")}
+      ${event.choices.map((c) => `<button onclick="chooseEvent(${c.index})">${formatRichText(c.text)}</button>`).join("")}
     </div>
   `;
 }
@@ -337,9 +361,77 @@ function escHtml(str) {
     .replace(/>/g, "&gt;");
 }
 
+function escAttr(str) {
+  return escHtml(str).replace(/"/g, "&quot;");
+}
+
+function pokemonIconHtml(p) {
+  const fallback = typeIcon(p?.types?.[0]);
+  if (!p?.sprite) {
+    return `<div class="poke-icon">${fallback}</div>`;
+  }
+  return `
+    <div class="poke-icon has-sprite" data-fallback="${escAttr(fallback)}">
+      <img src="${escAttr(p.sprite)}" alt="${escAttr(p.species || p.name || "Pokemon")}" onerror="this.parentElement.textContent=this.parentElement.dataset.fallback">
+    </div>
+  `;
+}
+
+function feedPokemonIconHtml(item) {
+  const sprites = item?.pokemon_sprites || [];
+  if (!sprites.length) {
+    return `<div class="event-icon">${feedIcon(item?.kind)}</div>`;
+  }
+  const first = sprites[0];
+  const extra = sprites.length > 1 ? `<span class="event-pokemon-extra">+${sprites.length - 1}</span>` : "";
+  const fallback = feedIcon(item?.kind || "pokemon");
+  return `
+    <div class="event-pokemon-icon" title="${escAttr(first.name)}" data-fallback="${escAttr(fallback)}">
+      <img src="${escAttr(first.sprite)}" alt="${escAttr(first.name)}" onerror="this.parentElement.textContent=this.parentElement.dataset.fallback">
+      ${extra}
+    </div>
+  `;
+}
+
+function escapeRegex(str) {
+  return String(str || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function pokemonNameList(pokemonNames = []) {
+  const basePokemonNames = ["Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Eevee", "Pidgey", "Rattata", "Caterpie", "Weedle"];
+  return Array.from(new Set([...pokemonNames, ...basePokemonNames].filter(Boolean)))
+    .sort((a, b) => b.length - a.length);
+}
+
+function highlightPokemonHtml(html, pokemonNames = []) {
+  let result = html;
+  for (const name of pokemonNameList(pokemonNames)) {
+    result = result.replace(new RegExp(`(?<![A-Za-z0-9])(${escapeRegex(name)})(?![A-Za-z0-9])`, "gi"), '<span class="rich-pokemon">$1</span>');
+  }
+  return result;
+}
+
+function formatRichText(text, pokemonNames = []) {
+  let html = escHtml(text);
+  html = highlightPokemonHtml(html, pokemonNames);
+  const rules = [
+    [/\b(Professor Oak|Oak)\b/g, "rich-oak"],
+    [/\b(Pokemon|Pokémon)\b/g, "rich-pokemon"],
+    [/\b(Treinador|Criador|Coordenador|Estudante|Pesquisador|Explorador|Cientista)\b/g, "rich-career"],
+    [/\b(Kanto|Pallet Town|Viridian City|Pewter City|Cerulean City)\b/g, "rich-place"],
+    [/\b(Saude|morte|Game Over|fugiu|golpes|risco)\b/gi, "rich-danger"],
+    [/\b(Pokedollar|dinheiro|premio|salario)\b/gi, "rich-money"],
+    [/\b(Insignia|Ribbon|Contest|Ginasio)\b/gi, "rich-achievement"],
+  ];
+  for (const [pattern, cls] of rules) {
+    html = html.replace(pattern, `<span class="${cls}">$1</span>`);
+  }
+  return html;
+}
+
 // ── Summary text rich formatter ───────────────────────────────────────────────
 
-function formatSummaryText(text) {
+function formatSummaryText(text, pokemonNames = []) {
   const lines = String(text || "").split("\n").filter(l => l.trim());
 
   // label → [display, color, style-hint]
@@ -368,6 +460,10 @@ function formatSummaryText(text) {
     return h.replace(/(Lv\.\d+)/g, '<span class="sum-lv">$1</span>');
   }
 
+  function rich(h) {
+    return highlightPokemonHtml(h, pokemonNames);
+  }
+
   return lines.map(raw => {
     const line = raw.trim();
 
@@ -385,8 +481,10 @@ function formatSummaryText(text) {
         }
         const rows = parts.map(p => {
           let h = esc(p);
+          const eggMoment = /ovo.*chocou|chocou.*revelou|revelou/i.test(p);
           h = h.replace(/(\d[\d.,]*)\s*Pokedollar/gi, '<span class="sum-money-n">$1 ₱</span>');
-          return `<span class="sum-log-item">• ${h}</span>`;
+          h = rich(h);
+          return `<span class="sum-log-item${eggMoment ? " sum-egg-log" : ""}">• ${h}</span>`;
         }).join("");
         return `<div class="sum-row sum-row-log">${labelHtml}<div class="sum-log-list">${rows}</div></div>`;
       }
@@ -395,11 +493,11 @@ function formatSummaryText(text) {
       if (hint === "money") {
         if (/ganhou/.test(rest)) {
           let h = esc(rest).replace(/(\d[\d.,]*)\s*Pokedollar/gi, '<span class="sum-gain">+$1 ₱</span>');
-          return `<div class="sum-row">${labelHtml} <span class="sum-pos">${h}</span></div>`;
+          return `<div class="sum-row">${labelHtml} <span class="sum-pos">${rich(h)}</span></div>`;
         }
         if (/gastou|perdeu/.test(rest)) {
           let h = esc(rest).replace(/(\d[\d.,]*)\s*Pokedollar/gi, '<span class="sum-loss">-$1 ₱</span>');
-          return `<div class="sum-row">${labelHtml} <span class="sum-neg">${h}</span></div>`;
+          return `<div class="sum-row">${labelHtml} <span class="sum-neg">${rich(h)}</span></div>`;
         }
         return `<div class="sum-row">${labelHtml} <span class="sum-muted">${esc(rest)}</span></div>`;
       }
@@ -411,7 +509,7 @@ function formatSummaryText(text) {
         }
         let h = applyLevel(applyArrow(esc(rest)));
         h = h.replace(/(evolucoes:)/gi, '<span class="sum-evo">evoluções:</span>');
-        return `<div class="sum-row">${labelHtml} <span>${h}</span></div>`;
+        return `<div class="sum-row">${labelHtml} <span>${rich(h)}</span></div>`;
       }
 
       // ── Encontros ─────────────────────────────────────────────────────────
@@ -424,7 +522,7 @@ function formatSummaryText(text) {
         h = h.replace(/(\d+ derrota\(s\))/g, '<span class="sum-lose">$1</span>');
         h = h.replace(/(\d+ captura\(s\))/g, '<span class="sum-cap">$1</span>');
         h = h.replace(/(\d+ tentativa\(s\) frustrada\(s\))/g, '<span class="sum-fail">$1</span>');
-        return `<div class="sum-row">${labelHtml} <span>${h}</span></div>`;
+        return `<div class="sum-row">${labelHtml} <span>${rich(h)}</span></div>`;
       }
 
       // ── Ginásios ──────────────────────────────────────────────────────────
@@ -457,7 +555,7 @@ function formatSummaryText(text) {
       // ── Local ─────────────────────────────────────────────────────────────
       if (hint === "location") {
         let h = applyArrow(esc(rest));
-        return `<div class="sum-row">${labelHtml} <span class="sum-city">${h}</span></div>`;
+        return `<div class="sum-row">${labelHtml} <span class="sum-city">${rich(h)}</span></div>`;
       }
 
       // ── Reputação ─────────────────────────────────────────────────────────
@@ -477,7 +575,10 @@ function formatSummaryText(text) {
       }
       let h = applyLevel(applyArrow(esc(rest)));
       h = h.replace(/(\d[\d.,]*)\s*Pokedollar/gi, '<span class="sum-money-n">$1 ₱</span>');
-      return `<div class="sum-row">${labelHtml} <span>${h}</span></div>`;
+      if (hint === "eggs" && /chocados|chocou|revelou/i.test(rest)) {
+        return `<div class="sum-row sum-egg-row">${labelHtml} <span class="sum-egg-birth">${rich(h)}</span></div>`;
+      }
+      return `<div class="sum-row">${labelHtml} <span>${rich(h)}</span></div>`;
     }
 
     // Fallback: plain

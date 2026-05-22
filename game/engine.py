@@ -36,7 +36,7 @@ from .lifestyle import (
 from .map_grid import KantoGrid, load_grid
 from .names import NameDatabase
 from .mortality import check_mortality, is_dead
-from .pokemon import PokemonSpecies, assign_evolution_stages, create_owned_pokemon
+from .pokemon import PokemonSpecies, assign_evolution_stages, create_owned_pokemon, coherent_pokemon_level, minimum_level_for_species
 from .prison import imprison, progress_prison_time
 from .progression import progress_year
 from .progression import grant_pokemon_xp
@@ -53,6 +53,26 @@ from .tournaments import (
 DATA_DIR = Path("data")
 MIN_CHILD_ACTION_AGE = 5
 MIN_JOURNEY_ACTION_AGE = 10
+
+
+def _contest_ribbon_label(category: str, difficulty: str) -> str:
+    symbols = {
+        "beauty": "✦",
+        "cute": "♡",
+        "cool": "◆",
+        "smart": "◇",
+        "mysterious": "☾",
+    }
+    names = {
+        "beauty": "Beauty",
+        "cute": "Cute",
+        "cool": "Cool",
+        "smart": "Smart",
+        "mysterious": "Mysterious",
+    }
+    symbol = symbols.get(category, "✦")
+    name = names.get(category, category.title())
+    return f"{symbol} Ribbon {name} {difficulty.title()}"
 
 
 @dataclass(frozen=True)
@@ -317,7 +337,7 @@ class GameEngine:
             if egg.progress >= egg.years_to_hatch:
                 species = self.pokemon.get(egg.species)
                 if species:
-                    pokemon = create_owned_pokemon(species, level=1, origin=f"chocado de ovo: {egg.origin}")
+                    pokemon = create_owned_pokemon(species, level=1, origin=f"chocado de ovo: {egg.origin}", species_by_name=self.pokemon)
                     destination = character.add_pokemon(pokemon)
                     location = "equipe" if destination == "team" else "Box"
                     character.register_caught(species.name)
@@ -476,13 +496,21 @@ class GameEngine:
         if not encounter:
             return []
         species = self.pokemon[encounter["species"]]
-        level = random.randint(encounter["min_level"], encounter["max_level"])
+        level = coherent_pokemon_level(species, random.randint(encounter["min_level"], encounter["max_level"]), self.pokemon)
+        notes = [f"Durante o ano, voce encontrou um {species.name} selvagem de nivel {level} em {character.current_city}."]
+        if not character.team:
+            health_loss = random.randint(2, 7)
+            character.health = max(1, character.health - health_loss)
+            character.register_seen(species.name)
+            notes.append(
+                f"Sem Pokemon para se defender, voce fugiu do {species.name} e recebeu alguns golpes. Saude -{health_loss}."
+            )
+            return notes
         has_ball = any(
             amount > 0 and name in self.items and self.items[name].item_type == "capture"
             for name, amount in character.inventory.items()
         )
         action = decide_auto_encounter_action(character, species, level, has_ball)
-        notes = [f"Durante o ano, voce encontrou um {species.name} selvagem de nivel {level} em {character.current_city}."]
         if action == "capture":
             success, message = self.capture_wild(character, species.name, level)
             notes.append(f"Captura automatica: {message}")
@@ -751,10 +779,34 @@ class GameEngine:
     def character_has_pokemon(self, character: Character) -> bool:
         return bool(character.team or character.box)
 
+    def oak_pokemon_options_for_career(self, career: str) -> list[str]:
+        if career == "Treinador":
+            return ["Bulbasaur", "Charmander", "Squirtle"]
+        common_species = [
+            species.name
+            for species in self.pokemon.values()
+            if species.can_be_wild
+            and species.rarity == "common"
+            and not species.is_legendary
+            and not species.is_mythic
+            and not species.is_starter
+        ]
+        if not common_species:
+            common_species = ["Pidgey", "Rattata", "Caterpie"]
+        count = 3 if career == "Criador" else 2
+        rng = random.Random(f"{career}:{len(common_species)}:{self.data_dir}")
+        return rng.sample(common_species, k=min(count, len(common_species)))
+
     def choose_starter(self, character: Character, starter_name: str | None, career: str | None = None) -> str:
         character.flags["oak_event_done"] = True
         allowed_careers = {"Treinador", "Criador", "Coordenador"}
         if starter_name is None:
+            if career == "Estudante da academia":
+                character.career = "Estudante da academia"
+                history = "Aos 10 anos, voce decidiu continuar como estudante da academia."
+                character.add_history(history, ["oak", "academy"])
+                self._append_to_annual_report(character, history)
+                return "Voce continuou como Estudante da academia. Escolha um foco de estudo para guiar seus proximos anos."
             history = "Aos 10 anos, voce recusou iniciar uma jornada Pokemon por enquanto."
             character.add_history(history, ["oak"])
             self._append_to_annual_report(character, history)
@@ -765,7 +817,7 @@ class GameEngine:
             self._append_to_annual_report(character, history)
             return "Professor Oak decidiu esperar ate voce escolher uma profissao ligada a Pokemon."
         species = self.pokemon[starter_name]
-        pokemon = create_owned_pokemon(species, level=5, origin="presente do Professor Oak")
+        pokemon = create_owned_pokemon(species, level=5, origin="presente do Professor Oak", species_by_name=self.pokemon)
         character.add_pokemon(pokemon)
         character.career = career
         history = f"Aos 10 anos, voce decidiu ser {career} e recebeu um {starter_name} do Professor Oak."
@@ -1222,7 +1274,7 @@ class GameEngine:
             return False, f"Voce precisa de {price} Pokedollar."
         character.money -= price
         species = self.pokemon[species_name]
-        pokemon = create_owned_pokemon(species, level=max(5, min(35, character.age // 2)), origin="mercado negro")
+        pokemon = create_owned_pokemon(species, level=max(5, min(35, character.age // 2)), origin="mercado negro", species_by_name=self.pokemon)
         destination = character.add_pokemon(pokemon)
         character.register_caught(species.name)
         # Criminosos de carreira sofrem menos penalidade reputacional (já é rotina)
@@ -1289,7 +1341,7 @@ class GameEngine:
             chance -= 0.08
         chance = max(0.03, min(0.55, chance))
         if random.random() <= chance:
-            pokemon = create_owned_pokemon(species, level=random.randint(5, max(8, min(35, character.age + 8))), origin="roubado")
+            pokemon = create_owned_pokemon(species, level=random.randint(5, max(8, min(35, character.age + 8))), origin="roubado", species_by_name=self.pokemon)
             destination = character.add_pokemon(pokemon)
             character.register_caught(species.name)
             apply_negative_reputation(character, 10 if character.career == "Criminoso" else 18, "roubo de Pokemon")
@@ -1506,6 +1558,16 @@ class GameEngine:
             return False, "Cacadas so ficam disponiveis a partir dos 10 anos."
 
         species, level, encounter_text = self.wild_encounter(character)
+        if not character.team:
+            health_loss = random.randint(3, 9)
+            character.health = max(1, character.health - health_loss)
+            character.register_seen(species.name)
+            msg = (
+                encounter_text
+                + f"\nSem Pokemon na equipe, voce fugiu e foi atingido de raspao. Saude -{health_loss}."
+            )
+            character.add_history(msg, ["pokemon", "risk", "manual"])
+            return False, msg
 
         pok = character.attributes.POK
         phy = character.attributes.PHY
@@ -1526,7 +1588,7 @@ class GameEngine:
                 character.inventory["Poke Ball"] = max(0, character.inventory["Poke Ball"] - 1)
                 if character.inventory["Poke Ball"] == 0:
                     del character.inventory["Poke Ball"]
-            new_poke = create_owned_pokemon(species, level=level, origin="cacada manual")
+            new_poke = create_owned_pokemon(species, level=level, origin="cacada manual", species_by_name=self.pokemon)
             destination = character.add_pokemon(new_poke)
             slot = "equipe" if destination == "team" else "Box"
             character.register_caught(species.name)
@@ -1813,7 +1875,7 @@ class GameEngine:
                 continue
             level = int(reward.get("level", max(1, min(5, character.age + 1))))
             origin = reward.get("origin", f"evento em {character.current_city}")
-            pokemon = create_owned_pokemon(self.pokemon[species_name], level=level, origin=origin)
+            pokemon = create_owned_pokemon(self.pokemon[species_name], level=level, origin=origin, species_by_name=self.pokemon)
             destination = character.add_pokemon(pokemon)
             location = "equipe ativa" if destination == "team" else "Box"
             character.register_caught(species_name)
@@ -1824,8 +1886,8 @@ class GameEngine:
             if not encounter:
                 continue
             species = self.pokemon[encounter["species"]]
-            level = int(reward.get("level", max(1, min(5, encounter["min_level"]))))
-            pokemon = create_owned_pokemon(species, level=level, origin=reward.get("origin", f"evento em {location_name}"))
+            level = coherent_pokemon_level(species, int(reward.get("level", max(1, min(5, encounter["min_level"])))), self.pokemon)
+            pokemon = create_owned_pokemon(species, level=level, origin=reward.get("origin", f"evento em {location_name}"), species_by_name=self.pokemon)
             destination = character.add_pokemon(pokemon)
             place = "equipe ativa" if destination == "team" else "Box"
             character.register_caught(species.name)
@@ -1857,14 +1919,15 @@ class GameEngine:
             encounter = self._choose_encounter(character.current_city)
         if encounter:
             species = self.pokemon[encounter["species"]]
-            level = random.randint(encounter["min_level"], encounter["max_level"])
+            level = coherent_pokemon_level(species, random.randint(encounter["min_level"], encounter["max_level"]), self.pokemon)
         else:
             possible = [
                 species for species in self.pokemon.values()
                 if species.can_be_wild and not species.is_legendary and species.rarity in {"common", "uncommon"}
+                and minimum_level_for_species(species, self.pokemon) <= max(4, min(12, character.age + 2))
             ]
             species = random.choice(possible)
-            level = random.randint(3, max(4, min(12, character.age + 2)))
+            level = coherent_pokemon_level(species, random.randint(3, max(4, min(12, character.age + 2))), self.pokemon)
         character.register_seen(species.name)
         text = f"Um {species.name} selvagem de nivel {level} apareceu perto de {self.display_location_name(character.current_city)}."
         return species, level, text
@@ -1911,7 +1974,7 @@ class GameEngine:
 
     def capture_wild(self, character: Character, species_name: str, level: int) -> tuple[bool, str]:
         ball = self.best_available_ball(character, self.pokemon[species_name])
-        success, message, _ = try_capture(character, self.pokemon[species_name], level, ball=ball, item=self.items.get(ball))
+        success, message, _ = try_capture(character, self.pokemon[species_name], level, ball=ball, item=self.items.get(ball), species_by_name=self.pokemon)
         if success:
             character.register_caught(species_name)
         else:
@@ -2328,6 +2391,11 @@ class GameEngine:
 
         character.reputation = clamp_reputation(character.reputation + result.rep_gained)
         if result.rank == 1:
+            ribbon = _contest_ribbon_label(category, difficulty)
+            ribbons = list(character.flags.get("contest_ribbons", []))
+            if ribbon not in ribbons:
+                ribbons.append(ribbon)
+            character.flags["contest_ribbons"] = ribbons
             history = f"{pokemon.display_name()} venceu um contest {difficulty}."
             character.add_history(history, ["contest", "win"])
         else:

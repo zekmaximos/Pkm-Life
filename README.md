@@ -110,6 +110,8 @@ poke-life/
 |   +-- static/
 |       +-- style.css
 |       +-- game.js
+|       +-- sprites/
+|           +-- pokemon/
 ```
 
 ## Banco de dados local
@@ -133,6 +135,14 @@ Eventos tambem podem conceder `random_area_pokemon` ou `eggs`. Ovos usam tiers C
 O script `tools/build_kanto_database.py` pode regenerar esses arquivos a partir da PokeAPI e das tabelas locais de disponibilidade de Kanto.
 
 O script `tools/build_kanto_locations.py` sincroniza `locations_kanto.json` e adiciona `location_id` nas tabelas de encontro.
+
+## Creditos de assets
+
+Os icones de Pokemon usados na interface sao derivados da colecao HOMENatDexIcons:
+https://chicoeevee.github.io/HOMENatDexIcons/
+
+Pokemon e seus nomes sao marcas registradas de seus respectivos proprietarios.
+Este projeto e um fan project sem fins comerciais.
 
 ## Proximos passos naturais
 

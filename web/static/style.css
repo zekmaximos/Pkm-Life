@@ -208,6 +208,41 @@ label {
   display: block;
   font-size: 18px;
 }
+.symbol-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.symbol-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  padding: 4px 7px;
+  border-radius: var(--border-radius-md);
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.2;
+  border: .5px solid var(--color-border-tertiary);
+}
+.symbol-chip span {
+  font-size: 13px;
+  line-height: 1;
+}
+.symbol-chip.badge {
+  background: var(--amber-soft);
+  color: #6d4707;
+}
+.symbol-chip.ribbon {
+  background: var(--purple-soft);
+  color: #3c3489;
+}
+.symbol-empty {
+  color: var(--color-text-tertiary);
+  font-size: 11px;
+  line-height: 1.35;
+}
 small, .soft {
   color: var(--color-text-secondary);
 }
@@ -260,6 +295,18 @@ small, .soft {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+.poke-icon.has-sprite {
+  background: rgba(255, 253, 248, .65);
+  border: .5px solid rgba(207, 198, 183, .75);
+  overflow: hidden;
+}
+.poke-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+  image-rendering: auto;
 }
 .poke-name {
   font-size: 12px;
@@ -322,6 +369,40 @@ small, .soft {
   flex-shrink: 0;
   font-weight: 700;
 }
+.event-pokemon-icon {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--border-radius-md);
+  background: rgba(255, 253, 248, .82);
+  border: .5px solid var(--color-border-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.event-pokemon-icon img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  display: block;
+}
+.event-pokemon-extra {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: var(--green);
+  color: var(--green-soft);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+}
 .feed-card.event .event-icon, .feed-card.time .event-icon { background: var(--blue-soft); color: #0c447c; }
 .feed-card.pokemon .event-icon, .feed-card.career .event-icon { background: var(--green-soft); color: #085041; }
 .feed-card.money .event-icon, .feed-card.egg .event-icon { background: var(--amber-soft); color: #633806; }
@@ -347,14 +428,24 @@ small, .soft {
 }
 .choice-bar {
   background: var(--color-background-primary);
-  border-top: .5px solid var(--color-border-tertiary);
-  padding: 10px 14px;
+  border: .5px solid var(--color-border-tertiary);
+  border-left: 3px solid var(--green);
+  border-radius: var(--border-radius-md);
+  margin: 12px 14px 0;
+  padding: 12px 14px;
+  box-shadow: 0 8px 22px rgba(37, 35, 31, .08);
+  flex-shrink: 0;
 }
 .choice-label {
-  color: var(--color-text-secondary);
+  color: var(--color-text-tertiary);
   font-size: 11px;
   margin-bottom: 6px;
-  font-weight: 600;
+  font-weight: 650;
+  text-transform: uppercase;
+}
+.event-choice-text {
+  margin-bottom: 10px;
+  line-height: 1.45;
 }
 .choice-list {
   display: flex;
@@ -370,6 +461,13 @@ small, .soft {
   color: var(--green-soft);
   border-color: var(--green);
 }
+.rich-oak { color: var(--blue); font-weight: 700; }
+.rich-pokemon { color: var(--green); font-weight: 700; }
+.rich-career { color: var(--purple); font-weight: 700; }
+.rich-place { color: var(--blue); font-weight: 650; }
+.rich-danger { color: var(--red); font-weight: 700; }
+.rich-money { color: #8a6200; font-weight: 700; }
+.rich-achievement { color: var(--amber); font-weight: 700; }
 .menu-group {
   display: flex;
   flex-direction: column;
@@ -523,6 +621,26 @@ small, .soft {
 .sum-lv     { color: var(--blue);  font-weight: 600; font-size: 11px; }
 .sum-health { font-weight: 700; }
 .sum-arrow  { color: var(--blue); font-weight: 700; margin: 0 2px; }
+.sum-egg-row {
+  margin: 5px 0;
+  align-items: center;
+}
+.sum-egg-birth {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--border-radius-md);
+  background: var(--amber-soft);
+  color: #704800;
+  border: .5px solid rgba(186, 117, 23, .25);
+  font-weight: 650;
+}
+.sum-egg-birth::before {
+  content: "○";
+  color: var(--amber);
+  font-weight: 800;
+}
 .sum-log-list {
   display: flex;
   flex-direction: column;
@@ -536,6 +654,14 @@ small, .soft {
   color: var(--color-text-secondary);
   line-height: 1.45;
   display: block;
+}
+.sum-egg-log {
+  margin-top: 2px;
+  padding: 5px 7px;
+  border-radius: var(--border-radius-md);
+  background: color-mix(in srgb, var(--amber-soft) 72%, var(--color-background-primary));
+  border-left: 2px solid var(--amber);
+  color: #6d4a0c;
 }
 .sum-default { color: var(--color-text-tertiary); font-style: italic; }
 

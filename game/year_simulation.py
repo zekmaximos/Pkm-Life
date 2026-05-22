@@ -372,18 +372,20 @@ def _sim_career_mission(character: "Character") -> ActivityResult | None:
 
 def _sim_capture(character: "Character", species_by_name: dict) -> ActivityResult:
     from .capture import attempt_capture
-    from .pokemon import create_owned_pokemon
+    from .pokemon import create_owned_pokemon, coherent_pokemon_level, minimum_level_for_species
 
+    max_level = max(5, min(25, character.age + 3))
     candidates = [
         species for species in species_by_name.values()
         if species.can_be_wild and not species.is_legendary and species.rarity in {"common", "uncommon"}
+        and minimum_level_for_species(species, species_by_name) <= max_level
     ]
     if not candidates:
         return ActivityResult("care", "Nao encontrou nada para capturar.")
 
     attrs = character.attributes
     species = random.choice(candidates)
-    level = random.randint(3, max(5, min(25, character.age + 3)))
+    level = coherent_pokemon_level(species, random.randint(3, max_level), species_by_name)
     ball_items = {"Master Ball": 100, "Ultra Ball": 25, "Great Ball": 12, "Poke Ball": 0}
     ball_used = "Poke Ball"
     ball_bonus = 0
@@ -422,7 +424,7 @@ def _sim_capture(character: "Character", species_by_name: dict) -> ActivityResul
             origin = f"encontrado aos {age} anos perto de {character.current_city}"
         else:
             origin = f"capturado durante o ano em {character.current_city}"
-        pokemon = create_owned_pokemon(species, level=level, origin=origin)
+        pokemon = create_owned_pokemon(species, level=level, origin=origin, species_by_name=species_by_name)
         destination = character.add_pokemon(pokemon)
         character.register_caught(species.name)
         return ActivityResult(
