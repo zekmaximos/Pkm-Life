@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from flask import Flask, jsonify, render_template, request
 
+from game.careers import CAREER_RANK_XP, career_rank_label
 from game.character import Character
 from game.engine import GameEngine
 from game.save_system import list_saves, load_game, save_game
@@ -148,6 +149,12 @@ def state() -> dict[str, Any]:
     has_team = bool(character.team)
     age = character.age
     dead = bool(character.flags.get("dead"))
+    career_years = dict(character.flags.get("career_years", {}))
+    career_rank = character.career_rank() if character.career else 0
+    career_xp = character.career_xp.get(character.career, 0) if character.career else 0
+    career_needed = CAREER_RANK_XP[career_rank] if character.career and career_rank < 5 else 0
+    has_business = bool(character.career and character.career in dict(character.flags.get("businesses", {})))
+    has_retirement = bool(character.flags.get("retirement_pension"))
     action_availability = {
         "advance": not dead,
         "read": not dead and age >= 5,
@@ -168,6 +175,8 @@ def state() -> dict[str, Any]:
         "breed": not dead and age >= 10 and len(character.team) >= 2 and engine._period_action_available(character, "breed"),
         "tournament": not dead and age >= 10 and has_team and engine._period_action_available(character, "tournament"),
         "hunt": not dead and age >= 10,
+        "battle_search": not dead and age >= 10 and has_team,
+        "hospital": not dead,
     }
     return {
         "ready": True,
@@ -185,6 +194,16 @@ def state() -> dict[str, Any]:
         "career": character.career or "Indefinida",
         "career_info": engine.career_rank_info(character),
         "career_goal": engine.career_goal_status(character) if character.career else "Sem carreira definida.",
+        "career_summary": {
+            "career": character.career or "Indefinida",
+            "rank": career_rank,
+            "rank_label": career_rank_label(character.career, character.career_ranks) if character.career else "",
+            "xp": career_xp,
+            "xp_needed": career_needed,
+            "years": int(career_years.get(character.career, 0)) if character.career else 0,
+            "has_business": has_business,
+            "has_retirement": has_retirement,
+        },
         "academy_focus": engine.academy_focus_info(character),
         "attributes": character.attributes.to_dict(),
         "team": [pokemon_state(pokemon) for pokemon in character.team],
@@ -307,10 +326,15 @@ def api_saves():
 def api_new():
     global character, feed, pending_event
     data = request.get_json(silent=True) or {}
-    name = str(data.get("name") or "Red").strip() or "Red"
+    first_name = str(data.get("name") or "Red").strip() or "Red"
+    first_name = first_name.split()[0]
+    last_name = engine.name_database.random_last_name() if engine.name_database else ""
+    name = f"{first_name} {last_name}".strip()
     cities = [loc.name for loc in engine.locations.values() if loc.kind == "city"]
     hometown = random.choice(cities) if cities else "Pallet Town"
     character = engine.create_character(name, hometown)
+    character.flags["given_name"] = first_name
+    character.flags["family_name"] = last_name
     feed = []
     pending_event = None
     desc = CITY_DESCRIPTIONS.get(hometown, "")
@@ -352,6 +376,8 @@ def api_advance():
     if character.flags.get("dead"):
         push("health", "Game over: o tempo nao avanca apos a morte.", "Game Over")
         return response()
+    if pending_event is not None:
+        return jsonify({"error": "Responda o evento pendente antes de avançar o tempo."}), 400
     data = request.get_json(silent=True) or {}
     months = int(data.get("months") or 12)
     pending_event = engine.advance_time(character, months)
@@ -477,9 +503,30 @@ def api_action(name: str):
     elif name == "hunt":
         ok, message = engine.manual_action_hunt_wild_pokemon(character)
         kind = "pokemon" if ok else "event"
+    elif name == "battle_search":
+        ok, message = engine.manual_action_search_trainer_battle(character)
+        kind = "battle" if ok else "event"
     else:
         return jsonify({"error": "Acao desconhecida."}), 404
     push(kind, message, "Acao")
+    return response()
+
+
+@app.get("/api/hospital")
+def api_hospital_options():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    return jsonify(engine.hospital_options(character))
+
+
+@app.post("/api/hospital")
+def api_hospital():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    data = request.get_json(silent=True) or {}
+    option_key = str(data.get("option") or "leve")
+    ok, message = engine.go_to_hospital(character, option_key)
+    push("health" if ok else "event", message, "Hospital")
     return response()
 
 
@@ -518,26 +565,5 @@ def api_tournament():
     return response()
 
 
-@app.post("/api/box/swap")
-def api_box_swap():
-    if character is None:
-        return jsonify({"error": "Nenhum jogo ativo."}), 400
-    data = request.get_json(silent=True) or {}
-    ok, message = engine.swap_box_pokemon(character, int(data.get("team_index", 0)), int(data.get("box_index", 0)))
-    if ok:
-        push("pokemon", message, "Box")
-    return response() if ok else (jsonify({"error": message}), 400)
-
-
-@app.post("/api/team/reorder")
-def api_team_reorder():
-    if character is None:
-        return jsonify({"error": "Nenhum jogo ativo."}), 400
-    data = request.get_json(silent=True) or {}
-    ok, message = engine.reorder_team(character, int(data.get("from_index", 0)), int(data.get("to_index", 0)))
-    return response() if ok else (jsonify({"error": message}), 400)
-
-
 if __name__ == "__main__":
-    print("Poke Life web: http://localhost:5000")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(debug=True, port=5000)

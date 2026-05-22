@@ -1,14 +1,14 @@
 [
-  {"id": "pewter_rock", "city": "Pewter City", "main_type": "Rock", "difficulty": 1, "badge": "Insignia da Rocha", "recommended_level": 12, "official": true},
-  {"id": "cerulean_water", "city": "Cerulean City", "main_type": "Water", "difficulty": 2, "badge": "Insignia da Cascata", "recommended_level": 18, "official": true},
-  {"id": "vermilion_electric", "city": "Vermilion City", "main_type": "Electric", "difficulty": 3, "badge": "Insignia do Trovao", "recommended_level": 24, "official": true},
-  {"id": "celadon_grass", "city": "Celadon City", "main_type": "Grass", "difficulty": 4, "badge": "Insignia do Arco-Iris", "recommended_level": 30, "official": true},
-  {"id": "fuchsia_poison", "city": "Fuchsia City", "main_type": "Poison", "difficulty": 5, "badge": "Insignia da Alma", "recommended_level": 36, "official": true},
-  {"id": "saffron_psychic", "city": "Saffron City", "main_type": "Psychic", "difficulty": 6, "badge": "Insignia do Pantano", "recommended_level": 34, "official": true},
-  {"id": "cinnabar_fire", "city": "Cinnabar Island", "main_type": "Fire", "difficulty": 7, "badge": "Insignia do Vulcao", "recommended_level": 36, "official": true},
-  {"id": "viridian_ground", "city": "Viridian City", "main_type": "Ground", "difficulty": 8, "badge": "Insignia da Terra", "recommended_level": 38, "official": true},
-  {"id": "pallet_normal", "city": "Pallet Town", "main_type": "Normal", "difficulty": 2, "badge": "Insignia da Origem", "recommended_level": 16, "official": false},
-  {"id": "lavender_ghost", "city": "Lavender Town", "main_type": "Ghost", "difficulty": 5, "badge": "Insignia do Espirito", "recommended_level": 34, "official": false},
-  {"id": "indigo_dragon", "city": "Indigo Plateau", "main_type": "Dragon", "difficulty": 9, "badge": "Insignia do Legado", "recommended_level": 38, "official": false},
-  {"id": "seafoam_ice", "city": "Seafoam Harbor", "main_type": "Ice", "difficulty": 6, "badge": "Insignia da Geada", "recommended_level": 34, "official": false}
+  {"id": "pewter_rock",        "city": "Pewter City",     "main_type": "Rock",     "difficulty": 1, "badge": "Insignia da Rocha",    "recommended_level": 12, "official": true},
+  {"id": "pallet_normal",      "city": "Pallet Town",     "main_type": "Normal",   "difficulty": 2, "badge": "Insignia da Origem",   "recommended_level": 16, "official": false},
+  {"id": "cerulean_water",     "city": "Cerulean City",   "main_type": "Water",    "difficulty": 2, "badge": "Insignia da Cascata",  "recommended_level": 18, "official": true},
+  {"id": "vermilion_electric", "city": "Vermilion City",  "main_type": "Electric", "difficulty": 3, "badge": "Insignia do Trovao",   "recommended_level": 24, "official": true},
+  {"id": "celadon_grass",      "city": "Celadon City",    "main_type": "Grass",    "difficulty": 4, "badge": "Insignia do Arco-Iris","recommended_level": 30, "official": true},
+  {"id": "lavender_ghost",     "city": "Lavender Town",   "main_type": "Ghost",    "difficulty": 5, "badge": "Insignia do Espirito", "recommended_level": 34, "official": false},
+  {"id": "fuchsia_poison",     "city": "Fuchsia City",    "main_type": "Poison",   "difficulty": 5, "badge": "Insignia da Alma",     "recommended_level": 36, "official": true},
+  {"id": "saffron_psychic",    "city": "Saffron City",    "main_type": "Psychic",  "difficulty": 6, "badge": "Insignia do Pantano",  "recommended_level": 34, "official": true},
+  {"id": "seafoam_ice",        "city": "Seafoam Harbor",  "main_type": "Ice",      "difficulty": 6, "badge": "Insignia da Geada",    "recommended_level": 34, "official": false},
+  {"id": "cinnabar_fire",      "city": "Cinnabar Island", "main_type": "Fire",     "difficulty": 7, "badge": "Insignia do Vulcao",   "recommended_level": 36, "official": true},
+  {"id": "viridian_ground",    "city": "Viridian City",   "main_type": "Ground",   "difficulty": 8, "badge": "Insignia da Terra",    "recommended_level": 38, "official": true},
+  {"id": "indigo_dragon",      "city": "Indigo Plateau",  "main_type": "Dragon",   "difficulty": 9, "badge": "Insignia do Legado",   "recommended_level": 38, "official": false}
 ]

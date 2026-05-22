@@ -1116,6 +1116,124 @@ class GameEngine:
         character.add_history(f"Sua equipe descansou no Pokemon Center de {character.current_city}.", ["city", "heal"])
         return "Sua equipe foi curada."
 
+    # ── Hospital ────────────────────────────────────────────────────────────────
+
+    _HOSPITAL_OPTIONS: dict[str, dict] = {
+        "leve": {
+            "label": "Tratamento leve (3 meses)",
+            "months": 3,
+            "cost": 150,
+            "heal": 20,
+            "min_health": 0,
+            "description": "Consultas e repouso. Recupera saúde moderadamente.",
+        },
+        "completo": {
+            "label": "Tratamento completo (6 meses)",
+            "months": 6,
+            "cost": 350,
+            "heal": 40,
+            "min_health": 0,
+            "description": "Internação parcial. Cura status negativos e recupera bem.",
+        },
+        "internacao": {
+            "label": "Internação prolongada (12 meses)",
+            "months": 12,
+            "cost": 700,
+            "heal": 75,
+            "min_health": 70,
+            "description": "Tratamento completo. Garante saúde mínima de 70 ao sair.",
+        },
+    }
+
+    def hospital_options(self, character: Character) -> list[dict]:
+        """Retorna opções de hospital disponíveis com custo e efeito."""
+        opts = []
+        for key, opt in self._HOSPITAL_OPTIONS.items():
+            can_afford = character.money >= opt["cost"]
+            opts.append({
+                "key": key,
+                "label": opt["label"],
+                "cost": opt["cost"],
+                "months": opt["months"],
+                "heal": opt["heal"],
+                "can_afford": can_afford,
+                "description": opt["description"],
+            })
+        return opts
+
+    def go_to_hospital(self, character: Character, option_key: str) -> tuple[bool, str]:
+        """Internar o personagem no hospital. Cura saúde e trata status negativos."""
+        if is_dead(character):
+            return False, "Game over: personagem falecido."
+        if character.flags.get("in_prison"):
+            return False, "Voce nao pode escolher hospital enquanto esta preso."
+        opt = self._HOSPITAL_OPTIONS.get(option_key)
+        if not opt:
+            return False, "Opção de internação inválida."
+        cost = opt["cost"]
+        if character.money < cost:
+            return False, f"{opt['label']} custa {cost}P. Você tem {character.money}P."
+
+        character.money -= cost
+        old_health = character.health
+        healed = opt["heal"]
+
+        months = opt["months"]
+        character.flags["current_period_months"] = months
+        age_progress = int(character.flags.get("age_month_progress", 0)) + months
+        aged_years = 0
+        while age_progress >= 12:
+            age_progress -= 12
+            character.age += 1
+            aged_years += 1
+            if character.age in {5, 10, 15, 18, 20, 25, 30, 40, 50, 60, 70}:
+                character.add_history(f"Voce completou {character.age} anos durante recuperacao hospitalar.", ["age", "milestone"])
+        character.flags["age_month_progress"] = age_progress
+
+        character.health = min(100, character.health + healed)
+        if opt["min_health"] > 0:
+            character.health = max(opt["min_health"], character.health)
+
+        if months >= 6:
+            for pokemon in character.team + list(character.box):
+                if pokemon.status in ("injured", "sick", "tired"):
+                    pokemon.status = "healthy"
+        if months >= 12:
+            for pokemon in character.team + list(character.box):
+                if pokemon.status == "badly_injured":
+                    pokemon.status = "healthy"
+
+        egg_notes = self._progress_eggs_by_months(character, months)
+        self._reset_period_action_flags(character)
+
+        health_change = character.health - old_health
+        health_indicator = "↑↑↑" if health_change >= 60 else "↑↑" if health_change >= 30 else "↑"
+        msg_parts = [
+            f"HOSPITAL|{opt['label']}|{months}|{cost}|{old_health}|{character.health}",
+            f"Você passou {months} meses se recuperando.",
+            f"Saúde: {old_health} → {character.health} {health_indicator}",
+        ]
+        if aged_years:
+            msg_parts.append(f"O tempo passou: agora voce tem {character.age} anos.")
+        if months >= 6:
+            msg_parts.append("Status dos Pokémon tratados.")
+        if months >= 12:
+            msg_parts.append("Recuperação total garantida.")
+        msg_parts.extend(egg_notes)
+
+        msg = "\n".join(msg_parts)
+        character.add_history(
+            f"Internação hospitalar de {months} meses. Saúde: {old_health}→{character.health}.",
+            ["health", "hospital"],
+        )
+        character.flags["last_year_report"] = (
+            f"Resumo de {months} meses aos {character.age} anos\n"
+            f"SAUDE tratamento hospitalar: {old_health} -> {character.health}.\n"
+            f"DINHEIRO voce gastou {cost} Pokedollar.\n"
+            + ("\n".join(egg_notes) if egg_notes else "REGISTRO periodo dedicado a recuperacao.")
+        )
+        return True, msg
+
     def current_city_economy_tier(self, character: Character) -> int:
         return city_economy_tier(self.display_location_name(character.current_city))
 
@@ -1616,6 +1734,86 @@ class GameEngine:
             ]
             return False, random.choice(escapes)
 
+    # ── Procurar Batalha com Treinador ─────────────────────────────────────────
+
+    _TRAINER_PREFIXES = [
+        "Treinador", "Rival", "Aspirante", "Novato", "Veterano", "Caminhante",
+        "Aventureiro", "Explorador", "Caçador", "Buscador",
+    ]
+    _TRAINER_AREAS = [
+        "da Rota", "do Parque", "do Porto", "da Floresta", "da Montanha",
+        "da Cidade", "do Vale", "das Cavernas", "da Costa", "da Planície",
+    ]
+
+    def manual_action_search_trainer_battle(self, character: Character) -> tuple[bool, str]:
+        """Encontra um treinador aleatorio para uma serie curta de 1 a 3 batalhas."""
+        if character.age < MIN_JOURNEY_ACTION_AGE:
+            return False, "Buscar batalhas só fica disponível a partir dos 10 anos."
+        if not character.team:
+            return False, "Você precisa de pelo menos um Pokémon na equipe para batalhar."
+        healthy_team = [pokemon for pokemon in character.team if pokemon.current_health > 0 and pokemon.status != "badly_injured"]
+        if not healthy_team:
+            return False, "Sua equipe esta sem condicoes para batalhar."
+
+        viable = [
+            species
+            for species in self.pokemon.values()
+            if not species.is_legendary and not species.is_mythic and species.can_be_wild
+        ]
+        if not viable:
+            return False, "Nenhum Pokémon disponível no mundo para batalhar."
+
+        prefix = random.choice(self._TRAINER_PREFIXES)
+        area = random.choice(self._TRAINER_AREAS)
+        trainer_name = f"{prefix} {area}"
+
+        team_levels = sorted((p.level for p in healthy_team), reverse=True)
+        top_level = team_levels[0]
+        match_count = min(len(healthy_team), random.randint(1, 3))
+        opponents: list[SeriesOpponent] = []
+        for _ in range(match_count):
+            species = random.choice(viable)
+            raw_level = int(top_level * random.uniform(0.82, 1.12)) + random.randint(-1, 2)
+            level = coherent_pokemon_level(species, max(3, raw_level))
+            opponents.append(SeriesOpponent(trainer_name, species.name, level))
+
+        wins_required = max(1, match_count // 2 + 1)
+        preview = estimate_series_chance(character, opponents, self.pokemon, wins_required=wins_required)
+        result = run_team_series(
+            character,
+            opponents,
+            self.pokemon,
+            wins_required=wins_required,
+            important=False,
+            title=f"Serie amistosa contra {trainer_name}",
+        )
+
+        header = f"TREINADOR|{trainer_name}|{result.total}|{result.wins}|{result.losses}|{'win' if result.won else 'loss'}|{preview['series_chance']}"
+        log = [header]
+        log.extend(result.log)
+
+        team_xp = 12 * match_count + 18 * result.wins + (12 if result.won else 0)
+        xp_notes = self._grant_team_battle_xp(character, team_xp, result.won)
+        if xp_notes:
+            log.append(f"XP de batalha contra treinador: {team_xp} para a equipe.")
+            log.extend(xp_notes)
+
+        if result.won:
+            money = random.randint(30, 80) + sum(opponent.level for opponent in opponents) * 2
+            character.money += money
+            character.modify_attributes({"POK": random.randint(0, 1), "MEN": random.randint(0, 1)})
+            log.append(f"Vitoria na serie! +{money}P.")
+        else:
+            money = random.randint(8, 25)
+            character.money += money
+            log.append(f"Derrota na serie. Voce recebeu {money}P de consolacao.")
+
+        character.add_history(
+            f"Batalhou contra {trainer_name} em uma serie de {match_count} batalha(s). {'Vitoria' if result.won else 'Derrota'}.",
+            ["battle", "trainer", "manual"],
+        )
+        return result.won, "\n".join(log)
+
     def get_city_gym(self, character: Character) -> dict | None:
         self.ensure_world_generated(character)
         city = self.get_city_services(character.current_city)
@@ -1689,7 +1887,7 @@ class GameEngine:
         team_levels = sorted((pokemon.level for pokemon in character.team), reverse=True)
         if not team_levels:
             team_levels = sorted((pokemon.level for pokemon in character.box), reverse=True)
-        strongest = team_levels[0] if team_levels else 12
+        strongest = team_levels[0] if team_levels else int(gym.get("recommended_level", 12))
         top_three = team_levels[:3] or [strongest]
         average_top = round(sum(top_three) / len(top_three))
         badge_pressure = min(4, len(character.badges))
@@ -2402,60 +2600,85 @@ class GameEngine:
             history = f"{pokemon.display_name()} ficou em {result.rank}o lugar em um contest {difficulty}."
             character.add_history(history, ["contest"])
         self._mark_period_action_used(character, "contest")
-        return True, result, history
+        summary_msg = (
+            f"{pokemon.display_name()} ficou em {result.rank}o lugar no contest {difficulty} ({category})."
+            f" Premio: {result.prize_money}P."
+        )
+        return True, result, summary_msg
 
-    def breed_pokemon(self, character: Character, first_index: int = 0, second_index: int = 1) -> tuple[bool, str]:
-        if character.age < MIN_JOURNEY_ACTION_AGE:
-            return False, "Criacao Pokemon so fica disponivel a partir dos 10 anos."
-        if len(character.team) < 2:
-            return False, "Voce precisa de pelo menos dois Pokemon na equipe para tentar criacao."
+    def breed_pokemon(self, character: Character, first: int = 0, second: int = 1) -> tuple[bool, str]:
+        if is_dead(character):
+            return False, "Game over: personagem falecido."
+        if character.age < 10:
+            return False, "Voce ainda e jovem demais para breeding."
         if not self._period_action_available(character, "breed"):
-            return False, "Voce ja tentou criacao neste periodo."
-        if first_index == second_index:
-            return False, "Escolha dois Pokemon diferentes."
-        if first_index < 0 or second_index < 0 or first_index >= len(character.team) or second_index >= len(character.team):
-            return False, "Pokemon invalido."
-        first = character.team[first_index]
-        second = character.team[second_index]
-        success, egg, message = create_bred_egg(character, first, second, self.pokemon)
+            return False, "Voce ja tentou breeding neste periodo."
+        if len(character.team) < 2:
+            return False, "Voce precisa de pelo menos 2 Pokemon na equipe para tentar breeding."
+        if first < 0 or first >= len(character.team) or second < 0 or second >= len(character.team) or first == second:
+            return False, "Indices de Pokemon invalidos para breeding."
+        pok_a = character.team[first]
+        pok_b = character.team[second]
+        if not self.pokemon.get(pok_a.species) or not self.pokemon.get(pok_b.species):
+            return False, "Especie nao encontrada."
+        chance = breed_success_chance(character, pok_a, pok_b)
+        self._mark_period_action_used(character, "breed")
+        success, egg, message = create_bred_egg(character, pok_a, pok_b, self.pokemon)
         if success and egg:
             character.eggs.append(egg)
             character.reputation = clamp_reputation(character.reputation + (2 if character.career == "Criador" else 1))
-            character.add_history(message, ["breeding", "egg"])
-        self._mark_period_action_used(character, "breed")
-        return success, message
+            message = (
+                f"Breeding bem-sucedido: {pok_a.display_name()} e {pok_b.display_name()} "
+                f"produziram um ovo {egg.color} ({egg.rarity_label}). Chance era {chance * 100:.0f}%."
+            )
+            character.add_history(message, ["breed", "egg"])
+            return True, message
+        message = (
+            f"O breeding entre {pok_a.display_name()} e {pok_b.display_name()} nao gerou ovo desta vez. "
+            f"Chance era {chance * 100:.0f}%."
+        )
+        character.add_history(message, ["breed"])
+        return False, message
 
-    def breeding_preview(self, character: Character, first_index: int = 0, second_index: int = 1) -> dict:
+    def breeding_preview(self, character: Character, first: int = 0, second: int = 1) -> dict:
+        if is_dead(character):
+            return {"available": False, "summary": "Game over: personagem falecido."}
         if character.age < MIN_JOURNEY_ACTION_AGE:
             return {"available": False, "summary": "Criacao Pokemon fica disponivel a partir dos 10 anos."}
-        if len(character.team) < 2 or first_index == second_index:
+        if len(character.team) < 2 or first == second:
             return {"available": False, "summary": "Criacao exige dois Pokemon diferentes na equipe."}
-        first = character.team[first_index]
-        second = character.team[second_index]
+        if first < 0 or second < 0 or first >= len(character.team) or second >= len(character.team):
+            return {"available": False, "summary": "Pokemon invalido para criacao."}
+        first_pokemon = character.team[first]
+        second_pokemon = character.team[second]
+        chance = breed_success_chance(character, first_pokemon, second_pokemon)
         return {
             "available": True,
-            "first": first.display_name(),
-            "second": second.display_name(),
-            "chance": round(breed_success_chance(character, first, second) * 100, 1),
+            "first": first_pokemon.display_name(),
+            "second": second_pokemon.display_name(),
+            "chance": round(chance * 100, 1),
             "career_bonus": character.career == "Criador",
+            "summary": f"Chance estimada: {chance * 100:.1f}%.",
         }
 
 
-# ------------------------------------------------------------------ #
-# Helpers de modulo                                                    #
-# ------------------------------------------------------------------ #
-
 def _is_history_worthy(note: str) -> bool:
-    keywords = (
-        "subiu para o nivel", "evoluiu", "aprendeu", "conseguiu", "venceu",
-        "badge", "insignia", "torneio", "rank", "ovo chocou", "capturou",
-    )
-    lower = note.lower()
-    return any(keyword in lower for keyword in keywords)
+    """Decide se uma nota de atividade merece entrar no historico do personagem."""
+    if not note or len(note) < 15:
+        return False
+    if note.startswith("BATALHA|") or note.startswith("XP:") or note.startswith("Nivel "):
+        return False
+    skip_prefixes = ("Passou o ano", "Sem novidades", "XP de carreira")
+    if any(note.startswith(p) for p in skip_prefixes):
+        return False
+    return True
 
 
 def _clean_sentence(text: str) -> str:
-    text = str(text).strip().rstrip(".")
-    if text and text[0].islower():
-        text = text[0].upper() + text[1:]
+    text = str(text).strip()
+    if not text:
+        return text
+    text = text[0].upper() + text[1:]
+    if not text.endswith((".", "!", "?")):
+        text = text.rstrip(".") + "."
     return text

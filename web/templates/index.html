@@ -33,13 +33,29 @@
         </div>
       </div>
       <div class="top-stats">
-        <span id="topAge">0 anos</span>
-        <span id="topCity">Pallet Town</span>
-        <span id="topMoney">0 P</span>
-        <span id="topBadges">0 badges</span>
-        <span id="topRep">0 rep</span>
+        <div class="top-chip">
+          <small>Idade</small>
+          <b id="topAge">0 anos</b>
+        </div>
+        <div class="top-chip">
+          <small>Cidade</small>
+          <b id="topCity">Pallet Town</b>
+        </div>
+        <div class="top-chip money">
+          <small>Dinheiro</small>
+          <b id="topMoney">0 P</b>
+        </div>
+        <div class="top-chip">
+          <small>Insignias</small>
+          <b id="topBadges">0</b>
+        </div>
+        <div class="top-chip">
+          <small>Rep</small>
+          <b id="topRep">0</b>
+        </div>
       </div>
       <div class="top-actions">
+        <span class="save-label">Save</span>
         <input id="saveSlot" placeholder="autosave">
         <button id="saveBtn">Salvar</button>
         <button id="homeBtn">Inicio</button>
@@ -48,20 +64,56 @@
 
     <div class="layout">
       <aside class="left-rail">
-        <section class="panel">
-          <h3>Personagem</h3>
-          <div class="metric-grid">
-            <div>
-              <b id="healthValue">100</b>
-              <span id="healthStatusBadge" class="health-badge"></span>
-              <small>Saude</small>
-            </div>
-            <div><b id="repValue">0</b><small>Rep</small></div>
-            <div><b id="badgeValue">0</b><small>Insignias</small></div>
-            <div><b id="boxValue">0</b><small>Box</small></div>
+        <section class="panel char-panel">
+          <div class="char-panel-header">
+            <h3>Personagem</h3>
+            <span id="charPhaseTag" class="phase-tag"></span>
           </div>
-          <p id="careerLine" class="soft"></p>
-          <p id="academyLine" class="soft"></p>
+
+          <!-- Saúde com barra visual -->
+          <div class="health-block">
+            <div class="health-row">
+              <span class="health-label">❤ Saúde</span>
+              <span>
+                <b id="healthValue">100</b>
+                <span id="healthStatusBadge" class="health-badge"></span>
+              </span>
+            </div>
+            <div class="bar-track health-bar-track">
+              <div id="healthBar" class="bar-fill health-bar-fill" style="width:100%"></div>
+            </div>
+          </div>
+
+          <!-- Grid de stats compacto -->
+          <div class="char-stat-grid">
+            <div class="char-stat">
+              <span class="char-stat-icon">★</span>
+              <b id="repValue">0</b>
+              <small>Reputação</small>
+            </div>
+            <div class="char-stat">
+              <span class="char-stat-icon">💰</span>
+              <b id="moneyValue">0</b>
+              <small>Pokedólares</small>
+            </div>
+            <div class="char-stat">
+              <span class="char-stat-icon">🏅</span>
+              <b id="badgeValue">0</b>
+              <small>Insígnias</small>
+            </div>
+            <div class="char-stat">
+              <span class="char-stat-icon">📦</span>
+              <b id="boxValue">0</b>
+              <small>Box</small>
+            </div>
+          </div>
+
+          <!-- Pokémon ativo resumido -->
+          <div id="activePokeSummary" class="active-poke-summary hidden"></div>
+
+          <div id="careerSummary" class="career-summary"></div>
+          <p id="careerLine" class="soft hidden"></p>
+          <p id="academyLine" class="soft hidden"></p>
           <div id="badgeRibbonShelf" class="symbol-shelf"></div>
         </section>
 
@@ -87,10 +139,11 @@
             <p class="eyebrow">registro continuo</p>
             <h2>Vida em Kanto</h2>
           </div>
+          <div class="time-control-label">Avancar tempo</div>
           <div class="time-buttons">
-            <button data-months="3">3 meses</button>
-            <button data-months="6">6 meses</button>
-            <button data-months="12" class="primary small">1 ano</button>
+            <button data-months="3"><span>3</span><small>meses</small></button>
+            <button data-months="6"><span>6</span><small>meses</small></button>
+            <button data-months="12" class="primary small"><span>1</span><small>ano</small></button>
           </div>
         </section>
         <div id="cityBanner" class="city-banner hidden"></div>
@@ -101,52 +154,83 @@
       <aside class="right-rail">
         <section class="menu-group">
           <div class="section-label">acoes</div>
-          <button class="menu-btn active" data-action="train">Pokemon <span class="tag">treino</span></button>
-          <button class="menu-btn" data-action="focus_career">Carreira</button>
-          <button class="menu-btn" data-action="read">Academia</button>
-          <button class="menu-btn" data-action="work">Trabalhar</button>
-          <button class="menu-btn" data-action="egg">Breeding</button>
-          <button class="menu-btn" data-action="heal">Pokemon Center</button>
-          <button class="menu-btn" data-action="gym">Ginasio</button>
-          <button class="menu-btn" id="huntBtn">Cacar Pokemon <span class="tag" id="huntTag">3</span></button>
-          <button class="menu-btn danger" data-action="steal">Roubar Pokemon</button>
+          <button class="menu-btn active" data-action="train"><span class="action-icon">XP</span><span class="action-label">Pokemon</span><span class="tag">treino</span></button>
+          <button class="menu-btn" data-action="focus_career"><span class="action-icon">CR</span><span class="action-label">Carreira</span></button>
+          <button class="menu-btn" data-action="read"><span class="action-icon">AC</span><span class="action-label">Academia</span></button>
+          <button class="menu-btn" data-action="work"><span class="action-icon">P$</span><span class="action-label">Trabalhar</span></button>
+          <button class="menu-btn" data-action="egg"><span class="action-icon">OV</span><span class="action-label">Breeding</span></button>
+          <button class="menu-btn" data-action="heal"><span class="action-icon">PC</span><span class="action-label">Pokemon Center</span></button>
+          <button class="menu-btn" data-action="gym"><span class="action-icon">GY</span><span class="action-label">Ginasio</span></button>
+          <button class="menu-btn" id="huntBtn"><span class="action-icon">HT</span><span class="action-label">Cacar Pokemon</span><span class="tag" id="huntTag">3</span></button>
+          <button class="menu-btn" id="battleSearchBtn"><span class="action-icon">BT</span><span class="action-label">Procurar Batalha</span><span class="tag" id="battleSearchTag">3</span></button>
+          <button class="menu-btn danger" data-action="steal"><span class="action-icon">RK</span><span class="action-label">Roubar Pokemon</span></button>
+          <button class="menu-btn" id="hospitalBtn"><span class="action-icon">HP</span><span class="action-label">Hospital</span></button>
+        </section>
+
+        <!-- Painel Hospital (expandível) -->
+        <section class="panel hidden" id="hospitalPanel">
+          <h3>🏥 Hospital</h3>
+          <p class="soft" style="margin-bottom:8px">Escolha o tipo de internação:</p>
+          <div id="hospitalOptions" class="hospital-options"></div>
+          <button class="menu-btn" id="hospitalCancelBtn" style="margin-top:6px">Cancelar</button>
         </section>
 
         <section class="panel">
-          <h3>Carreira</h3>
-          <select id="careerSelect"></select>
-          <button id="setCareerBtn">Mudar carreira</button>
-          <select id="academySelect"></select>
-          <select id="typeSelect">
-            <option>Normal</option><option>Fire</option><option>Water</option><option>Electric</option>
-            <option>Grass</option><option>Ice</option><option>Fighting</option><option>Poison</option>
-            <option>Ground</option><option>Flying</option><option>Psychic</option><option>Bug</option>
-            <option>Rock</option><option>Ghost</option><option>Dragon</option>
-          </select>
-          <button id="setAcademyBtn">Definir foco</button>
+          <div class="panel-title"><span class="panel-icon">CR</span><h3>Carreira</h3></div>
+          <div class="control-stack">
+            <label class="control-label" for="careerSelect">Profissao</label>
+            <div class="inline-control">
+              <select id="careerSelect"></select>
+              <button id="setCareerBtn">Mudar</button>
+            </div>
+            <label class="control-label" for="academySelect">Foco academico</label>
+            <select id="academySelect"></select>
+            <select id="typeSelect">
+              <option>Normal</option><option>Fire</option><option>Water</option><option>Electric</option>
+              <option>Grass</option><option>Ice</option><option>Fighting</option><option>Poison</option>
+              <option>Ground</option><option>Flying</option><option>Psychic</option><option>Bug</option>
+              <option>Rock</option><option>Ghost</option><option>Dragon</option>
+            </select>
+            <button id="setAcademyBtn">Definir foco</button>
+          </div>
         </section>
 
         <section class="panel">
-          <h3>Loja</h3>
-          <select id="shopSelect"></select>
-          <input id="shopQty" type="number" min="1" max="99" value="1" style="width:50px">
-          <button id="buyBtn">Comprar</button>
-          <h3>Inventario</h3>
-          <select id="itemSelect"></select>
-          <button id="useItemBtn">Usar item</button>
+          <div class="panel-title"><span class="panel-icon">LO</span><h3>Loja</h3></div>
+          <div class="control-stack">
+            <label class="control-label" for="shopSelect">Item disponivel</label>
+            <select id="shopSelect"></select>
+            <div class="inline-control qty-row">
+              <input id="shopQty" type="number" min="1" max="99" value="1">
+              <button id="buyBtn">Comprar</button>
+            </div>
+          </div>
+          <div class="panel-divider"></div>
+          <div class="panel-title compact"><span class="panel-icon">MO</span><h3>Inventario</h3></div>
+          <div class="control-stack">
+            <select id="itemSelect"></select>
+            <button id="useItemBtn">Usar item</button>
+          </div>
         </section>
 
         <section class="panel">
-          <h3>Viagem</h3>
-          <select id="citySelect"></select>
-          <button id="travelBtn">Viajar</button>
+          <div class="panel-title"><span class="panel-icon">VI</span><h3>Viagem</h3></div>
+          <div class="control-stack">
+            <label class="control-label" for="citySelect">Destino</label>
+            <div class="inline-control">
+              <select id="citySelect"></select>
+              <button id="travelBtn">Viajar</button>
+            </div>
+          </div>
         </section>
 
         <section class="panel">
-          <h3>Extras</h3>
-          <button id="contestBtn">Contest local</button>
-          <button id="breedBtn">Tentar breed</button>
-          <button id="tournamentBtn">Torneio local</button>
+          <div class="panel-title"><span class="panel-icon">EX</span><h3>Extras</h3></div>
+          <div class="quick-grid">
+            <button id="contestBtn">Contest</button>
+            <button id="breedBtn">Breed</button>
+            <button id="tournamentBtn">Torneio</button>
+          </div>
           <div id="gymPreview" class="preview"></div>
         </section>
       </aside>

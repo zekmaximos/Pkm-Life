@@ -21,3 +21,7 @@ class NameDatabase:
                 return name
         return f"{random.choice(self.first_names)} {random.choice(self.last_names)}"
 
+    def random_last_name(self) -> str:
+        if not self.last_names:
+            return ""
+        return random.choice(self.last_names)

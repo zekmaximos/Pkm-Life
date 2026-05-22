@@ -137,8 +137,10 @@ def run_team_series(
             important=important,
             species_by_name=species_by_name,
         )
-        result_line = next((line for line in battle_log if "venceu" in line or "perdeu" in line), battle_log[-1])
-        log.append(f"  {result_line}")
+        structured_line = next((line for line in battle_log if line.startswith("BATALHA|")), None)
+        if structured_line:
+            log.append(f"  {structured_line}")
+        log.extend(f"  {line}" for line in battle_log if line != structured_line)
         if won:
             wins += 1
         else:

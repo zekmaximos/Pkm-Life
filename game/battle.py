@@ -114,12 +114,13 @@ def calculate_battle_score(
     trainer_luck: int = 50,
 ) -> float:
     base_power = calculate_base_power(pokemon, trainer_bonus)
-    level_factor = 1 + (pokemon.level / 100)
+    # level_factor: peso maior para o nível — diferença de 18 níveis ≈ +55% de score
+    level_factor = 1 + (pokemon.level / 20)
     type_factor = get_type_factor(pokemon.types, opponent.types)
     ability_factor = get_ability_factor(pokemon, opponent)
     condition_factor = get_condition_factor(pokemon)
     luck_bonus = (trainer_luck - 50) / 1000
-    random_factor = random.uniform(0.90 + luck_bonus, 1.10 + luck_bonus)
+    random_factor = random.uniform(0.92 + luck_bonus, 1.08 + luck_bonus)
     return base_power * level_factor * type_factor * ability_factor * condition_factor * random_factor
 
 

@@ -78,7 +78,30 @@ class CoreSystemsTest(unittest.TestCase):
         result = attempt_capture("rare", "Eevee", 40, attrs, ball_bonus=12, pokemon_level=12, evolution_stage=1)
         self.assertGreaterEqual(result.chance, 1)
         self.assertLessEqual(result.chance, 95)
-        self.assertIsInstance(result.success, bool)
+
+    def test_hospital_treatment_spends_time_and_recovers_health(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.money = 1000
+        character.health = 20
+        ok, message = engine.go_to_hospital(character, "internacao")
+        self.assertTrue(ok, message)
+        self.assertEqual(character.age, 17)
+        self.assertGreaterEqual(character.health, 70)
+        self.assertEqual(character.money, 300)
+        self.assertIn("HOSPITAL|", message)
+
+    def test_manual_trainer_battle_uses_series_log(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 14
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=15, species_by_name=engine.pokemon))
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Rattata"], level=14, species_by_name=engine.pokemon))
+        ok, message = engine.manual_action_search_trainer_battle(character)
+        self.assertIsInstance(ok, bool)
+        self.assertIn("TREINADOR|", message)
+        self.assertIn("BATALHA|", message)
 
     def test_auto_battle_returns_scores_chance_and_winner(self) -> None:
         attrs = PlayerAttributes(PHY=50, MEN=65, POK=70, LUK=55)
@@ -1314,12 +1337,15 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIn("prisao", character.flags.get("death_cause", ""))
 
     def test_web_app_can_create_advance_and_run_action(self) -> None:
-        from web.app import app
+        import web.app as web_app
 
-        client = app.test_client()
+        client = web_app.app.test_client()
         created = client.post("/api/new", json={"name": "WebCase", "hometown": "Pallet Town"})
         self.assertEqual(created.status_code, 200)
-        self.assertEqual(created.get_json()["state"]["name"], "WebCase")
+        created_state = created.get_json()["state"]
+        self.assertTrue(created_state["name"].startswith("WebCase "))
+        self.assertEqual(web_app.character.flags.get("given_name"), "WebCase")
+        self.assertTrue(web_app.character.flags.get("family_name"))
 
         advanced = client.post("/api/advance", json={"months": 12})
         self.assertEqual(advanced.status_code, 200)

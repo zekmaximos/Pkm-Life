@@ -73,7 +73,7 @@ def generate_gym_team(template: GymTemplate, pokemon_by_name: dict[str, PokemonS
 
     team = []
     for index, species in enumerate(team_species):
-        level = random.randint(base_level, base_level + 3)
+        level = base_level + (index % 4)
         team.append({"species": species.name, "level": max(12, min(41, level))})
     return team
 
