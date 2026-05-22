@@ -168,6 +168,8 @@ def state() -> dict[str, Any]:
         "breed": not dead and age >= 10 and len(character.team) >= 2 and engine._period_action_available(character, "breed"),
         "tournament": not dead and age >= 10 and has_team and engine._period_action_available(character, "tournament"),
         "hunt": not dead and age >= 10,
+        "battle_search": not dead and age >= 10 and has_team,
+        "hospital": not dead,
     }
     return {
         "ready": True,
@@ -352,6 +354,8 @@ def api_advance():
     if character.flags.get("dead"):
         push("health", "Game over: o tempo nao avanca apos a morte.", "Game Over")
         return response()
+    if pending_event is not None:
+        return jsonify({"error": "Responda o evento pendente antes de avançar o tempo."}), 400
     data = request.get_json(silent=True) or {}
     months = int(data.get("months") or 12)
     pending_event = engine.advance_time(character, months)
@@ -477,9 +481,30 @@ def api_action(name: str):
     elif name == "hunt":
         ok, message = engine.manual_action_hunt_wild_pokemon(character)
         kind = "pokemon" if ok else "event"
+    elif name == "battle_search":
+        ok, message = engine.manual_action_search_trainer_battle(character)
+        kind = "battle" if ok else "event"
     else:
         return jsonify({"error": "Acao desconhecida."}), 404
     push(kind, message, "Acao")
+    return response()
+
+
+@app.get("/api/hospital")
+def api_hospital_options():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    return jsonify(engine.hospital_options(character))
+
+
+@app.post("/api/hospital")
+def api_hospital():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    data = request.get_json(silent=True) or {}
+    option_key = str(data.get("option") or "leve")
+    ok, message = engine.go_to_hospital(character, option_key)
+    push("health" if ok else "event", message, "Hospital")
     return response()
 
 
@@ -518,26 +543,5 @@ def api_tournament():
     return response()
 
 
-@app.post("/api/box/swap")
-def api_box_swap():
-    if character is None:
-        return jsonify({"error": "Nenhum jogo ativo."}), 400
-    data = request.get_json(silent=True) or {}
-    ok, message = engine.swap_box_pokemon(character, int(data.get("team_index", 0)), int(data.get("box_index", 0)))
-    if ok:
-        push("pokemon", message, "Box")
-    return response() if ok else (jsonify({"error": message}), 400)
-
-
-@app.post("/api/team/reorder")
-def api_team_reorder():
-    if character is None:
-        return jsonify({"error": "Nenhum jogo ativo."}), 400
-    data = request.get_json(silent=True) or {}
-    ok, message = engine.reorder_team(character, int(data.get("from_index", 0)), int(data.get("to_index", 0)))
-    return response() if ok else (jsonify({"error": message}), 400)
-
-
 if __name__ == "__main__":
-    print("Poke Life web: http://localhost:5000")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(debug=True, port=5000)

@@ -2,6 +2,7 @@ let appState = null;
 let currentFeed = [];
 let isAdvancing = false;
 let huntsLeft = 3;
+let battlesLeft = 3;
 
 const $ = (id) => document.getElementById(id);
 
@@ -49,6 +50,8 @@ function showStart() {
 
 function setData(payload) {
   appState = payload.state;
+  // Copia pending_event para appState para que renderActionAvailability possa checar
+  if (appState) appState.pending_event = payload.pending_event || null;
   currentFeed = payload.feed || [];
   if (appState?.ready) showGame();
   render();
@@ -84,17 +87,52 @@ function render() {
   $("topBadges").textContent = `${(s.badges || []).length} badges`;
   $("topRep").textContent = `${s.reputation} rep`;
 
-  // Left panel stats
+  // Left panel — stats
   $("healthValue").textContent = s.health;
   $("repValue").textContent = s.reputation;
+  $("moneyValue").textContent = (s.money || 0).toLocaleString("pt-BR");
   $("badgeValue").textContent = (s.badges || []).length;
   $("boxValue").textContent = s.box_count;
+
+  // Health bar
+  const hbar = $("healthBar");
+  if (hbar) {
+    hbar.style.width = `${s.health}%`;
+    // Gradient position: vermelho em 0%, amarelo em 50%, verde em 100%
+    hbar.style.backgroundPosition = `${100 - s.health}% 0`;
+  }
 
   // Health badge
   const badge = $("healthStatusBadge");
   if (badge) {
     badge.textContent = s.health_status || "";
     badge.className = "health-badge" + (s.health < 30 ? " danger" : s.health < 60 ? " warning" : "");
+  }
+
+  // Phase tag
+  const phaseTag = $("charPhaseTag");
+  if (phaseTag) phaseTag.textContent = s.phase || "";
+
+  // Pokémon ativo resumido
+  const aps = $("activePokeSummary");
+  if (aps) {
+    const active = (s.team || []).find(p => p.active) || (s.team || [])[0];
+    if (active) {
+      aps.classList.remove("hidden");
+      aps.innerHTML = `
+        <span style="font-size:18px">${typeIcon(active.types?.[0])}</span>
+        <div style="flex:1;min-width:0">
+          <div class="aps-name">${escHtml(active.name)}</div>
+          <div class="aps-detail">Lv.${active.level} · ${escHtml(active.status)}</div>
+          <div class="aps-hp-bar"><div class="aps-hp-fill" style="width:${active.hp_percent}%"></div></div>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);text-align:right">
+          ${active.hp}/${active.max_hp}<br>HP
+        </div>
+      `;
+    } else {
+      aps.classList.add("hidden");
+    }
   }
 
   // Career lines
@@ -266,12 +304,57 @@ function updateHuntBtn() {
   if (tag) tag.textContent = huntsLeft;
 }
 
+function updateBattleSearchBtn() {
+  const btn = $("battleSearchBtn");
+  const tag = $("battleSearchTag");
+  if (!btn) return;
+  const canBattle = (appState?.action_availability?.battle_search !== false) && battlesLeft > 0;
+  btn.disabled = !canBattle;
+  btn.title = battlesLeft <= 0
+    ? "Voce ja batalhou 3 vezes neste periodo."
+    : canBattle ? "" : "Disponivel mais tarde na vida.";
+  if (tag) tag.textContent = battlesLeft;
+}
+
+async function openHospital() {
+  const panel = $("hospitalPanel");
+  const optEl = $("hospitalOptions");
+  if (!panel || !optEl) return;
+  panel.classList.remove("hidden");
+  optEl.innerHTML = '<p class="soft">Carregando opções...</p>';
+  try {
+    const opts = await api("/api/hospital");
+    optEl.innerHTML = opts.map(opt => `
+      <div class="hospital-opt ${opt.can_afford ? "" : "disabled"}" data-key="${escAttr(opt.key)}">
+        <span class="hosp-cost">${opt.cost.toLocaleString("pt-BR")}P</span>
+        <div class="hosp-title">${escHtml(opt.label)}</div>
+        <div class="hosp-desc">${escHtml(opt.description)} · +${opt.heal} saúde</div>
+      </div>
+    `).join("");
+    optEl.querySelectorAll(".hospital-opt:not(.disabled)").forEach(el => {
+      el.addEventListener("click", async () => {
+        const key = el.dataset.key;
+        panel.classList.add("hidden");
+        try {
+          const payload = await api("/api/hospital", { method: "POST", body: JSON.stringify({ option: key }) });
+          setData(payload);
+        } catch(e) { toast(e.message); }
+      });
+    });
+  } catch(e) {
+    optEl.innerHTML = `<p class="soft">Erro ao carregar opções.</p>`;
+  }
+}
+
 function renderActionAvailability() {
   const av = appState.action_availability || {};
+  const hasPendingEvent = !!(appState.pending_event);
   document.querySelectorAll(".time-buttons button").forEach((btn) => {
-    const allowed = av.advance !== false;
+    const allowed = av.advance !== false && !hasPendingEvent;
     btn.disabled = !allowed;
-    btn.title = allowed ? "" : "Game over: o tempo nao avanca apos a morte.";
+    btn.title = hasPendingEvent
+      ? "⚠️ Responda o evento pendente antes de avançar o tempo."
+      : (av.advance !== false ? "" : "Game over: o tempo nao avanca apos a morte.");
   });
   document.querySelectorAll("[data-action]").forEach((btn) => {
     const allowed = av[btn.dataset.action] !== false;
@@ -295,6 +378,7 @@ function renderActionAvailability() {
     node.title = allowed ? "" : "Disponivel mais tarde na vida.";
   });
   updateHuntBtn();
+  updateBattleSearchBtn();
 }
 
 function isSummaryCard(item) {
@@ -590,6 +674,15 @@ function formatBattleText(text) {
   const lines = String(text || "").split("\n").filter(l => l.trim());
   return lines.map(raw => {
     const line = raw.trim();
+    if (line.startsWith("TREINADOR|")) {
+      const [, name, total, wins, losses, outcome, chance] = line.split("|");
+      const won = outcome === "win";
+      return `<div class="trainer-header">
+        <span class="trainer-name">${escHtml(name)}</span>
+        <span class="trainer-result ${won ? "win" : "loss"}">${won ? "Serie vencida" : "Serie perdida"}</span>
+        <span class="trainer-score">${wins}/${total} vitorias · ${losses} derrota(s) · ${chance}% chance</span>
+      </div>`;
+    }
     // Formato estruturado de batalha individual
     if (line.startsWith("BATALHA|")) {
       const [, player, enemy, chanceStr, outcome, pScore, eScore, xp, hpLoss] = line.split("|");
@@ -743,6 +836,10 @@ async function advance(months) {
     renderActionAvailability();
     return;
   }
+  if (appState?.pending_event) {
+    toast("⚠️ Responda o evento pendente antes de avançar o tempo.");
+    return;
+  }
   isAdvancing = true;
   const btns = document.querySelectorAll(".time-buttons button");
   btns.forEach((b) => (b.disabled = true));
@@ -752,6 +849,7 @@ async function advance(months) {
       body: JSON.stringify({ months }),
     });
     huntsLeft = 3;
+    battlesLeft = 3;
     setData(payload);
     await refreshShop();
   } catch (e) {
@@ -803,74 +901,221 @@ async function enterTournament() {
 
 // ── Boot ─────────────────────────────────────────────────────────────────────
 
-document.addEventListener("DOMContentLoaded", async () => {
-  $("newGameBtn").addEventListener("click", createGame);
-  $("loadBtn").addEventListener("click", loadGame);
-  $("saveBtn").addEventListener("click", saveGame);
-  $("homeBtn").addEventListener("click", showStart);
-
-  document.querySelectorAll(".time-buttons button").forEach((btn) => {
-    btn.addEventListener("click", () => advance(Number(btn.dataset.months)));
-  });
-
-  document.querySelectorAll("[data-action]").forEach((btn) => {
-    btn.addEventListener("click", () => action(btn.dataset.action));
-  });
-
-  $("setCareerBtn").addEventListener("click", () => {
-    const career = $("careerSelect").value;
-    if (career && career !== "Sem opcoes ainda") action("set_career", { career });
-    else toast("Nenhuma carreira disponivel no momento.");
-  });
-
-  $("setAcademyBtn").addEventListener("click", () =>
-    action("academy_focus", {
-      focus: $("academySelect").value,
-      type: $("typeSelect").value,
-    })
-  );
-
-  $("buyBtn").addEventListener("click", () => {
-    const item = $("shopSelect").value;
-    const qty = parseInt($("shopQty")?.value || "1") || 1;
-    if (item && item !== "Loja indisponivel") action("buy_item", { item, quantity: qty });
-  });
-
-  $("useItemBtn").addEventListener("click", () => {
-    const item = $("itemSelect").value;
-    if (item && item !== "Inventario vazio") action("use_item", { item });
-    else toast("Inventario vazio.");
-  });
-
-  $("travelBtn").addEventListener("click", () =>
-    action("travel", { city: $("citySelect").value })
-  );
-
-  $("contestBtn").addEventListener("click", () =>
-    action("contest", { pokemon_index: 0, difficulty: "local", category: "beauty" })
-  );
-
-  $("breedBtn").addEventListener("click", () =>
-    action("breed", { first: 0, second: 1 })
-  );
-
-  $("tournamentBtn").addEventListener("click", enterTournament);
-
-  $("huntBtn").addEventListener("click", async () => {
-    if (huntsLeft <= 0) return toast("Voce ja cacou 3 vezes neste periodo. Avance o tempo.");
-    huntsLeft--;
-    updateHuntBtn();
-    await action("hunt");
-  });
-
-  await loadSaves();
-  await refreshCities();
-
-  try {
-    const payload = await api("/api/state");
-    if (payload?.state?.ready) {
+document.addEventListener("DOMContentLoaded", () => {
+  // ── New game ───────────────────────────────────────────────────────────────
+  $("newGameBtn").addEventListener("click", async () => {
+    const name = $("newName").value.trim() || "Red";
+    try {
+      const payload = await api("/api/new", {
+        method: "POST",
+        body: JSON.stringify({ name }),
+      });
       setData(payload);
       await refreshShop();
+      $("startScreen").classList.add("hidden");
+      $("gameScreen").classList.remove("hidden");
+    } catch (e) {
+      toast("Erro ao criar jogo: " + e.message);
     }
-  } catch {}
+  });
+
+  // ── Load game ──────────────────────────────────────────────────────────────
+  $("loadBtn").addEventListener("click", async () => {
+    const slot = $("saveSelect").value;
+    if (!slot) return toast("Selecione um save.");
+    try {
+      const payload = await api("/api/load", {
+        method: "POST",
+        body: JSON.stringify({ slot }),
+      });
+      setData(payload);
+      await refreshShop();
+      $("startScreen").classList.add("hidden");
+      $("gameScreen").classList.remove("hidden");
+    } catch (e) {
+      toast("Erro ao carregar: " + e.message);
+    }
+  });
+
+  // ── Save ───────────────────────────────────────────────────────────────────
+  $("saveBtn").addEventListener("click", async () => {
+    const slot = $("saveSlot").value.trim() || "autosave";
+    try {
+      await api("/api/save", {
+        method: "POST",
+        body: JSON.stringify({ slot }),
+      });
+      toast('Salvo em "' + slot + '"');
+    } catch (e) {
+      toast("Erro ao salvar: " + e.message);
+    }
+  });
+
+  // ── Home ───────────────────────────────────────────────────────────────────
+  $("homeBtn").addEventListener("click", () => {
+    $("gameScreen").classList.add("hidden");
+    $("startScreen").classList.remove("hidden");
+    loadSaves();
+  });
+
+  // ── Time advance buttons ───────────────────────────────────────────────────
+  document.querySelectorAll("[data-months]").forEach((btn) => {
+    btn.addEventListener("click", () => advance(parseInt(btn.dataset.months)));
+  });
+
+  // ── Action menu buttons ────────────────────────────────────────────────────
+  document.querySelectorAll("[data-action]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".menu-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      action(btn.dataset.action);
+    });
+  });
+
+  // ── Hunt ──────────────────────────────────────────────────────────────────
+  $("huntBtn").addEventListener("click", async () => {
+    if (huntsLeft <= 0) return toast("Voce ja procurou Pokemon 3 vezes neste periodo. Avance o tempo.");
+    document.querySelectorAll(".menu-btn").forEach((b) => b.classList.remove("active"));
+    $("huntBtn").classList.add("active");
+    try {
+      const payload = await api("/api/action/hunt", { method: "POST", body: JSON.stringify({}) });
+      huntsLeft = Math.max(0, huntsLeft - 1);
+      setData(payload);
+    } catch (e) {
+      toast(e.message || "Caça falhou.");
+    }
+  });
+
+  // ── Procurar Batalha ──────────────────────────────────────────────────────
+  $("battleSearchBtn").addEventListener("click", async () => {
+    if (battlesLeft <= 0) return toast("Voce ja buscou batalhas 3 vezes neste periodo. Avance o tempo.");
+    document.querySelectorAll(".menu-btn").forEach((b) => b.classList.remove("active"));
+    $("battleSearchBtn").classList.add("active");
+    try {
+      const payload = await api("/api/action/battle_search", { method: "POST", body: JSON.stringify({}) });
+      battlesLeft = Math.max(0, battlesLeft - 1);
+      setData(payload);
+    } catch (e) {
+      toast(e.message || "Batalha falhou.");
+    }
+  });
+
+  // ── Hospital ──────────────────────────────────────────────────────────────
+  $("hospitalBtn").addEventListener("click", () => openHospital());
+
+  $("hospitalCancelBtn").addEventListener("click", () => {
+    $("hospitalPanel").classList.add("hidden");
+  });
+
+  // ── Career ────────────────────────────────────────────────────────────────
+  $("setCareerBtn").addEventListener("click", async () => {
+    const career = $("careerSelect").value;
+    if (!career) return;
+    try {
+      const payload = await api("/api/action/set_career", {
+        method: "POST",
+        body: JSON.stringify({ career }),
+      });
+      setData(payload);
+    } catch (e) {
+      toast(e.message || "Erro ao mudar carreira.");
+    }
+  });
+
+  // ── Academy ───────────────────────────────────────────────────────────────
+  $("setAcademyBtn").addEventListener("click", async () => {
+    const academy = $("academySelect").value;
+    const type = $("typeSelect").value;
+    try {
+      const payload = await api("/api/action/academy_focus", {
+        method: "POST",
+        body: JSON.stringify({ focus: academy, type }),
+      });
+      setData(payload);
+    } catch (e) {
+      toast(e.message || "Erro ao definir foco.");
+    }
+  });
+
+  // ── Shop ──────────────────────────────────────────────────────────────────
+  $("buyBtn").addEventListener("click", async () => {
+    const item = $("shopSelect").value;
+    const qty = parseInt($("shopQty").value) || 1;
+    if (!item) return;
+    try {
+      const payload = await api("/api/action/buy_item", {
+        method: "POST",
+        body: JSON.stringify({ item, quantity: qty }),
+      });
+      setData(payload);
+      await refreshShop();
+    } catch (e) {
+      toast(e.message || "Compra falhou.");
+    }
+  });
+
+  // ── Use item ──────────────────────────────────────────────────────────────
+  $("useItemBtn").addEventListener("click", async () => {
+    const item = $("itemSelect").value;
+    if (!item) return;
+    try {
+      const payload = await api("/api/action/use_item", {
+        method: "POST",
+        body: JSON.stringify({ item }),
+      });
+      setData(payload);
+      await refreshShop();
+    } catch (e) {
+      toast(e.message || "Uso do item falhou.");
+    }
+  });
+
+  // ── Travel ────────────────────────────────────────────────────────────────
+  $("travelBtn").addEventListener("click", async () => {
+    const city = $("citySelect").value;
+    if (!city) return;
+    try {
+      const payload = await api("/api/action/travel", {
+        method: "POST",
+        body: JSON.stringify({ city }),
+      });
+      setData(payload);
+    } catch (e) {
+      toast(e.message || "Viagem falhou.");
+    }
+  });
+
+  // ── Contest ───────────────────────────────────────────────────────────────
+  $("contestBtn").addEventListener("click", async () => {
+    try {
+      const payload = await api("/api/action/contest", {
+        method: "POST",
+        body: JSON.stringify({ pokemon_index: 0, difficulty: "local", category: "beauty" }),
+      });
+      setData(payload);
+    } catch (e) {
+      toast(e.message || "Contest falhou.");
+    }
+  });
+
+  // ── Breed ─────────────────────────────────────────────────────────────────
+  $("breedBtn").addEventListener("click", async () => {
+    const team = appState?.team || [];
+    if (team.length < 2) return toast("Precisa de 2 Pokémon na equipe.");
+    try {
+      const payload = await api("/api/action/breed", {
+        method: "POST",
+        body: JSON.stringify({ first: 0, second: 1 }),
+      });
+      setData(payload);
+    } catch (e) {
+      toast(e.message || "Breed falhou.");
+    }
+  });
+
+  // ── Tournament ────────────────────────────────────────────────────────────
+  $("tournamentBtn").addEventListener("click", () => enterTournament());
+
+  // ── Load saves on boot ────────────────────────────────────────────────────
+  loadSaves();
 });

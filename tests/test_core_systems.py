@@ -78,7 +78,30 @@ class CoreSystemsTest(unittest.TestCase):
         result = attempt_capture("rare", "Eevee", 40, attrs, ball_bonus=12, pokemon_level=12, evolution_stage=1)
         self.assertGreaterEqual(result.chance, 1)
         self.assertLessEqual(result.chance, 95)
-        self.assertIsInstance(result.success, bool)
+
+    def test_hospital_treatment_spends_time_and_recovers_health(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 16
+        character.money = 1000
+        character.health = 20
+        ok, message = engine.go_to_hospital(character, "internacao")
+        self.assertTrue(ok, message)
+        self.assertEqual(character.age, 17)
+        self.assertGreaterEqual(character.health, 70)
+        self.assertEqual(character.money, 300)
+        self.assertIn("HOSPITAL|", message)
+
+    def test_manual_trainer_battle_uses_series_log(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 14
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pidgey"], level=15, species_by_name=engine.pokemon))
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Rattata"], level=14, species_by_name=engine.pokemon))
+        ok, message = engine.manual_action_search_trainer_battle(character)
+        self.assertIsInstance(ok, bool)
+        self.assertIn("TREINADOR|", message)
+        self.assertIn("BATALHA|", message)
 
     def test_auto_battle_returns_scores_chance_and_winner(self) -> None:
         attrs = PlayerAttributes(PHY=50, MEN=65, POK=70, LUK=55)

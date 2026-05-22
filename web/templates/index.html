@@ -48,19 +48,54 @@
 
     <div class="layout">
       <aside class="left-rail">
-        <section class="panel">
-          <h3>Personagem</h3>
-          <div class="metric-grid">
-            <div>
-              <b id="healthValue">100</b>
-              <span id="healthStatusBadge" class="health-badge"></span>
-              <small>Saude</small>
-            </div>
-            <div><b id="repValue">0</b><small>Rep</small></div>
-            <div><b id="badgeValue">0</b><small>Insignias</small></div>
-            <div><b id="boxValue">0</b><small>Box</small></div>
+        <section class="panel char-panel">
+          <div class="char-panel-header">
+            <h3>Personagem</h3>
+            <span id="charPhaseTag" class="phase-tag"></span>
           </div>
-          <p id="careerLine" class="soft"></p>
+
+          <!-- Saúde com barra visual -->
+          <div class="health-block">
+            <div class="health-row">
+              <span class="health-label">❤ Saúde</span>
+              <span>
+                <b id="healthValue">100</b>
+                <span id="healthStatusBadge" class="health-badge"></span>
+              </span>
+            </div>
+            <div class="bar-track health-bar-track">
+              <div id="healthBar" class="bar-fill health-bar-fill" style="width:100%"></div>
+            </div>
+          </div>
+
+          <!-- Grid de stats compacto -->
+          <div class="char-stat-grid">
+            <div class="char-stat">
+              <span class="char-stat-icon">★</span>
+              <b id="repValue">0</b>
+              <small>Reputação</small>
+            </div>
+            <div class="char-stat">
+              <span class="char-stat-icon">💰</span>
+              <b id="moneyValue">0</b>
+              <small>Pokedólares</small>
+            </div>
+            <div class="char-stat">
+              <span class="char-stat-icon">🏅</span>
+              <b id="badgeValue">0</b>
+              <small>Insígnias</small>
+            </div>
+            <div class="char-stat">
+              <span class="char-stat-icon">📦</span>
+              <b id="boxValue">0</b>
+              <small>Box</small>
+            </div>
+          </div>
+
+          <!-- Pokémon ativo resumido -->
+          <div id="activePokeSummary" class="active-poke-summary hidden"></div>
+
+          <p id="careerLine" class="soft" style="margin-top:6px"></p>
           <p id="academyLine" class="soft"></p>
           <div id="badgeRibbonShelf" class="symbol-shelf"></div>
         </section>
@@ -109,7 +144,17 @@
           <button class="menu-btn" data-action="heal">Pokemon Center</button>
           <button class="menu-btn" data-action="gym">Ginasio</button>
           <button class="menu-btn" id="huntBtn">Cacar Pokemon <span class="tag" id="huntTag">3</span></button>
+          <button class="menu-btn" id="battleSearchBtn">Procurar Batalha <span class="tag" id="battleSearchTag">3</span></button>
           <button class="menu-btn danger" data-action="steal">Roubar Pokemon</button>
+          <button class="menu-btn" id="hospitalBtn">🏥 Hospital</button>
+        </section>
+
+        <!-- Painel Hospital (expandível) -->
+        <section class="panel hidden" id="hospitalPanel">
+          <h3>🏥 Hospital</h3>
+          <p class="soft" style="margin-bottom:8px">Escolha o tipo de internação:</p>
+          <div id="hospitalOptions" class="hospital-options"></div>
+          <button class="menu-btn" id="hospitalCancelBtn" style="margin-top:6px">Cancelar</button>
         </section>
 
         <section class="panel">
