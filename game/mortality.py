@@ -61,9 +61,17 @@ def mortality_chance(character, months: int, context: str = "life", health_delta
         if health < 25:
             chance += 0.015 * period
         cause = "ferimentos em briga"
+    elif context == "crime":
+        chance *= 0.72
+        if health < 25:
+            chance += 0.006 * period
+        cause = "ferimentos em atividade criminal"
     elif context == "illness":
         chance += 0.020 * period
         cause = "doenca"
+
+    if getattr(character, "career", None) == "Criminoso" and context not in {"prison"}:
+        chance *= 0.82
 
     return float(clamp(chance, 0.0, 0.85)), cause
 

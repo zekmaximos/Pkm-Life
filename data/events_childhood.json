@@ -1,8 +1,8 @@
 [
   {
     "id": "first_pokemon_toy",
-    "title": "O brinquedo de Pokemon",
-    "text": "Ainda pequeno, voce ganha um brinquedo gasto de Pokemon. Ele vira sua primeira obsessao.",
+    "title": "O brinquedo de Pokémon",
+    "text": "Ainda pequeno, você ganha um brinquedo gasto de Pokémon. Ele vira sua primeira obsessão.",
     "min_age": 1,
     "max_age": 4,
     "phase": "primeira infancia",
@@ -18,17 +18,17 @@
             "MEN": 1
           }
         },
-        "history_entry": "Voce cuidava de um brinquedo de Pokemon como se fosse um companheiro real."
+        "history_entry": "Você cuidava de um brinquedo de Pokémon como se fosse um companheiro real."
       },
       {
-        "text": "Levar para brincar la fora",
+        "text": "Levar para brincar lá fora",
         "effects": {
           "attributes": {
             "PHY": 2,
             "LUK": 1
           }
         },
-        "history_entry": "Voce levou seu brinquedo de Pokemon para pequenas aventuras em Pallet Town."
+        "history_entry": "Você levou seu brinquedo de Pokémon para pequenas aventuras em Pallet Town."
       }
     ],
     "tags": [
@@ -40,8 +40,8 @@
   },
   {
     "id": "thunderstorm_night",
-    "title": "Noite de trovoes",
-    "text": "Uma tempestade cai sobre Pallet Town. Ao longe, algo eletrico ilumina a grama alta.",
+    "title": "Noite de trovões",
+    "text": "Uma tempestade cai sobre Pallet Town. Ao longe, algo elétrico ilumina a grama alta.",
     "min_age": 2,
     "max_age": 4,
     "phase": "primeira infancia",
@@ -57,7 +57,7 @@
             "MEN": 1
           }
         },
-        "history_entry": "Voce viu luzes eletricas na grama alta durante uma tempestade."
+        "history_entry": "Você viu luzes elétricas na grama alta durante uma tempestade."
       },
       {
         "text": "Tentar sair para ver melhor",
@@ -74,8 +74,8 @@
             "PHY": 1
           }
         },
-        "history_entry": "Voce quase saiu na tempestade para investigar luzes na grama.",
-        "failure_history_entry": "Voce escorregou tentando sair na tempestade e aprendeu medo e curiosidade ao mesmo tempo."
+        "history_entry": "Você quase saiu na tempestade para investigar luzes na grama.",
+        "failure_history_entry": "Você escorregou tentando sair na tempestade e aprendeu medo e curiosidade ao mesmo tempo."
       }
     ],
     "tags": [
@@ -88,7 +88,7 @@
   {
     "id": "academy_first_day",
     "title": "Primeiro dia na academia",
-    "text": "A pequena academia local ensina criancas sobre rotas, tipos e seguranca com Pokemon selvagens.",
+    "text": "A pequena academia local ensina crianças sobre rotas, tipos e segurança com Pokémon selvagens.",
     "min_age": 5,
     "max_age": 7,
     "phase": "infancia",
@@ -97,7 +97,7 @@
     "once": true,
     "choices": [
       {
-        "text": "Prestar atencao nas aulas",
+        "text": "Prestar atenção nas aulas",
         "effects": {
           "attributes": {
             "MEN": 2,
@@ -105,7 +105,7 @@
           },
           "career": "Estudante da academia"
         },
-        "history_entry": "Voce comecou a estudar Pokemon na academia de Pallet Town."
+        "history_entry": "Você começou a estudar Pokémon na academia de Pallet Town."
       },
       {
         "text": "Fazer amigos no intervalo",
@@ -116,7 +116,7 @@
           },
           "career": "Estudante da academia"
         },
-        "history_entry": "Voce fez seus primeiros amigos na academia Pokemon."
+        "history_entry": "Você fez seus primeiros amigos na academia Pokémon."
       },
       {
         "text": "Fugir para observar a grama alta",
@@ -133,8 +133,8 @@
             "PHY": 1
           }
         },
-        "history_entry": "Voce fugiu da aula e observou Pokemon selvagens de longe.",
-        "failure_history_entry": "Voce fugiu da aula, tropecou perto da grama alta e levou uma bronca memoravel."
+        "history_entry": "Você fugiu da aula e observou Pokémon selvagens de longe.",
+        "failure_history_entry": "Você fugiu da aula, tropeçou perto da grama alta e levou uma bronca memorável."
       }
     ],
     "tags": [
@@ -147,7 +147,7 @@
   {
     "id": "hurt_pidgey",
     "title": "Um Pidgey ferido",
-    "text": "Voce encontra um Pidgey machucado perto de casa. Ele parece assustado, mas nao foge.",
+    "text": "Você encontra um Pidgey machucado perto de casa. Ele parece assustado, mas não foge.",
     "min_age": 5,
     "max_age": 9,
     "phase": "infancia",
@@ -171,8 +171,8 @@
           },
           "health": -2
         },
-        "history_entry": "Voce ajudou um Pidgey ferido perto de Pallet Town.",
-        "failure_history_entry": "Voce tentou ajudar um Pidgey ferido, mas ele se assustou e bicou sua mao."
+        "history_entry": "Você ajudou um Pidgey ferido perto de Pallet Town.",
+        "failure_history_entry": "Você tentou ajudar um Pidgey ferido, mas ele se assustou e bicou sua mão."
       },
       {
         "text": "Chamar um adulto",
@@ -182,7 +182,7 @@
             "POK": 1
           }
         },
-        "history_entry": "Voce chamou um adulto para cuidar de um Pidgey ferido."
+        "history_entry": "Você chamou um adulto para cuidar de um Pidgey ferido."
       },
       {
         "text": "Observar de longe",
@@ -191,7 +191,7 @@
             "POK": 1
           }
         },
-        "history_entry": "Voce observou um Pidgey ferido e aprendeu a respeitar seu espaco."
+        "history_entry": "Você observou um Pidgey ferido e aprendeu a respeitar seu espaço."
       }
     ],
     "tags": [
@@ -203,8 +203,8 @@
   },
   {
     "id": "oak_lab_visit",
-    "title": "Visita ao laboratorio",
-    "text": "O laboratorio do Professor Oak esta aberto. Livros, mapas e sons estranhos ocupam a sala.",
+    "title": "Visita ao laboratório",
+    "text": "O laboratório do Professor Oak está aberto. Livros, mapas e sons estranhos ocupam a sala.",
     "min_age": 6,
     "max_age": 9,
     "phase": "infancia",
@@ -213,14 +213,14 @@
     "once": false,
     "choices": [
       {
-        "text": "Ler sobre tipos Pokemon",
+        "text": "Ler sobre tipos Pokémon",
         "effects": {
           "attributes": {
             "MEN": 1,
             "POK": 3
           }
         },
-        "history_entry": "Voce passou uma tarde lendo sobre tipos Pokemon no laboratorio do Professor Oak."
+        "history_entry": "Você passou uma tarde lendo sobre tipos Pokémon no laboratório do Professor Oak."
       },
       {
         "text": "Ajudar a organizar amostras",
@@ -238,8 +238,8 @@
           },
           "reputation": -1
         },
-        "history_entry": "Voce ajudou no laboratorio e ganhou alguns Pokedollar.",
-        "failure_history_entry": "Voce derrubou amostras no laboratorio do Professor Oak e ficou sem graca."
+        "history_entry": "Você ajudou no laboratório e ganhou alguns Pokédollar.",
+        "failure_history_entry": "Você derrubou amostras no laboratório do Professor Oak e ficou sem graca."
       },
       {
         "text": "Conversar com os assistentes",
@@ -249,7 +249,7 @@
             "POK": 1
           }
         },
-        "history_entry": "Voce fez perguntas aos assistentes do Professor Oak."
+        "history_entry": "Você fez perguntas aos assistentes do Professor Oak."
       }
     ],
     "tags": [
@@ -262,7 +262,7 @@
   {
     "id": "school_battle_cards",
     "title": "Batalhas de papel",
-    "text": "As criancas da academia inventam batalhas usando cartas desenhadas a mao.",
+    "text": "As crianças da academia inventam batalhas usando cartas desenhadas a mão.",
     "min_age": 6,
     "max_age": 9,
     "phase": "infancia",
@@ -271,14 +271,14 @@
     "once": false,
     "choices": [
       {
-        "text": "Jogar pensando em estrategia",
+        "text": "Jogar pensando em estratégia",
         "effects": {
           "attributes": {
             "MEN": 2,
             "POK": 1
           }
         },
-        "history_entry": "Voce aprendeu estrategia brincando de batalhas Pokemon no papel."
+        "history_entry": "Você aprendeu estratégia brincando de batalhas Pokémon no papel."
       },
       {
         "text": "Blefar e improvisar",
@@ -296,7 +296,7 @@
           },
           "reputation": -1
         },
-        "history_entry": "Voce venceu uma brincadeira de batalha com um blefe ousado.",
+        "history_entry": "Você venceu uma brincadeira de batalha com um blefe ousado.",
         "failure_history_entry": "Seu blefe numa batalha de papel falhou e virou piada por alguns dias."
       }
     ],
@@ -309,7 +309,7 @@
   {
     "id": "forest_dare",
     "title": "Desafio na grama alta",
-    "text": "Outras criancas desafiam voce a chegar perto da grama alta sem um Pokemon.",
+    "text": "Outras crianças desafiam você a chegar perto da grama alta sem um Pokémon.",
     "min_age": 7,
     "max_age": 9,
     "phase": "infancia",
@@ -333,8 +333,8 @@
           },
           "health": -10
         },
-        "history_entry": "Voce encarou a grama alta antes de ter um Pokemon.",
-        "failure_history_entry": "Voce correu da grama alta depois de ouvir um rosnado desconhecido."
+        "history_entry": "Você encarou a grama alta antes de ter um Pokémon.",
+        "failure_history_entry": "Você correu da grama alta depois de ouvir um rosnado desconhecido."
       },
       {
         "text": "Recusar e voltar para casa",
@@ -343,7 +343,7 @@
             "MEN": 1
           }
         },
-        "history_entry": "Voce recusou um desafio perigoso perto da grama alta."
+        "history_entry": "Você recusou um desafio perigoso perto da grama alta."
       }
     ],
     "tags": [
@@ -356,7 +356,7 @@
   {
     "id": "lost_allowance",
     "title": "Mesada perdida",
-    "text": "Voce encontra alguns Pokedollar caidos perto da estrada. Ninguem parece estar olhando.",
+    "text": "Você encontra alguns Pokédollar caidos perto da estrada. Ninguem parece estar olhando.",
     "min_age": 8,
     "max_age": 9,
     "phase": "infancia",
@@ -372,7 +372,7 @@
           },
           "reputation": 2
         },
-        "history_entry": "Voce entregou Pokedollar perdidos na academia."
+        "history_entry": "Você entregou Pokédollar perdidos na academia."
       },
       {
         "text": "Guardar para comprar Poke Balls no futuro",
@@ -389,8 +389,8 @@
             "LUK": 1
           }
         },
-        "history_entry": "Voce guardou alguns Pokedollar encontrados na estrada.",
-        "failure_history_entry": "Descobriram que voce guardou Pokedollar perdidos, e sua reputacao sofreu."
+        "history_entry": "Você guardou alguns Pokédollar encontrados na estrada.",
+        "failure_history_entry": "Descobriram que você guardou Pokédollar perdidos, e sua reputação sofreu."
       }
     ],
     "tags": [
@@ -402,7 +402,7 @@
   {
     "id": "academy_pokeball_prize",
     "title": "Premio da academia",
-    "text": "A academia organiza uma prova sobre seguranca, habitats e comportamento de Pokemon selvagens.",
+    "text": "A academia organiza uma prova sobre segurança, habitats e comportamento de Pokémon selvagens.",
     "min_age": 8,
     "max_age": 9,
     "phase": "infancia",
@@ -428,8 +428,8 @@
             "POK": 1
           }
         },
-        "history_entry": "Voce ganhou duas Poke Balls em uma prova da academia.",
-        "failure_history_entry": "Voce foi mediano na prova da academia, mas aprendeu o suficiente para tentar de novo no futuro."
+        "history_entry": "Você ganhou duas Poke Balls em uma prova da academia.",
+        "failure_history_entry": "Você foi mediano na prova da academia, mas aprendeu o suficiente para tentar de novo no futuro."
       },
       {
         "text": "Chutar respostas e confiar na sorte",
@@ -447,8 +447,8 @@
             "LUK": 1
           }
         },
-        "history_entry": "Voce ganhou uma Great Ball chutando respostas improvaveis na academia.",
-        "failure_history_entry": "Voce chutou respostas na prova da academia e saiu so com uma risada nervosa."
+        "history_entry": "Você ganhou uma Great Ball chutando respostas improváveis na academia.",
+        "failure_history_entry": "Você chutou respostas na prova da academia e saiu só com uma risada nervosa."
       }
     ],
     "tags": [
@@ -461,7 +461,7 @@
   {
     "id": "rattata_in_pantry",
     "title": "Rattata na despensa",
-    "text": "Um Rattata entra na despensa da sua casa. Ele esta assustado, faminto e rapido demais para adultos alcancarem.",
+    "text": "Um Rattata entra na despensa da sua casa. Ele está assustado, faminto e rápido demais para adultos alcancarem.",
     "min_age": 8,
     "max_age": 9,
     "phase": "infancia",
@@ -496,8 +496,8 @@
             "Poke Ball": -1
           }
         },
-        "history_entry": "Voce conquistou um Rattata jovem antes mesmo de receber um Pokemon inicial.",
-        "failure_history_entry": "Voce tentou capturar um Rattata na despensa, mas ele fugiu pela janela."
+        "history_entry": "Você conquistou um Rattata jovem antes mesmo de receber um Pokémon inicial.",
+        "failure_history_entry": "Você tentou capturar um Rattata na despensa, mas ele fugiu pela janela."
       },
       {
         "text": "Guiar o Rattata para fora com cuidado",
@@ -508,7 +508,7 @@
           },
           "reputation": 1
         },
-        "history_entry": "Voce guiou um Rattata assustado para fora de casa sem machuca-lo."
+        "history_entry": "Você guiou um Rattata assustado para fora de casa sem machuca-lo."
       }
     ],
     "tags": [
@@ -527,7 +527,7 @@
   {
     "id": "pidgey_follows_home",
     "title": "O Pidgey que voltou",
-    "text": "Um Pidgey que voce ja tinha visto aparece varias tardes no mesmo telhado, sempre observando voce.",
+    "text": "Um Pidgey que você já tinha visto aparece várias tardes no mesmo telhado, sempre observando você.",
     "min_age": 9,
     "max_age": 9,
     "phase": "infancia",
@@ -556,17 +556,17 @@
             "POK": 1
           }
         },
-        "history_entry": "Um Pidgey passou a confiar em voce e entrou para sua equipe.",
-        "failure_history_entry": "Voce tentou conquistar a confianca de um Pidgey, mas ele continuou livre pelos telhados."
+        "history_entry": "Um Pidgey passou a confiar em você e entrou para sua equipe.",
+        "failure_history_entry": "Você tentou conquistar a confiança de um Pidgey, mas ele continuou livre pelos telhados."
       },
       {
-        "text": "So observar seu comportamento",
+        "text": "Só observar seu comportamento",
         "effects": {
           "attributes": {
             "POK": 2
           }
         },
-        "history_entry": "Voce observou por semanas o comportamento de um Pidgey dos telhados."
+        "history_entry": "Você observou por semanas o comportamento de um Pidgey dos telhados."
       }
     ],
     "tags": [
@@ -581,7 +581,7 @@
   {
     "id": "pallet_area_companion",
     "title": "Um companheiro da vizinhanca",
-    "text": "Durante varios dias, um Pokemon pequeno das redondezas de Pallet aparece perto de voce. Ele parece curioso, nao agressivo.",
+    "text": "Durante vários dias, um Pokémon pequeno das redondezas de Pallet aparece perto de você. Ele parece curioso, não agressivo.",
     "min_age": 7,
     "max_age": 9,
     "phase": "infancia",
@@ -600,7 +600,7 @@
     },
     "choices": [
       {
-        "text": "Criar confianca com comida e paciencia",
+        "text": "Criar confiança com comida e paciência",
         "chance": 0.55,
         "effects": {
           "attributes": {
@@ -620,8 +620,8 @@
             "POK": 1
           }
         },
-        "history_entry": "Voce conquistou a confianca de um Pokemon das redondezas de Pallet.",
-        "failure_history_entry": "Voce tentou se aproximar de um Pokemon de Pallet, mas ele voltou para a grama alta."
+        "history_entry": "Você conquistou a confiança de um Pokémon das redondezas de Pallet.",
+        "failure_history_entry": "Você tentou se aproximar de um Pokémon de Pallet, mas ele voltou para a grama alta."
       },
       {
         "text": "Observar sem interferir",
@@ -630,14 +630,14 @@
             "POK": 2
           }
         },
-        "history_entry": "Voce observou um Pokemon selvagem de Pallet sem tentar prende-lo."
+        "history_entry": "Você observou um Pokémon selvagem de Pallet sem tentar prende-lo."
       }
     ]
   },
   {
     "id": "warm_common_egg",
     "title": "Ovo esquecido na cerca",
-    "text": "Perto de uma cerca baixa, voce encontra um ovo morno com manchas coloridas. Um adulto diz que ele pode ser cuidado na academia.",
+    "text": "Perto de uma cerca baixa, você encontra um ovo morno com manchas coloridas. Um adulto diz que ele pode ser cuidado na academia.",
     "min_age": 6,
     "max_age": 9,
     "phase": "infancia",
@@ -674,15 +674,15 @@
             "POK": 1
           }
         },
-        "history_entry": "Voce encontrou um Poke Egg comum nas redondezas de Pallet.",
-        "failure_history_entry": "Voce encontrou um ovo, mas um cuidador localizou o verdadeiro dono antes que voce pudesse cuidar dele."
+        "history_entry": "Você encontrou um Poké Egg comum nas redondezas de Pallet.",
+        "failure_history_entry": "Você encontrou um ovo, mas um cuidador localizou o verdadeiro dono antes que você pudesse cuidar dele."
       }
     ]
   },
   {
     "id": "academy_colored_egg",
     "title": "Ovo colorido da academia",
-    "text": "A academia recebe alguns ovos para estudo. Um deles chama sua atencao pela cor ligada a um tipo Pokemon.",
+    "text": "A academia recebe alguns ovos para estudo. Um deles chama sua atenção pela cor ligada a um tipo Pokémon.",
     "min_age": 8,
     "max_age": 9,
     "phase": "infancia",
@@ -727,15 +727,15 @@
             "POK": 1
           }
         },
-        "history_entry": "Voce recebeu um Poke Egg raro em um programa da academia.",
-        "failure_history_entry": "A academia decidiu que voce ainda nao estava pronto para cuidar daquele ovo raro."
+        "history_entry": "Você recebeu um Poké Egg raro em um programa da academia.",
+        "failure_history_entry": "A academia decidiu que você ainda não estava pronto para cuidar daquele ovo raro."
       }
     ]
   },
   {
     "id": "shimmering_super_rare_egg",
     "title": "Ovo de brilho estranho",
-    "text": "Em uma noite silenciosa, um ovo de brilho incomum aparece perto do laboratorio do Professor Oak. Ninguem sabe explicar sua origem.",
+    "text": "Em uma noite silenciosa, um ovo de brilho incomum aparece perto do laboratório do Professor Oak. Ninguem sabe explicar sua origem.",
     "min_age": 9,
     "max_age": 9,
     "phase": "infancia",
@@ -771,7 +771,7 @@
                 "RR": 45,
                 "SR": 25
               },
-              "origin": "ovo misterioso encontrado perto do laboratorio Oak"
+              "origin": "ovo misterioso encontrado perto do laboratório Oak"
             }
           ]
         },
@@ -780,8 +780,8 @@
             "POK": 2
           }
         },
-        "history_entry": "Voce recebeu um Poke Egg de brilho rarissimo com autorizacao do Professor Oak.",
-        "failure_history_entry": "Oak recolheu o ovo misterioso para pesquisa, mas deixou voce acompanhar os estudos."
+        "history_entry": "Você recebeu um Poké Egg de brilho rarissimo com autorizacao do Professor Oak.",
+        "failure_history_entry": "Oak recolheu o ovo misterioso para pesquisa, mas deixou você acompanhar os estudos."
       }
     ]
   }

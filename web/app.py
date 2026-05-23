@@ -203,6 +203,8 @@ def state() -> dict[str, Any]:
             "years": int(career_years.get(character.career, 0)) if character.career else 0,
             "has_business": has_business,
             "has_retirement": has_retirement,
+            "breeder_infrastructure_level": int(character.flags.get("breeder_infrastructure_level", 0)),
+            "academy_diplomas": list(character.flags.get("academy_diplomas", [])),
         },
         "academy_focus": engine.academy_focus_info(character),
         "attributes": character.attributes.to_dict(),
@@ -230,6 +232,8 @@ def state() -> dict[str, Any]:
             for ribbon in character.flags.get("contest_ribbons", [])
         ],
         "inventory": dict(sorted(character.inventory.items())),
+        "has_kanto_map": engine._has_kanto_map(character),
+        "travel_options": engine.travel_destinations(character),
         "history": [entry.to_dict() for entry in character.history[-12:]],
         "pokedex_seen": len(character.pokedex_seen),
         "pokedex_caught": len(character.pokedex_caught),
@@ -466,7 +470,7 @@ def api_action(name: str):
     elif name == "gym":
         ok, log = engine.challenge_city_gym(character)
         message = "\n".join(log)
-        kind = "battle" if ok else "health"
+        kind = "battle" if "BATALHA|" in message else "health"
     elif name == "steal":
         _, message = engine.steal_pokemon(character)
         kind = "crime"
@@ -479,13 +483,19 @@ def api_action(name: str):
         ok, message = engine.set_academy_focus(character, str(data.get("focus") or ""), data.get("type"))
         kind = "career" if ok else "event"
     elif name == "use_item":
-        ok, message = engine.use_item(character, str(data.get("item") or ""))
-        kind = "health" if ok else "event"
+        item_name = str(data.get("item") or "")
+        item = engine.items.get(item_name)
+        ok, message = engine.use_item(character, item_name)
+        kind = "pokemon" if ok and item and item.item_type == "evolution" else ("health" if ok else "event")
     elif name == "buy_item":
         ok, message = engine.buy_item(character, str(data.get("item") or ""), int(data.get("quantity") or 1))
         kind = "money" if ok else "event"
     elif name == "travel":
-        ok, message = engine.move_to_city(character, str(data.get("city") or ""))
+        destination = str(data.get("city") or "").strip()
+        if destination and re.match(r"^[A-Z]\d+$", destination):
+            ok, message = engine.travel_to(character, destination)
+        else:
+            ok, message = engine.move_to_city(character, destination)
         kind = "travel"
     elif name == "contest":
         ok, result, message = engine.enter_contest(
@@ -505,7 +515,7 @@ def api_action(name: str):
         kind = "pokemon" if ok else "event"
     elif name == "battle_search":
         ok, message = engine.manual_action_search_trainer_battle(character)
-        kind = "battle" if ok else "event"
+        kind = "battle"
     else:
         return jsonify({"error": "Acao desconhecida."}), 404
     push(kind, message, "Acao")
@@ -527,6 +537,38 @@ def api_hospital():
     option_key = str(data.get("option") or "leve")
     ok, message = engine.go_to_hospital(character, option_key)
     push("health" if ok else "event", message, "Hospital")
+    return response()
+
+
+@app.post("/api/team/reorder")
+def api_team_reorder():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    data = request.get_json(silent=True) or {}
+    ok, message = engine.reorder_team(
+        character,
+        int(data.get("from_index") or 0),
+        int(data.get("to_index") or 0),
+    )
+    if not ok:
+        return jsonify({"error": message}), 400
+    push("pokemon", message, "Equipe")
+    return response()
+
+
+@app.post("/api/box/swap")
+def api_box_swap():
+    if character is None:
+        return jsonify({"error": "Nenhum jogo ativo."}), 400
+    data = request.get_json(silent=True) or {}
+    ok, message = engine.swap_box_pokemon(
+        character,
+        int(data.get("team_index") or 0),
+        int(data.get("box_index") or 0),
+    )
+    if not ok:
+        return jsonify({"error": message}), 400
+    push("pokemon", message, "Box")
     return response()
 
 

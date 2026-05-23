@@ -25,6 +25,9 @@ def breed_success_chance(character: Character, first: OwnedPokemon, second: Owne
         base += 0.12
     rank = character.career_rank("Criador") if hasattr(character, "career_rank") else 0
     base += rank * 0.025
+    if character.career == "Criador":
+        infra_level = int(getattr(character, "flags", {}).get("breeder_infrastructure_level", 0))
+        base += min(4, infra_level) * 0.035
     return float(clamp(base, 0.05, 0.78))
 
 
@@ -45,7 +48,8 @@ def create_bred_egg(
     type_hint = random.choice(parent.types) if parent else None
     tier_weights = {"C": 70, "I": 22, "R": 7, "RR": 1}
     if character.career == "Criador":
-        tier_weights = {"C": 55, "I": 30, "R": 12, "RR": 3}
+        infra_level = int(getattr(character, "flags", {}).get("breeder_infrastructure_level", 0))
+        tier_weights = {"C": max(42, 55 - infra_level * 3), "I": 30, "R": 12 + infra_level * 2, "RR": 3 + infra_level}
     tier = choose_egg_tier(tier_weights)
     egg = create_random_egg(species_by_name, tier=tier, origin="criacao Pokemon", type_hint=type_hint)
     first.happiness = int(clamp(first.happiness + 1, 0, 100))

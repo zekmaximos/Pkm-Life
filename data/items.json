@@ -253,5 +253,40 @@
     "type": "contest",
     "price": 2400,
     "effect": "contest_cool_bonus"
+  },
+  {
+    "id": "fire_stone",
+    "name": "Fire Stone",
+    "type": "evolution",
+    "price": 3500,
+    "effect": "fire-stone"
+  },
+  {
+    "id": "water_stone",
+    "name": "Water Stone",
+    "type": "evolution",
+    "price": 3500,
+    "effect": "water-stone"
+  },
+  {
+    "id": "thunder_stone",
+    "name": "Thunder Stone",
+    "type": "evolution",
+    "price": 3500,
+    "effect": "thunder-stone"
+  },
+  {
+    "id": "leaf_stone",
+    "name": "Leaf Stone",
+    "type": "evolution",
+    "price": 3500,
+    "effect": "leaf-stone"
+  },
+  {
+    "id": "moon_stone",
+    "name": "Moon Stone",
+    "type": "evolution",
+    "price": 0,
+    "effect": "moon-stone"
   }
 ]

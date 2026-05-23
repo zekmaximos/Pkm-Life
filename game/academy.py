@@ -24,6 +24,7 @@ class AcademyFocus:
     care_bonus: int = 0
     beauty_bonus: int = 0
     work_bonus: int = 0
+    diploma: str | None = None
 
 
 ACADEMY_FOCI: dict[str, AcademyFocus] = {
@@ -33,6 +34,7 @@ ACADEMY_FOCI: dict[str, AcademyFocus] = {
         "Estuda vantagens, fraquezas e leitura de tipos.",
         {"POK": 2, "MEN": 1},
         training_xp_bonus=2,
+        diploma="Tipos",
     ),
     "capture_techniques": AcademyFocus(
         "capture_techniques",
@@ -40,6 +42,7 @@ ACADEMY_FOCI: dict[str, AcademyFocus] = {
         "Estuda abordagem, distancia, Pokebolas e comportamento de captura.",
         {"POK": 1, "LUK": 1},
         capture_bonus=8,
+        diploma="Captura",
     ),
     "habitat_research": AcademyFocus(
         "habitat_research",
@@ -48,6 +51,15 @@ ACADEMY_FOCI: dict[str, AcademyFocus] = {
         {"POK": 1, "MEN": 1},
         capture_bonus=4,
         work_bonus=15,
+        diploma="Habitats",
+    ),
+    "field_research": AcademyFocus(
+        "field_research",
+        "Pesquisa Pokemon",
+        "Estuda metodo cientifico, registro de campo e catalogacao.",
+        {"MEN": 2, "POK": 1},
+        work_bonus=20,
+        diploma="Pesquisa",
     ),
     "battle_theory": AcademyFocus(
         "battle_theory",
@@ -55,6 +67,7 @@ ACADEMY_FOCI: dict[str, AcademyFocus] = {
         "Estuda ritmo de combate, resistencia e tomada de decisao.",
         {"PHY": 1, "POK": 1},
         training_xp_bonus=7,
+        diploma="Batalha",
     ),
     "breeding_care": AcademyFocus(
         "breeding_care",
@@ -142,7 +155,9 @@ def apply_focus_progress(character, months: int = 12) -> str | None:
     years = dict(character.flags.get("academy_focus_years", {}))
     years[focus.focus_id] = int(years.get(focus.focus_id, 0)) + completed_years
     character.flags["academy_focus_years"] = years
-    return note or f"Seus estudos em {focus_label(character)} renderam progresso academico."
+    diploma_note = _maybe_award_diploma(character, focus, years[focus.focus_id])
+    progress_note = note or f"Seus estudos em {focus_label(character)} renderam progresso academico."
+    return f"{progress_note} {diploma_note}" if diploma_note else progress_note
 
 
 def capture_bonus_for(character, species) -> int:
@@ -188,7 +203,20 @@ def work_bonus(character) -> int:
 def _suggest_focus_id(character) -> str:
     team = getattr(character, "team", [])
     if not team:
-        return random.choice(("capture_techniques", "habitat_research", "pokemon_types"))
+        return random.choice(("capture_techniques", "habitat_research", "pokemon_types", "field_research"))
     if len(team) >= 2:
-        return random.choice(("battle_theory", "breeding_care", "pokemon_types", "contest_culture"))
+        return random.choice(("battle_theory", "breeding_care", "pokemon_types", "contest_culture", "field_research"))
     return random.choice(tuple(ACADEMY_FOCI))
+
+
+def _maybe_award_diploma(character, focus: AcademyFocus, years_in_focus: int) -> str | None:
+    if not focus.diploma or years_in_focus < 2:
+        return None
+    diplomas = list(getattr(character, "flags", {}).get("academy_diplomas", []))
+    if focus.diploma in diplomas:
+        return None
+    diplomas.append(focus.diploma)
+    character.flags["academy_diplomas"] = sorted(diplomas)
+    if hasattr(character, "add_history"):
+        character.add_history(f"Voce recebeu o diploma academico de {focus.diploma}.", ["academy", "diploma"])
+    return f"Diploma conquistado: {focus.diploma}."

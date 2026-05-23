@@ -38,7 +38,10 @@
     "work": {
       "name": "Ajudante do Laboratorio Oak",
       "base_income": 45,
-      "primary_attributes": ["MEN", "POK"],
+      "primary_attributes": [
+        "MEN",
+        "POK"
+      ],
       "health_risk": 0.03
     }
   },
@@ -79,7 +82,10 @@
     "work": {
       "name": "Guia de rota",
       "base_income": 62,
-      "primary_attributes": ["PHY", "POK"],
+      "primary_attributes": [
+        "PHY",
+        "POK"
+      ],
       "health_risk": 0.08
     }
   },
@@ -127,7 +133,10 @@
     "work": {
       "name": "Assistente do museu",
       "base_income": 72,
-      "primary_attributes": ["MEN", "POK"],
+      "primary_attributes": [
+        "MEN",
+        "POK"
+      ],
       "health_risk": 0.04
     }
   },
@@ -147,7 +156,8 @@
       "Repel",
       "Common Egg",
       "Grooming Kit",
-      "Escape Rope"
+      "Escape Rope",
+      "Water Stone"
     ],
     "careers": [
       "Treinador",
@@ -168,7 +178,10 @@
     "work": {
       "name": "Monitor da ponte",
       "base_income": 78,
-      "primary_attributes": ["POK", "LUK"],
+      "primary_attributes": [
+        "POK",
+        "LUK"
+      ],
       "health_risk": 0.06
     }
   },
@@ -196,7 +209,8 @@
       "Escape Rope",
       "Tool Kit",
       "Protein",
-      "Calcium"
+      "Calcium",
+      "Thunder Stone"
     ],
     "careers": [
       "Treinador",
@@ -219,7 +233,10 @@
     "work": {
       "name": "Auxiliar do porto",
       "base_income": 105,
-      "primary_attributes": ["PHY", "MEN"],
+      "primary_attributes": [
+        "PHY",
+        "MEN"
+      ],
       "health_risk": 0.12
     }
   },
@@ -262,7 +279,10 @@
     "work": {
       "name": "Cuidador do memorial",
       "base_income": 58,
-      "primary_attributes": ["MEN", "POK"],
+      "primary_attributes": [
+        "MEN",
+        "POK"
+      ],
       "health_risk": 0.05
     }
   },
@@ -294,7 +314,11 @@
       "Rare Candy",
       "Protein",
       "Calcium",
-      "Lucky Charm"
+      "Lucky Charm",
+      "Fire Stone",
+      "Water Stone",
+      "Thunder Stone",
+      "Leaf Stone"
     ],
     "careers": [
       "Treinador",
@@ -318,7 +342,10 @@
     "work": {
       "name": "Atendente da loja de departamento",
       "base_income": 132,
-      "primary_attributes": ["MEN", "LUK"],
+      "primary_attributes": [
+        "MEN",
+        "LUK"
+      ],
       "health_risk": 0.06
     }
   },
@@ -344,7 +371,8 @@
       "Escape Rope",
       "Field Boots",
       "Protein",
-      "Calcium"
+      "Calcium",
+      "Leaf Stone"
     ],
     "careers": [
       "Treinador",
@@ -365,8 +393,11 @@
     "work": {
       "name": "Auxiliar da Safari Zone",
       "base_income": 92,
-      "primary_attributes": ["POK", "PHY"],
-      "health_risk": 0.10
+      "primary_attributes": [
+        "POK",
+        "PHY"
+      ],
+      "health_risk": 0.1
     }
   },
   {
@@ -420,7 +451,10 @@
     "work": {
       "name": "Estagio corporativo na Silph",
       "base_income": 160,
-      "primary_attributes": ["MEN", "POK"],
+      "primary_attributes": [
+        "MEN",
+        "POK"
+      ],
       "health_risk": 0.05
     }
   },
@@ -447,7 +481,8 @@
       "Rare Candy",
       "Protein",
       "Calcium",
-      "Lucky Charm"
+      "Lucky Charm",
+      "Fire Stone"
     ],
     "careers": [
       "Treinador",
@@ -470,7 +505,10 @@
     "work": {
       "name": "Assistente de laboratorio",
       "base_income": 122,
-      "primary_attributes": ["MEN", "POK"],
+      "primary_attributes": [
+        "MEN",
+        "POK"
+      ],
       "health_risk": 0.07
     }
   },
@@ -514,7 +552,10 @@
     "work": {
       "name": "Apoio da Liga Pokemon",
       "base_income": 150,
-      "primary_attributes": ["POK", "MEN"],
+      "primary_attributes": [
+        "POK",
+        "MEN"
+      ],
       "health_risk": 0.08
     }
   },
@@ -561,7 +602,10 @@
     "work": {
       "name": "Operador do cais",
       "base_income": 96,
-      "primary_attributes": ["PHY", "LUK"],
+      "primary_attributes": [
+        "PHY",
+        "LUK"
+      ],
       "health_risk": 0.11
     }
   }

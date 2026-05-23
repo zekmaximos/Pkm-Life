@@ -103,6 +103,30 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertIn("TREINADOR|", message)
         self.assertIn("BATALHA|", message)
 
+    def test_manual_hunt_blocks_extreme_level_capture(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case", "Cinnabar Island")
+        character.age = 14
+        character.inventory = {"Great Ball": 2}
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Haunter"], level=12, species_by_name=engine.pokemon))
+        with patch.object(engine, "wild_encounter", return_value=(engine.pokemon["Tentacool"], 42, "Um Tentacool selvagem de nivel 42 apareceu.")), patch("game.engine.random.random", return_value=0.99):
+            ok, message = engine.manual_action_hunt_wild_pokemon(character)
+        self.assertFalse(ok)
+        self.assertEqual(character.inventory["Great Ball"], 2)
+        self.assertIn("muito acima da sua equipe", message)
+
+    def test_travel_without_kanto_map_moves_randomly(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case", "Indigo Plateau")
+        character.age = 14
+        character.inventory.pop("Mapa de Kanto", None)
+        character.flags.pop("has_kanto_map", None)
+        old_city = character.current_city
+        ok, message = engine.move_to_city(character, "")
+        self.assertTrue(ok, message)
+        self.assertNotEqual(character.current_city, old_city)
+        self.assertIn("Sem o Mapa de Kanto", message)
+
     def test_auto_battle_returns_scores_chance_and_winner(self) -> None:
         attrs = PlayerAttributes(PHY=50, MEN=65, POK=70, LUK=55)
         bulbasaur = create_owned_pokemon(
@@ -668,6 +692,44 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertTrue(success)
         self.assertGreater(character.attributes.LUK, luck_before)
 
+    def test_evolution_stone_evolves_active_pokemon(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pikachu"], level=18, species_by_name=engine.pokemon))
+        character.inventory["Thunder Stone"] = 1
+        ok, message = engine.use_item(character, "Thunder Stone")
+        self.assertTrue(ok, message)
+        self.assertEqual(character.active_pokemon().species, "Raichu")
+        self.assertEqual(character.inventory.get("Thunder Stone", 0), 0)
+
+    def test_event_choice_reports_visible_effects(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        event = LifeEvent(
+            event_id="test_visible_effects",
+            title="Teste",
+            text="Teste",
+            min_age=0,
+            max_age=99,
+            phase=None,
+            region=None,
+            city=None,
+            choices=[
+                type("Choice", (), {
+                    "effects": {"money": 50, "health": -2, "items": {"Leaf Stone": 1}},
+                    "history_entry": "Voce encontrou uma recompensa.",
+                    "chance": None,
+                    "failure_effects": None,
+                    "failure_history_entry": None,
+                })()
+            ],
+        )
+        message = engine.apply_event_choice(character, event, 0)
+        self.assertIn("EFEITOS|sucesso|", message)
+        self.assertIn("Dinheiro +50", message)
+        self.assertIn("Leaf Stone x+1", message)
+
     def test_team_overflow_goes_to_box_and_old_reserve_saves_load(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Case")
@@ -801,6 +863,11 @@ class CoreSystemsTest(unittest.TestCase):
         pokemon.heal_full(engine.pokemon[pokemon.species])
         self.assertEqual(pokemon.current_health, pokemon.max_health(engine.pokemon[pokemon.species]))
 
+    def test_pokemon_max_health_is_more_contained_at_high_level(self) -> None:
+        engine = GameEngine()
+        pokemon = create_owned_pokemon(engine.pokemon["Haunter"], level=30, species_by_name=engine.pokemon)
+        self.assertLessEqual(pokemon.max_health(engine.pokemon[pokemon.species]), 125)
+
     def test_annual_report_is_recorded_after_year_progression(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Case")
@@ -929,6 +996,17 @@ class CoreSystemsTest(unittest.TestCase):
         apply_focus_progress(character, 3)
         apply_focus_progress(character, 3)
         self.assertEqual(character.attributes.LUK, min(100, luk_before + 1))
+
+    def test_student_focus_awards_diploma_after_two_years(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 12
+        character.career = CAREER_STUDENT
+        ok, _ = engine.set_academy_focus(character, "field_research")
+        self.assertTrue(ok)
+        note = apply_focus_progress(character, 24)
+        self.assertIn("Pesquisa", character.flags.get("academy_diplomas", []))
+        self.assertIn("Diploma", note)
 
     def test_automatic_gym_invite_can_trigger_for_ready_team(self) -> None:
         engine = GameEngine()
@@ -1153,6 +1231,7 @@ class CoreSystemsTest(unittest.TestCase):
         character = engine.create_character("Case")
         character.age = 18
         character.career = CAREER_BREEDER
+        character.money = 100
         first = create_owned_pokemon(engine.pokemon["Eevee"], level=12)
         second = create_owned_pokemon(engine.pokemon["Rattata"], level=12)
         first.happiness = 90
@@ -1166,6 +1245,21 @@ class CoreSystemsTest(unittest.TestCase):
             success, message = engine.breed_pokemon(character, 0, 1)
         self.assertTrue(success, message)
         self.assertEqual(len(character.eggs), 1)
+
+    def test_breeder_infrastructure_costs_money_and_improves_chance(self) -> None:
+        engine = GameEngine()
+        character = engine.create_character("Case")
+        character.age = 18
+        character.career = CAREER_BREEDER
+        character.money = 5000
+        character.career_ranks[CAREER_BREEDER] = 2
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Pikachu"], level=12, species_by_name=engine.pokemon))
+        character.add_pokemon(create_owned_pokemon(engine.pokemon["Raichu"], level=20, species_by_name=engine.pokemon))
+        before_money = character.money
+        message = engine.manual_action_focus_career(character)
+        self.assertGreaterEqual(character.flags.get("breeder_infrastructure_level", 0), 1)
+        self.assertLess(character.money, before_money + 1000)
+        self.assertIn("Infraestrutura de Criador", message)
 
     def test_gym_preview_uses_series_details(self) -> None:
         engine = GameEngine()
@@ -1301,6 +1395,15 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertGreater(prison_chance, old_chance)
         self.assertIn("prisao", cause)
 
+    def test_criminal_mortality_is_softer_outside_prison(self) -> None:
+        criminal = Character("Case")
+        criminal.age = 45
+        criminal.health = 25
+        criminal.career = CAREER_CRIMINAL
+        life_chance, _ = mortality_chance(criminal, 12, "crime", -18)
+        prison_chance, _ = mortality_chance(criminal, 12, "prison", -18)
+        self.assertLess(life_chance, prison_chance)
+
     def test_death_sets_game_over_and_blocks_official_actions(self) -> None:
         engine = GameEngine()
         character = engine.create_character("Case")
@@ -1428,6 +1531,30 @@ class CoreSystemsTest(unittest.TestCase):
         self.assertEqual(state["age"], 15)
         self.assertTrue(state["dead"])
         self.assertFalse(state["action_availability"]["advance"])
+
+    def test_web_team_reorder_and_box_swap_routes(self) -> None:
+        import web.app as web_app
+
+        client = web_app.app.test_client()
+        created = client.post("/api/new", json={"name": "TeamWeb", "hometown": "Pallet Town"})
+        self.assertEqual(created.status_code, 200)
+        web_app.character.team = [
+            create_owned_pokemon(web_app.engine.pokemon["Pidgey"], level=5),
+            create_owned_pokemon(web_app.engine.pokemon["Rattata"], level=5),
+        ]
+        web_app.character.box = [create_owned_pokemon(web_app.engine.pokemon["Caterpie"], level=5)]
+        web_app.character.active_pokemon_index = 0
+        web_app.character._sync_active_flags()
+
+        reordered = client.post("/api/team/reorder", json={"from_index": 1, "to_index": 0})
+        self.assertEqual(reordered.status_code, 200)
+        self.assertEqual(reordered.get_json()["state"]["team"][0]["species"], "Rattata")
+
+        swapped = client.post("/api/box/swap", json={"team_index": 0, "box_index": 0})
+        self.assertEqual(swapped.status_code, 200)
+        payload = swapped.get_json()
+        self.assertEqual(payload["state"]["team"][0]["species"], "Caterpie")
+        self.assertEqual(payload["state"]["box"][0]["species"], "Rattata")
 
     def test_web_feed_cards_include_pokemon_sprite_mentions(self) -> None:
         import web.app as web_app

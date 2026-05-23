@@ -229,8 +229,8 @@ def evolve_pokemon(pokemon: OwnedPokemon, target_species: PokemonSpecies) -> str
 
 def calculate_max_health(healthy: int, level: int, species_base_hp: int | None = None) -> int:
     base = species_base_hp if species_base_hp is not None else healthy
-    value = 18 + level * 2 + healthy * 0.55 + base * 0.20
-    return int(clamp(round(value), 20, 320))
+    value = 18 + level * 1.55 + healthy * 0.40 + base * 0.16
+    return int(clamp(round(value), 20, 220))
 
 
 def can_evolve(pokemon: OwnedPokemon, species: PokemonSpecies) -> bool:

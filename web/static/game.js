@@ -84,8 +84,8 @@ function render() {
     }
   }
   $("topMoney").textContent = `${(s.money || 0).toLocaleString("pt-BR")} P`;
-  $("topBadges").textContent = `${(s.badges || []).length}`;
-  $("topRep").textContent = `${s.reputation}`;
+  if ($("topBadges")) $("topBadges").textContent = `${(s.badges || []).length}`;
+  if ($("topRep")) $("topRep").textContent = `${s.reputation}`;
 
   // Left panel — stats
   $("healthValue").textContent = s.health;
@@ -142,9 +142,11 @@ function render() {
 
   renderAttributes();
   renderTeam();
+  renderEggs();
   renderBox();
   renderBadgeRibbonShelf();
   renderInventory();
+  renderTravelOptions();
   renderCareers();
   renderAcademy();
   renderGymPreview();
@@ -171,6 +173,8 @@ function renderCareerSummary() {
   const extras = [];
   if (summary.has_business) extras.push("negócio próprio");
   if (summary.has_retirement) extras.push("aposentadoria ativa");
+  if (career === "Criador") extras.push(`infra ${Number(summary.breeder_infrastructure_level || 0)}/4`);
+  const diplomas = summary.academy_diplomas || [];
   el.innerHTML = `
     <div class="career-card">
       <div class="career-card-head">
@@ -187,6 +191,7 @@ function renderCareerSummary() {
         ${extras.length ? `<span>${escHtml(extras.join(" · "))}</span>` : ""}
       </div>
       ${focus ? `<div class="career-focus"><b>Foco</b><span>${escHtml(focus.replace(/^Foco academico:\\s*/i, ""))}</span></div>` : ""}
+      ${diplomas.length ? `<div class="career-focus"><b>Diplomas</b><span>${diplomas.map(escHtml).join(", ")}</span></div>` : ""}
     </div>
   `;
 }
@@ -237,6 +242,52 @@ function renderInventory() {
   $("itemSelect").innerHTML = items.length
     ? items.map((name) => `<option value="${name}">${name} ×${appState.inventory[name]}</option>`).join("")
     : `<option value="">Inventario vazio</option>`;
+}
+
+function renderEggs() {
+  const eggs = appState.eggs || [];
+  const listEl = $("eggList");
+  const countEl = $("eggCount");
+  if (!listEl) return;
+  if (countEl) countEl.textContent = eggs.length ? `(${eggs.length})` : "";
+  if (!eggs.length) {
+    listEl.innerHTML = '<p class="soft">Nenhum Egg em incubacao.</p>';
+    return;
+  }
+  listEl.innerHTML = eggs.map((egg, index) => {
+    const progress = Number(egg.progress || 0);
+    const total = Math.max(1, Number(egg.years_to_hatch || 1));
+    const pct = Math.max(0, Math.min(100, Math.round((progress / total) * 100)));
+    return `
+      <div class="egg-card">
+        <img class="egg-sprite" src="/static/sprites/pokemon/egg.png" alt="">
+        <div class="egg-main">
+          <div class="egg-name">Egg ${index + 1}</div>
+          <div class="egg-detail">${escHtml(egg.rarity || "Comum")} - ${escHtml(egg.color || "misterioso")}</div>
+          <div class="bar-track egg-progress"><div class="bar-fill egg-progress-fill" style="width:${pct}%"></div></div>
+        </div>
+        <div class="egg-steps">${progress}/${total}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderTravelOptions() {
+  const select = $("citySelect");
+  if (!select) return;
+  const options = appState.travel_options || [];
+  if (!appState.has_kanto_map) {
+    select.innerHTML = `<option value="">Viajar ao acaso</option>`;
+    select.title = "Sem o Mapa de Kanto, a viagem segue para uma rota adjacente aleatoria.";
+    return;
+  }
+  select.title = "";
+  select.innerHTML = options.length
+    ? options.map((opt) => {
+        const label = `${opt.coord} - ${opt.name || "???"}${opt.has_gym ? " - Ginasio" : ""}`;
+        return `<option value="${escAttr(opt.coord)}">${escHtml(label)}</option>`;
+      }).join("")
+    : `<option value="">Sem destinos adjacentes</option>`;
 }
 
 function renderBox() {
@@ -437,7 +488,7 @@ function renderFeed() {
       const mentionedPokemon = (item.pokemon_sprites || []).map((p) => p.name);
       const textHtml = summary ? formatSummaryText(item.text, mentionedPokemon)
                      : battle ? formatBattleText(item.text)
-                     : formatRichText(item.text, mentionedPokemon);
+                     : formatEventText(item.text, mentionedPokemon);
       const textClass = summary ? "event-text summary-text" : "event-text";
       return `
         <article class="feed-card ${item.kind || "event"}${summary ? " summary-card" : ""}">
@@ -476,6 +527,26 @@ function renderEvent(event) {
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
+
+function formatEventText(text, pokemonNames = []) {
+  const lines = String(text || "").split("\n").filter(l => l.trim());
+  return lines.map((line) => {
+    if (line.startsWith("EFEITOS|")) {
+      const [, status, ...parts] = line.split("|");
+      const chips = parts.filter(Boolean).map((part) => {
+        const cls = /-\d|Sa[úu]de -|Dinheiro -|Reputa[cç][aã]o -/.test(part)
+          ? "effect-chip loss"
+          : /\+\d|Pok[ée]mon|Eggs|Carreira/.test(part)
+          ? "effect-chip gain"
+          : "effect-chip";
+        return `<span class="${cls}">${escHtml(part)}</span>`;
+      }).join("");
+      const statusCls = status === "sucesso" ? "gain" : "loss";
+      return `<div class="effect-row"><span class="effect-status ${statusCls}">${escHtml(status || "efeito")}</span>${chips}</div>`;
+    }
+    return `<div>${formatRichText(line, pokemonNames)}</div>`;
+  }).join("");
+}
 
 function escHtml(str) {
   return String(str || "")
@@ -733,10 +804,13 @@ function formatBattleText(text) {
       return `<div class="battle-row">
         <span class="${resultCls} battle-outcome">${resultIcon}</span>
         <span class="battle-vs">${escHtml(player)} vs <b>${escHtml(enemy)}</b></span>
-        <span class="${chanceCls} battle-chance">${chance.toFixed(0)}% chance</span>
-        <span class="battle-scores">Poder: ${parseFloat(pScore).toFixed(1)} vs ${parseFloat(eScore).toFixed(1)}</span>
-        ${won ? `<span class="sum-pos battle-xp">+${xp} XP</span>` : `<span class="sum-neg battle-hp">-${hpLoss} HP</span>`}
+        <span class="${chanceCls} battle-chip">${chance.toFixed(0)}% chance</span>
+        <span class="battle-chip battle-scores">Forca ${parseFloat(pScore).toFixed(1)} x ${parseFloat(eScore).toFixed(1)}</span>
+        <span class="battle-chip ${won ? "sum-pos" : "sum-neg"}">${won ? `+${xp} XP` : `-${hpLoss} HP`}</span>
       </div>`;
+    }
+    if (/^Batalha\s+\d+:/i.test(line)) {
+      return `<div class="battle-row battle-match-title">${escHtml(line)}</div>`;
     }
     // Linhas de level up
     if (/subiu para o nivel|level up/i.test(line)) {
@@ -1112,7 +1186,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── Travel ────────────────────────────────────────────────────────────────
   $("travelBtn").addEventListener("click", async () => {
     const city = $("citySelect").value;
-    if (!city) return;
+    if (!city && appState?.has_kanto_map) return toast("Nenhum destino adjacente disponivel.");
     try {
       const payload = await api("/api/action/travel", {
         method: "POST",
